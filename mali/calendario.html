@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario MALI Educación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales del contenedor del calendario */
+        #calendar-section {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            font-family: 'Poppins', sans-serif;
+        }
+        h2 {
+            text-align: center;
+        }
+        
+        /* Contenedor principal del calendario con grid para los días */
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        /* Encabezado de los días de la semana */
+        .day-header {
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        /* Estilo de cada día en el calendario */
+        .day {
+            border: 1px solid #f3f3f3;
+            min-height: 100px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            box-sizing: border-box;
+            overflow: hidden;
+            background: #f3f3f3;
+        }
+        
+        /* Número del día en la esquina superior derecha */
+        .day-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 18px;
+            font-weight: normal;
+            color: black;
+        }
+        
+        /* Contenedor para los eventos del día */
+        .event-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Estilos de cada evento */
+        .event {
+            flex-grow: 1;
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="calendar-section">
+        <h2>Calendario MALI Educación</h2>
+        <div id="calendar"></div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
+	        const calendarId = "gustavo.oscorima@gmail.com";
+            const calendarDiv = document.getElementById("calendar");
+            const daysOfWeek = ["Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            
+            // Definir el primer y último día del mes en formato ISO 8601
+            const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
+            const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
+            
+            // Petición a la API de Google Calendar para obtener eventos del mes
+            fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.items) return;
+                    const events = data.items.filter(event => event.start && (event.start.date || event.start.dateTime));
+                    renderCalendar(month, year, events);
+                })
+                .catch(error => console.error("Error al cargar eventos:", error));
+            
+            function renderCalendar(month, year, events) {
+                calendarDiv.innerHTML = "";
+                
+                // Crear los encabezados de los días de la semana
+                daysOfWeek.forEach(day => {
+                    let dayHeader = document.createElement("div");
+                    dayHeader.classList.add("day-header");
+                    dayHeader.textContent = day;
+                    calendarDiv.appendChild(dayHeader);
+                });
+                
+                const firstDay = new Date(year, month - 1, 1).getDay();
+                const lastDate = new Date(year, month, 0).getDate();
+                
+                // Rellenar los espacios vacíos antes del primer día del mes
+                for (let i = 0; i < firstDay; i++) {
+                    let emptyCell = document.createElement("div");
+                    emptyCell.classList.add("day");
+                    calendarDiv.appendChild(emptyCell);
+                }
+                
+                const colors = ["#F2B544","#F2357B", "#025E73", "#52CBD9", "#F2F2F2"];
+                
+                // Generar los días del mes con sus eventos
+                for (let day = 1; day <= lastDate; day++) {
+                    let dayCell = document.createElement("div");
+                    dayCell.classList.add("day");
+                    
+                    let dayNumber = document.createElement("div");
+                    dayNumber.classList.add("day-number");
+                    dayNumber.textContent = day.toString().padStart(2, '0'); // Convierte números de 1-9 a 01-09
+                    dayCell.appendChild(dayNumber);
+                    
+                    let dayEvents = events.filter(event => {
+                        let eventDate = event.start.date ? new Date(event.start.date) : new Date(event.start.dateTime);
+                        return eventDate.getDate() === day && eventDate.getMonth() + 1 === month;
+                    });
+                    
+                    if (dayEvents.length > 0) {
+                        let eventContainer = document.createElement("div");
+                        eventContainer.classList.add("event-container");
+                        
+                        dayEvents.forEach((event, index) => {
+                            let eventEl = document.createElement("div");
+                            eventEl.classList.add("event");
+                            eventEl.style.background = colors[index % colors.length];
+                            eventEl.style.flex = `1 1 ${100 / dayEvents.length}%`;
+                            eventEl.textContent = event.summary || "Evento sin título";
+                            eventContainer.appendChild(eventEl);
+                        });
+                        
+                        dayCell.style.background = `linear-gradient(${dayEvents.map((_, i) => colors[i % colors.length]).join(", ")})`;
+                        dayNumber.style.color = "white"; // Cambia el color del número cuando hay eventos
+                        dayCell.appendChild(eventContainer);
+                    }
+                    
+                    calendarDiv.appendChild(dayCell);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

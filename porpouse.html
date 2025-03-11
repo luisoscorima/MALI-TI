@@ -1,0 +1,61 @@
+<section class="carousel-section">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img src="https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1283" alt="Slide 1">
+            <div class="carousel-caption"><i>Doble de letras: mujeres y trazos escritos: Voces, rostros y escrituras de mujeres en el Siglo XIX.</i>2009.</div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=464" alt="Slide 2">
+            <div class="carousel-caption">Por: Brodsky Zimmermann, Varinia [et al]. <i> Mujeres en las artes visuales en Chile (2010-2020) .</i>2021.</div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=230" alt="Slide 3">
+            <div class="carousel-caption">Rodríguez, Bélgica [et al] <i> Latin American women artists 1915-1995.</i>1995.</div>
+        </div>
+      </div>
+  
+      <!-- Paginación y botones -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        direction: "vertical",
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+  
+    <style>
+      .carousel-section {
+        width: 100%;
+        max-width: 400px; /* Ajusta según necesidad */
+        margin: auto;
+      }
+  
+      .swiper {
+        height: 600px; /* Ajusta la altura del carrusel */
+      }
+  
+      .swiper-slide img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    </style>
+  </section>
+  

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo de Servidores</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-5">
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center mb-5">
+            <h1 class="text-3xl font-bold">Estado de Servidores MALI</h1>
+            <img src="https://archivo.mali.pe/themes/default/assets/pawtucket/graphics/mali_logo_footer.png" alt="Logo Empresa" class="h-12">
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-3">Lista de Servidores</h2>
+                <table class="w-full border-collapse border border-gray-700 text-left">
+                    <thead>
+                        <tr class="bg-gray-700">
+                            <th class="border p-2">#</th>
+                            <th class="border p-2">Nombre</th>
+                            <th class="border p-2">IP</th>
+                            <th class="border p-2">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="server-table"></tbody>
+                </table>
+            </div>
+            <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-3">Resumen de Estado</h2>
+                <canvas id="serverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchServerStatus() {
+            try {
+                const response = await fetch('http://localhost:3000/status');
+                const servers = await response.json();
+                updateTable(servers);
+                updateChart(servers);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+
+        function updateTable(servers) {
+            const tableBody = document.getElementById('server-table');
+            tableBody.innerHTML = '';
+            servers.forEach((server, index) => {
+                const row = `<tr class="border">
+                    <td class="border p-2">${index + 1}</td>
+                    <td class="border p-2 text-blue-400 hover:underline cursor-pointer" onclick="window.open('http://' + '${server.ip}', '_blank')">${server.name}</td>
+                    <td class="border p-2">${server.ip}</td>
+                    <td class="border p-2 text-center font-bold ${server.status ? 'text-green-400' : 'text-red-400'}">
+                        ${server.status ? 'Activo' : 'Inactivo'}
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function updateChart(servers) {
+            const activeCount = servers.filter(s => s.status).length;
+            const inactiveCount = servers.length - activeCount;
+            
+            const ctx = document.getElementById('serverChart').getContext('2d');
+            if (window.myChart) window.myChart.destroy();
+            window.myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Activos', 'Inactivos'],
+                    datasets: [{
+                        data: [activeCount, inactiveCount],
+                        backgroundColor: ['#10B981', '#EF4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                }
+            });
+        }
+
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 180000);
+    </script>
+</body>
+</html>
