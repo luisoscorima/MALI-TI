@@ -1,239 +1,287 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario MALI Educación</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos generales del contenedor del calendario */
-        #calendar-section {
-            width: 100%;
-            max-width: 900px;
-            margin: auto;
-            font-family: 'Poppins', sans-serif;
-        }
-        h2 {
-            text-align: center;
-        }
-        
-        /* Contenedor principal del calendario con grid para los días */
-        #calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            padding: 10px;
-        }
-        
-        /* Encabezado de los días de la semana */
-        .day-header {
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-        }
-        
-        /* Estilo de cada día en el calendario */
-        .day {
-            border: 1px solid #f3f3f3;
-            min-height: 100px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            box-sizing: border-box;
-            overflow: hidden;
-            background: #f3f3f3;
-        }
-        
-        /* Número del día en la esquina superior derecha */
-        .day-number {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 18px;
-            font-weight: normal;
-            color: black;
-        }
-        .day.has-event .day-number {
-            color: white;
-        }
-
-        /* Contenedor para los eventos del día */
-        .event-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Estilos de cada evento */
-        .event {
-            flex-grow: 1;
-            font-size: 12px;
-            color: #fff;
-            text-align: center;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        /* Tooltip estilo globo de texto */
-        
-        .event-tooltip {
-            display: none;
-            position: absolute;
-            background: white;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            width: 250px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .tooltip-header {
-            display: flex;
-            justify-content:right;
-            align-items: right;
-        }
-        .tooltip-header button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .tooltip-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario MALI Educación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales del contenedor del calendario */
+    #calendar-section {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      font-family: 'Poppins', sans-serif;
+    }
+    h2 {
+      text-align: center;
+    }
+    
+    /* Contenedor principal del calendario con grid para los días */
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      padding: 10px;
+    }
+    
+    /* Encabezado de los días de la semana */
+    .day-header {
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+    }
+    
+    /* Estilo de cada día en el calendario */
+    .day {
+      border: 1px solid #f3f3f3;
+      min-height: 100px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: #f3f3f3;
+    }
+    
+    /* Número del día en la esquina superior derecha */
+    .day-number {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 18px;
+      font-weight: normal;
+      color: black;
+    }
+    .day.has-event .day-number {
+      color: white;
+    }
+    
+    /* Contenedor para los eventos del día */
+    .event-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Estilos de cada evento */
+    .event {
+      flex-grow: 1;
+      font-size: 12px;
+      color: #fff;
+      text-align: center;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 5px;
+    }
+    
+    /* Tooltip estilo globo de texto */
+    .event-tooltip {
+      display: none;
+      position: absolute;
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 250px;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .tooltip-header {
+      display: flex;
+      justify-content: right;
+      align-items: right;
+    }
+    .tooltip-header button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .tooltip-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
 
-    <section id="calendar-section">
-        <h2>Calendario MALI Educación</h2>
-        <div id="calendar"></div>
-        <div id="tooltip" class="event-tooltip">
-            <div class="tooltip-header">
-                <button onclick="shareEvent()">➤</button>
-                <button onclick="addToCalendar()">🔔</button>
-                <button onclick="closeTooltip()">X</button>
-            </div>
-            <span id="tooltip-title"></span>
-            <p id="tooltip-datetime"></p>
-            <p id="tooltip-description"></p>
-        </div>
-    </section>
+  <section id="calendar-section">
+    <h2>Calendario MALI Educación</h2>
+    <div id="calendar"></div>
+    <div id="tooltip" class="event-tooltip">
+      <div class="tooltip-header">
+        <button onclick="shareEvent()">➤</button>
+        <button onclick="addToCalendar()">🔔</button>
+        <button onclick="closeTooltip()">X</button>
+      </div>
+      <span id="tooltip-title" class="tooltip-title"></span>
+      <p id="tooltip-datetime"></p>
+      <p id="tooltip-description"></p>
+    </div>
+  </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
-            const calendarId = "gustavo.oscorima@gmail.com";
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Variables y elementos del DOM
+      const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
+      const calendarId = "gustavo.oscorima@gmail.com";
+      
+      const calendarDiv = document.getElementById("calendar");
+      const tooltip = document.getElementById("tooltip");
+      const tooltipTitle = document.getElementById("tooltip-title");
+      const tooltipDatetime = document.getElementById("tooltip-datetime");
+      const tooltipDescription = document.getElementById("tooltip-description");
+      
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      
+      const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
+      const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
+      
+      // Mapeo de colores y su "emoji" (se usará el carácter ● con estilo de color)
+      const colorMapping = {
+        "Cursos de Arte": "#F2357B",
+        "Extensión Profesional": "#025E73",
+        "Visitas": "#F2B544",
+        "Noche MALI": "#52CBD9"
+      };
+      const defaultColor = "#cccccc";
+      
+      // Se obtiene la información del evento y se renderiza el calendario
+      fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}&singleEvents=true&orderBy=startTime`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.items) return;
+          renderCalendar(new Date().getMonth() + 1, new Date().getFullYear(), data.items);
+        })
+        .catch(error => console.error("Error al cargar eventos:", error));
+      
+      // Función para obtener el color del evento a partir de la descripción
+      function getEventColor(description) {
+        if (!description) return defaultColor;
+        for (let key in colorMapping) {
+          if (description.includes(key)) {
+            return colorMapping[key];
+          }
+        }
+        return defaultColor;
+      }
+      
+      // Renderiza el calendario y asigna eventos a cada día
+      function renderCalendar(month, year, events) {
+        calendarDiv.innerHTML = "";
+        const firstDay = new Date(year, month - 1, 1).getDay();
+        const lastDate = new Date(year, month, 0).getDate();
+        // Espacios vacíos antes del primer día
+        for (let i = 0; i < firstDay; i++) {
+          let emptyCell = document.createElement("div");
+          emptyCell.classList.add("day");
+          calendarDiv.appendChild(emptyCell);
+        }
+        // Creación de cada día
+        for (let day = 1; day <= lastDate; day++) {
+          let dayCell = document.createElement("div");
+          dayCell.classList.add("day");
+          
+          let dayNumber = document.createElement("div");
+          dayNumber.classList.add("day-number");
+          dayNumber.textContent = day;
+          dayCell.appendChild(dayNumber);
+          
+          let dayEvents = events.filter(event => new Date(event.start.dateTime || event.start.date).getDate() === day);
+          if (dayEvents.length > 0) {
+            dayCell.classList.add("has-event");
+            let eventContainer = document.createElement("div");
+            eventContainer.classList.add("event-container");
             
-            const calendarDiv = document.getElementById("calendar");
-            const tooltip = document.getElementById("tooltip");
-            const tooltipTitle = document.getElementById("tooltip-title");
-            const tooltipDatetime = document.getElementById("tooltip-datetime");
-            const tooltipDescription = document.getElementById("tooltip-description");
-
-            const daysOfWeek = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-            
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            
-            const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
-            const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
-            
-            const colorMapping = {
-                "Cursos de Arte": "#F2357B",
-                "Extensión Profesional": "#025E73",
-                "Visitas": "#F2B544",
-                "Noche MALI": "#52CBD9"
-            };
-            const defaultColor = "#cccccc";
-            
-            fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}&singleEvents=true&orderBy=startTime`)
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.items) return;
-                    renderCalendar(new Date().getMonth() + 1, new Date().getFullYear(), data.items);
-                })
-                .catch(error => console.error("Error al cargar eventos:", error));
-            
-            function getEventColor(description) {
-                if (!description) return defaultColor;
-                for (let key in colorMapping) {
-                    if (description.includes(key)) {
-                        return colorMapping[key];
-                    }
-                }
-                return defaultColor;
-            }
-            
-            function renderCalendar(month, year, events) {
-                calendarDiv.innerHTML = "";
-                const firstDay = new Date(year, month - 1, 1).getDay();
-                const lastDate = new Date(year, month, 0).getDate();
-                for (let i = 0; i < firstDay; i++) {
-                    let emptyCell = document.createElement("div");
-                    emptyCell.classList.add("day");
-                    calendarDiv.appendChild(emptyCell);
-                }
-                for (let day = 1; day <= lastDate; day++) {
-                    let dayCell = document.createElement("div");
-                    dayCell.classList.add("day");
-                    let dayNumber = document.createElement("div");
-                    dayNumber.classList.add("day-number");
-                    dayNumber.textContent = day;
-                    dayCell.appendChild(dayNumber);
-                    let dayEvents = events.filter(event => new Date(event.start.dateTime || event.start.date).getDate() === day);
-                    if (dayEvents.length > 0) {
-                        dayCell.classList.add("has-event");
-                        let eventContainer = document.createElement("div");
-                        eventContainer.classList.add("event-container");
-                        dayEvents.forEach(event => {
-                            let eventEl = document.createElement("div");
-                            eventEl.classList.add("event");
-                            eventEl.textContent = event.summary;
-                            eventEl.dataset.title = event.summary;
-                            eventEl.dataset.datetime = event.start.dateTime || event.start.date;
-                            eventEl.dataset.description = event.description || "Sin descripción";
-                            eventEl.style.backgroundColor = Object.keys(colorMapping).find(key => event.description && event.description.includes(key)) ? colorMapping[Object.keys(colorMapping).find(key => event.description.includes(key))] : defaultColor;
-                            eventEl.addEventListener("click", function (e) {
-                                openTooltip(e, eventEl);
-                            });
-                            eventContainer.appendChild(eventEl);
-                        });
-                        dayCell.appendChild(eventContainer);
-                    }
-                    calendarDiv.appendChild(dayCell);
-                }
-            }
-            function openTooltip(event, element) {
-                tooltipTitle.textContent = element.dataset.title;
-                tooltipTitle.style.fontWeight = "bold";
-                tooltipDatetime.textContent = element.dataset.datetime;
-                tooltipDatetime.style.fontSize = "12px";
-                tooltipDescription.innerText = element.dataset.description;
-                tooltipDescription.style.fontSize = "12px";
-                tooltip.style.display = "block";
-                tooltip.style.top = `${event.clientY}px`;
-                tooltip.style.left = `${event.clientX + 10}px`;
-                tooltip.style.scrollbarWidth = "thin";
-                tooltip.style.padding = "30px";
-            }
-            function closeTooltip() {
-                const tooltip = document.getElementById("tooltip");
-                tooltip.style.display = "none";
-            }
-        });
-
-    </script>
+            dayEvents.forEach(event => {
+              let eventEl = document.createElement("div");
+              eventEl.classList.add("event");
+              eventEl.dataset.title = event.summary;
+              eventEl.dataset.datetime = event.start.dateTime || event.start.date;
+              eventEl.dataset.description = event.description || "Sin descripción";
+              // Asigna el color en función de la descripción
+              const eventColor = getEventColor(eventEl.dataset.description);
+              eventEl.style.backgroundColor = eventColor;
+              eventEl.textContent = event.summary;
+              eventEl.addEventListener("click", function (e) {
+                openTooltip(e, eventEl);
+              });
+              eventContainer.appendChild(eventEl);
+            });
+            dayCell.appendChild(eventContainer);
+          }
+          calendarDiv.appendChild(dayCell);
+        }
+      }
+      
+      // Muestra el tooltip posicionándolo cerca del evento clickeado y añade el “círculo” de color junto al título
+      function openTooltip(event, element) {
+        const eventColor = getEventColor(element.dataset.description);
+        // Se usa innerHTML para insertar el "círculo" con estilo de color y el título
+        tooltipTitle.innerHTML = `<span style="color: ${eventColor};">●</span> ${element.dataset.title}`;
+        tooltipDatetime.textContent = element.dataset.datetime;
+        tooltipDatetime.style.fontSize = "12px";
+        tooltipDescription.textContent = element.dataset.description;
+        tooltipDescription.style.fontSize = "12px";
+        tooltip.style.display = "block";
+        tooltip.style.top = event.clientY + "px";
+        tooltip.style.left = (event.clientX + 10) + "px";
+        tooltip.style.padding = "30px";
+      }
+      
+      // Cierra el tooltip
+      function closeTooltip() {
+        tooltip.style.display = "none";
+      }
+      
+      // Copia el link actual del HTML al portapapeles
+      function shareEvent() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url)
+          .then(() => alert("Enlace copiado al portapapeles"))
+          .catch(err => console.error("Error al copiar:", err));
+      }
+      
+      // Añade el evento al calendario del usuario (abre Google Calendar con datos prellenados)
+      function addToCalendar() {
+        // Se extraen los datos del tooltip
+        let title = tooltipTitle.textContent.replace(/●\s*/, ""); // quita el círculo
+        let datetime = tooltipDatetime.textContent;
+        let description = tooltipDescription.textContent;
+        
+        // Se asume que datetime está en formato ISO; se crea una fecha de inicio y se asume duración de 1 hora
+        let startDate = new Date(datetime);
+        let endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+        
+        // Función para formatear fecha a "YYYYMMDDTHHmmssZ" (en UTC)
+        function formatDate(date) {
+          return date.toISOString().replace(/[-:.]/g, "").split("Z")[0] + "Z";
+        }
+        const startStr = formatDate(startDate);
+        const endStr = formatDate(endDate);
+        
+        const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(description)}`;
+        window.open(googleCalendarUrl, "_blank");
+      }
+      
+      // Hacer las funciones accesibles desde los onclick de los botones del tooltip
+      window.closeTooltip = closeTooltip;
+      window.shareEvent = shareEvent;
+      window.addToCalendar = addToCalendar;
+    });
+  </script>
 
 </body>
 </html>
