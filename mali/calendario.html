@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario MALI Educación</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <style>
     /* Estilos generales del contenedor del calendario */
     #calendar-section {
@@ -35,7 +36,7 @@
     /* Estilo de cada día en el calendario */
     .day {
       border: 1px solid #f3f3f3;
-      min-height: 100px;
+      height: 120px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -65,6 +66,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
     
     /* Estilos de cada evento */
@@ -79,6 +81,9 @@
       justify-content: center;
       cursor: pointer;
       padding: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     
     /* Tooltip estilo globo de texto */
@@ -91,7 +96,7 @@
       border-radius: 15px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
       z-index: 1000;
-      width: 250px;
+      width: 300px;
       max-height: 250px;
       overflow-y: auto;
     }
@@ -120,9 +125,17 @@
     <div id="calendar"></div>
     <div id="tooltip" class="event-tooltip">
       <div class="tooltip-header">
-        <button onclick="shareEvent()">➤</button>
-        <button onclick="addToCalendar()">🔔</button>
-        <button onclick="closeTooltip()">X</button>
+        <button onclick="shareEvent()" title="Copiar enlace">
+            <i class="fas fa-share"></i>
+        </button>
+          
+        <button onclick="addToCalendar()" title="Añadir al calendario">
+            <i class="fas fa-bell"></i>
+        </button>
+          
+        <button onclick="closeTooltip()" title="Cerrar">
+            <i class="fas fa-times"></i>
+        </button>
       </div>
       <span id="tooltip-title" class="tooltip-title"></span>
       <p id="tooltip-datetime"></p>
@@ -219,6 +232,7 @@
                 openTooltip(e, eventEl);
               });
               eventContainer.appendChild(eventEl);
+              eventEl.title = event.summary;
             });
             dayCell.appendChild(eventContainer);
           }
@@ -230,11 +244,11 @@
       function openTooltip(event, element) {
         const eventColor = getEventColor(element.dataset.description);
         // Se usa innerHTML para insertar el "círculo" con estilo de color y el título
-        tooltipTitle.innerHTML = `<span style="color: ${eventColor};">●</span> ${element.dataset.title}`;
+        tooltipTitle.innerHTML = `<span style="color: ${eventColor};">⬤</span> ${element.dataset.title}`;
         tooltipDatetime.textContent = element.dataset.datetime;
         tooltipDatetime.style.fontSize = "12px";
-        tooltipDescription.textContent = element.dataset.description;
-        tooltipDescription.style.fontSize = "12px";
+        tooltipDescription.innerHTML = `<span style="color: ${eventColor};">፨</span> ${element.dataset.description}`;
+        tooltipDescription.style.fontSize = "14px";
         tooltip.style.display = "block";
         tooltip.style.top = event.clientY + "px";
         tooltip.style.left = (event.clientX + 10) + "px";
