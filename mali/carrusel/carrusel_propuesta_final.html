@@ -165,6 +165,11 @@ button {
 	}
 }
 
+.slide:not([data-current]):not([data-next]):not([data-previous]) {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .slide__inner {
 	--rotX: 0;
 	--rotY: 0;
@@ -425,8 +430,18 @@ button {
 						</div>
 					</div>
 				</div>
-				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1300); --dir: 0" data-current></div> <!-- Cambiar fondo -->
-	
+				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1300); --dir: 0"></div> <!-- Cambiar fondo -->
+				<!-- slide 5 -->
+				<div class="slide">
+					<div class="slide__inner">
+						<div class="slide--image__wrapper">
+							<a href="http://mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19798"> <!-- Cambiar el link -->
+								<img class="slide--image" src="https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1301" alt="Image 1" /> <!-- Cambiar la imagen -->
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1301); --dir: 0"></div> <!-- Cambiar fondo -->
 
 			</div>
 			<div class="slides--infos">
@@ -486,13 +501,29 @@ button {
 					<div class="slide-info__inner">
 						<div class="slide-info--text__wrapper">
 							<div data-title class="slide-info--text">
-								<span> Berthe Morisot: Impressionist</span>
+								<span>Berthe Morisot: Impressionist</span>
 							</div>
 							<div data-subtitle class="slide-info--text">
 								<span>F. Stuckey, Charles [et al].</span>
 							</div>
 							<div data-description class="slide-info--text">
 								<span>F. Stuckey, Charles [et al]. <i>  Berthe Morisot: Impressionist. </i> 1987.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Slide Info 5 -->
+				<div class="slide-info">
+					<div class="slide-info__inner">
+						<div class="slide-info--text__wrapper">
+							<div data-title class="slide-info--text">
+								<span>Resistir el paso del tiempo y la pérdida de la memoria. Intimidad y poder a través del retrato pictórico femenino en el Perú decimonónico.</span>
+							</div>
+							<div data-subtitle class="slide-info--text">
+								<span>Leonardini, Nanda.</span>
+							</div>
+							<div data-description class="slide-info--text">
+								<span>Leonardini, Nanda. <i>Resistir el paso del tiempo y la pérdida de la memoria. Intimidad y poder a través del retrato pictórico femenino en el Perú decimonónico. </i>2024.</span>
 							</div>
 						</div>
 					</div>
@@ -518,287 +549,262 @@ button {
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
-	console.log("El DOM está listo");
-	console.log(typeof imagesLoaded);
-	console.log("holi");
+		console.log("El DOM está listo");
+		console.log(typeof imagesLoaded);
+		console.log("holi");
 
-	// -------------------------------------------------
-	// ------------------ Utilities --------------------
-	// -------------------------------------------------
+		// -------------------------------------------------
+		// ------------------ Utilities --------------------
+		// -------------------------------------------------
 
-	// Math utilities
-	const wrap = (n, max) => (n + max) % max;
-	const lerp = (a, b, t) => a + (b - a) * t;
+		// Math utilities
+		const wrap = (n, max) => (n + max) % max;
+		const lerp = (a, b, t) => a + (b - a) * t;
 
-	// DOM utilities
-	const isHTMLElement = (el) => el instanceof HTMLElement;
+		// DOM utilities
+		const isHTMLElement = (el) => el instanceof HTMLElement;
 
-	const genId = (() => {
-		let count = 0;
-		return () => {
-			return (count++).toString();
-		};
-	})();
+		const genId = (() => {
+			let count = 0;
+			return () => (count++).toString();
+		})();
 
-	class Raf {
-		constructor() {
-			this.rafId = 0;
-			this.raf = this.raf.bind(this);
-			this.callbacks = [];
+		class Raf {
+			constructor() {
+				this.rafId = 0;
+				this.raf = this.raf.bind(this);
+				this.callbacks = [];
+				this.start();
+			}
 
-			this.start();
-		}
+			start() {
+				this.raf();
+			}
 
-		start() {
-			this.raf();
-		}
+			stop() {
+				cancelAnimationFrame(this.rafId);
+			}
 
-		stop() {
-			cancelAnimationFrame(this.rafId);
-		}
+			raf() {
+				this.callbacks.forEach(({ callback, id }) => callback({ id }));
+				this.rafId = requestAnimationFrame(this.raf);
+			}
 
-		raf() {
-			this.callbacks.forEach(({ callback, id }) => callback({ id }));
-			this.rafId = requestAnimationFrame(this.raf);
-		}
+			add(callback, id) {
+				this.callbacks.push({ callback, id: id || genId() });
+			}
 
-		add(callback, id) {
-			this.callbacks.push({ callback, id: id || genId() });
-		}
-
-		remove(id) {
-			this.callbacks = this.callbacks.filter((callback) => callback.id !== id);
-		}
-	}
-
-	class Vec2 {
-		constructor(x = 0, y = 0) {
-			this.x = x;
-			this.y = y;
-		}
-
-		set(x, y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		lerp(v, t) {
-			this.x = lerp(this.x, v.x, t);
-			this.y = lerp(this.y, v.y, t);
-		}
-	}
-
-	const vec2 = (x = 0, y = 0) => new Vec2(x, y);
-
-	function tilt(node, options) {
-		let { trigger, target } = resolveOptions(node, options);
-
-		let lerpAmount = 0.06;
-
-		const rotDeg = { current: vec2(), target: vec2() };
-		const bgPos = { current: vec2(), target: vec2() };
-
-		const update = (newOptions) => {
-			destroy();
-			({ trigger, target } = resolveOptions(node, newOptions));
-			init();
-		};
-
-		let rafId;
-
-		function ticker({ id }) {
-			rafId = id;
-
-			rotDeg.current.lerp(rotDeg.target, lerpAmount);
-			bgPos.current.lerp(bgPos.target, lerpAmount);
-
-			for (const el of target) {
-				el.style.setProperty("--rotX", rotDeg.current.y.toFixed(2) + "deg");
-				el.style.setProperty("--rotY", rotDeg.current.x.toFixed(2) + "deg");
-
-				el.style.setProperty("--bgPosX", bgPos.current.x.toFixed(2) + "%");
-				el.style.setProperty("--bgPosY", bgPos.current.y.toFixed(2) + "%");
+			remove(id) {
+				this.callbacks = this.callbacks.filter((callback) => callback.id !== id);
 			}
 		}
 
-		const onMouseMove = ({ offsetX, offsetY }) => {
-			lerpAmount = 0.1;
-
-			for (const el of target) {
-				const ox = (offsetX - el.clientWidth * 0.5) / (Math.PI * 3);
-				const oy = -(offsetY - el.clientHeight * 0.5) / (Math.PI * 4);
-
-				rotDeg.target.set(ox, oy);
-				bgPos.target.set(-ox * 0.3, oy * 0.3);
+		class Vec2 {
+			constructor(x = 0, y = 0) {
+				this.x = x;
+				this.y = y;
 			}
-		};
 
-		const onMouseLeave = () => {
-			lerpAmount = 0.06;
+			set(x, y) {
+				this.x = x;
+				this.y = y;
+			}
 
-			rotDeg.target.set(0, 0);
-			bgPos.target.set(0, 0);
-		};
+			lerp(v, t) {
+				this.x = lerp(this.x, v.x, t);
+				this.y = lerp(this.y, v.y, t);
+			}
+		}
 
-		const addListeners = () => {
-			trigger.addEventListener("mousemove", onMouseMove);
-			trigger.addEventListener("mouseleave", onMouseLeave);
-		};
+		const vec2 = (x = 0, y = 0) => new Vec2(x, y);
 
-		const removeListeners = () => {
-			trigger.removeEventListener("mousemove", onMouseMove);
-			trigger.removeEventListener("mouseleave", onMouseLeave);
-		};
+		function tilt(node, options) {
+			let { trigger, target } = resolveOptions(node, options);
+			let lerpAmount = 0.06;
+			const rotDeg = { current: vec2(), target: vec2() };
+			const bgPos = { current: vec2(), target: vec2() };
 
-		const init = () => {
-			addListeners();
-			raf.add(ticker);
-		};
+			let rafId;
+			function ticker({ id }) {
+				rafId = id;
+				rotDeg.current.lerp(rotDeg.target, lerpAmount);
+				bgPos.current.lerp(bgPos.target, lerpAmount);
 
-		const destroy = () => {
-			removeListeners();
-			raf.remove(rafId);
-		};
+				for (const el of target) {
+					el.style.setProperty("--rotX", rotDeg.current.y.toFixed(2) + "deg");
+					el.style.setProperty("--rotY", rotDeg.current.x.toFixed(2) + "deg");
+					el.style.setProperty("--bgPosX", bgPos.current.x.toFixed(2) + "%");
+					el.style.setProperty("--bgPosY", bgPos.current.y.toFixed(2) + "%");
+				}
+			}
 
-		init();
+			const onMouseMove = ({ offsetX, offsetY }) => {
+				lerpAmount = 0.1;
+				for (const el of target) {
+					const ox = (offsetX - el.clientWidth * 0.5) / (Math.PI * 3);
+					const oy = -(offsetY - el.clientHeight * 0.5) / (Math.PI * 4);
+					rotDeg.target.set(ox, oy);
+					bgPos.target.set(-ox * 0.3, oy * 0.3);
+				}
+			};
 
-		return { destroy, update };
-	}
+			const onMouseLeave = () => {
+				lerpAmount = 0.06;
+				rotDeg.target.set(0, 0);
+				bgPos.target.set(0, 0);
+			};
 
-	function resolveOptions(node, options) {
-		return {
-			trigger: options?.trigger ?? node,
-			target: options?.target
-				? Array.isArray(options.target)
-					? options.target
-					: [options.target]
-				: [node]
-		};
-	}
+			const addListeners = () => {
+				trigger.addEventListener("mousemove", onMouseMove);
+				trigger.addEventListener("mouseleave", onMouseLeave);
+			};
 
-	// -----------------------------------------------------
+			const removeListeners = () => {
+				trigger.removeEventListener("mousemove", onMouseMove);
+				trigger.removeEventListener("mouseleave", onMouseLeave);
+			};
 
-	// Global Raf Instance
-	const raf = new Raf();
+			const initTilt = () => {
+				addListeners();
+				raf.add(ticker);
+			};
 
-	function init() {
-		const loader = document.querySelector(".loader");
-		const slides = [...document.querySelectorAll(".slide")];
-		const slidesInfo = [...document.querySelectorAll(".slide-info")];
-		const buttons = {
-			prev: document.querySelector(".slider--btn__prev"),
-			next: document.querySelector(".slider--btn__next")
-		};
+			const destroy = () => {
+				removeListeners();
+				raf.remove(rafId);
+			};
 
-		loader.style.opacity = 0;
-		loader.style.pointerEvents = "none";
+			initTilt();
+			return { destroy, update: initTilt };
+		}
 
-		slides.forEach((slide, i) => {
-			const slideInner = slide.querySelector(".slide__inner");
-			const slideInfoInner = slidesInfo[i].querySelector(".slide-info__inner");
-			tilt(slide, { target: [slideInner, slideInfoInner] });
-		});
+		function resolveOptions(node, options) {
+			return {
+				trigger: options?.trigger ?? node,
+				target: options?.target
+					? Array.isArray(options.target)
+						? options.target
+						: [options.target]
+					: [node]
+			};
+		}
 
-		buttons.prev.addEventListener("click", change(-1));
-		buttons.next.addEventListener("click", change(1));
-		  // --- AUTO-PLAY CADA 2 SEGUNDOS ---
-		// Creamos una referencia a la función que avanza slides
-		const autoNext = change(1);
-		
-		// Iniciamos el intervalo
-		setInterval(() => {
-			autoNext(); // Llamamos a la función para ir al siguiente slide
-		}, 5000);
-	}
+		// -----------------------------------------------------
+		// Global Raf Instance
+		const raf = new Raf();
 
-	function setup() {
-		const loaderText = document.querySelector(".loader__text");
+		// Variables globales para gestionar los slides
+		let currentIndex = 0;
+		let allSlides = [];
+		let allSlidesInfo = [];
+		let allSlideBgs = [];
+		let totalSlides = 0;
 
-		const images = [...document.querySelectorAll("img")];
-		const totalImages = images.length;
-		let loadedImages = 0;
-		let progress = {
-			current: 0,
-			target: 0
-		};
+		function init() {
+			// Se capturan todos los elementos de slide, info y fondo
+			allSlides = [...document.querySelectorAll(".slide")];
+			allSlidesInfo = [...document.querySelectorAll(".slide-info")];
+			allSlideBgs = [...document.querySelectorAll(".slide__bg")];
+			totalSlides = allSlides.length;
 
-		// update progress target
-		images.forEach((image) => {
-			imagesLoaded(image, (instance) => {
-				if (instance.isComplete) {
-					loadedImages++;
-					progress.target = loadedImages / totalImages;
+			const loader = document.querySelector(".loader");
+			const slides = allSlides; // ya definidos globalmente
+			const slidesInfo = allSlidesInfo;
+			const buttons = {
+				prev: document.querySelector(".slider--btn__prev"),
+				next: document.querySelector(".slider--btn__next")
+			};
+
+			loader.style.opacity = 0;
+			loader.style.pointerEvents = "none";
+
+			slides.forEach((slide, i) => {
+				const slideInner = slide.querySelector(".slide__inner");
+				const slideInfoInner = slidesInfo[i].querySelector(".slide-info__inner");
+				tilt(slide, { target: [slideInner, slideInfoInner] });
+			});
+
+			buttons.prev.addEventListener("click", change(-1));
+			buttons.next.addEventListener("click", change(1));
+
+			// --- AUTO-PLAY CADA 5 SEGUNDOS ---
+			const autoNext = change(1);
+			setInterval(() => {
+				autoNext();
+			}, 5000);
+		}
+
+		function setup() {
+			const loaderText = document.querySelector(".loader__text");
+			const images = [...document.querySelectorAll("img")];
+			const totalImages = images.length;
+			let loadedImages = 0;
+			let progress = {
+				current: 0,
+				target: 0
+			};
+
+			images.forEach((image) => {
+				imagesLoaded(image, (instance) => {
+					if (instance.isComplete) {
+						loadedImages++;
+						progress.target = loadedImages / totalImages;
+					}
+				});
+			});
+
+			raf.add(({ id }) => {
+				progress.current = lerp(progress.current, progress.target, 0.06);
+				const progressPercent = Math.round(progress.current * 100);
+				loaderText.textContent = `${progressPercent}%`;
+				if (progressPercent === 100) {
+					init();
+					raf.remove(id);
 				}
 			});
-		});
+		}
 
-		// lerp progress current to progress target
-		raf.add(({ id }) => {
-			progress.current = lerp(progress.current, progress.target, 0.06);
+		function change(direction) {
+			return () => {
+				// Actualizamos el índice global
+				currentIndex = wrap(currentIndex + direction, totalSlides);
+				const prevIndex = wrap(currentIndex - 1, totalSlides);
+				const nextIndex = wrap(currentIndex + 1, totalSlides);
 
-			const progressPercent = Math.round(progress.current * 100);
-			loaderText.textContent = `${progressPercent}%`;
+				// Limpiamos atributos de todos los slides, info y fondos
+				allSlides.forEach(slide => {
+					slide.removeAttribute("data-current");
+					slide.removeAttribute("data-next");
+					slide.removeAttribute("data-previous");
+				});
+				allSlidesInfo.forEach(info => {
+					info.removeAttribute("data-current");
+					info.removeAttribute("data-next");
+					info.removeAttribute("data-previous");
+				});
+				allSlideBgs.forEach(bg => {
+					bg.removeAttribute("data-current");
+					bg.removeAttribute("data-next");
+					bg.removeAttribute("data-previous");
+				});
 
-			// hide loader when progress is 100%
-			if (progressPercent === 100) {
-				init();
-
-				// remove raf callback when progress is 100%
-				raf.remove(id);
-			}
-		});
-	}
-
-	function change(direction) {
-		return () => {
-			let current = {
-				slide: document.querySelector(".slide[data-current]"),
-				slideInfo: document.querySelector(".slide-info[data-current]"),
-				slideBg: document.querySelector(".slide__bg[data-current]")
+				// Asignamos atributos a los slides correspondientes
+				allSlides[currentIndex].setAttribute("data-current", "");
+				allSlidesInfo[currentIndex].setAttribute("data-current", "");
+				allSlideBgs[currentIndex].setAttribute("data-current", "");
+				
+				allSlides[prevIndex].setAttribute("data-previous", "");
+				allSlidesInfo[prevIndex].setAttribute("data-previous", "");
+				allSlideBgs[prevIndex].setAttribute("data-previous", "");
+				
+				allSlides[nextIndex].setAttribute("data-next", "");
+				allSlidesInfo[nextIndex].setAttribute("data-next", "");
+				allSlideBgs[nextIndex].setAttribute("data-next", "");
 			};
-			let previous = {
-				slide: document.querySelector(".slide[data-previous]"),
-				slideInfo: document.querySelector(".slide-info[data-previous]"),
-				slideBg: document.querySelector(".slide__bg[data-previous]")
-			};
-			let next = {
-				slide: document.querySelector(".slide[data-next]"),
-				slideInfo: document.querySelector(".slide-info[data-next]"),
-				slideBg: document.querySelector(".slide__bg[data-next]")
-			};
+		}
 
-			Object.values(current).map((el) => el.removeAttribute("data-current"));
-			Object.values(previous).map((el) => el.removeAttribute("data-previous"));
-			Object.values(next).map((el) => el.removeAttribute("data-next"));
-
-			if (direction === 1) {
-				let temp = current;
-				current = next;
-				next = previous;
-				previous = temp;
-
-				current.slide.style.zIndex = "30";
-				previous.slide.style.zIndex = "20";
-				next.slide.style.zIndex = "10";
-			} else if (direction === -1) {
-				let temp = current;
-				current = previous;
-				previous = next;
-				next = temp;
-
-				current.slide.style.zIndex = "30";
-				previous.slide.style.zIndex = "20";
-				next.slide.style.zIndex = "10";
-			}
-
-			Object.values(current).map((el) => el.setAttribute("data-current", ""));
-			Object.values(previous).map((el) => el.setAttribute("data-previous", ""));
-			Object.values(next).map((el) => el.setAttribute("data-next", ""));
-		};
-	}
-
-	// Start
-	setup();
-});
-	
+		// Start
+		setup();
+	});
 </script>
+
