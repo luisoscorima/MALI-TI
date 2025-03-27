@@ -122,7 +122,14 @@
 
   <section id="calendar-section">
     <h2>Calendario MALI Educación</h2>
+    <div id="calendar-container">
+        <button onclick="changeMonth(-1)"><i class="fas fa-arrow-left"></i></button>
+        <button onclick="changeMonth(1)"><i class="fas fa-arrow-right"></i></button>
+        <h2 id="month-year"></h2>
+      </div>
     <div id="calendar"></div>
+    
+
     <div id="tooltip" class="event-tooltip">
       <div class="tooltip-header">
         <button onclick="shareEvent()" title="Copiar enlace">
@@ -158,9 +165,27 @@
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth() + 1;
+
+      const monthYearLabel = document.getElementById("month-year");
+
+      // Días de la semana
+      const weekDays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+      
+      // Nombres de los meses
+      const monthNames = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+
+      // Mostrar el mes y año actual
+      monthYearLabel.textContent = `${monthNames[month]} ${year}`;
+      
+
       
       const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
       const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
+
+
       
       // Mapeo de colores y su "emoji" (se usará el carácter ● con estilo de color)
       const colorMapping = {
@@ -194,6 +219,15 @@
       // Renderiza el calendario y asigna eventos a cada día
       function renderCalendar(month, year, events) {
         calendarDiv.innerHTML = "";
+
+        // Agregar encabezados de días de la semana
+        weekDays.forEach(day => {
+                let dayHeader = document.createElement("div");
+                dayHeader.classList.add("day-header");
+                dayHeader.textContent = day;
+                calendarDiv.appendChild(dayHeader);
+            });
+
         const firstDay = new Date(year, month - 1, 1).getDay();
         const lastDate = new Date(year, month, 0).getDate();
         // Espacios vacíos antes del primer día
