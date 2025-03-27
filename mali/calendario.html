@@ -55,7 +55,10 @@
             font-weight: normal;
             color: black;
         }
-        
+        .day.has-event .day-number {
+            color: white;
+        }
+
         /* Contenedor para los eventos del día */
         .event-container {
             width: 100%;
@@ -74,6 +77,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+        }
+        /* Tooltip estilo globo de texto */
+        
+        .event-tooltip {
+            display: none;
+            position: absolute;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 250px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .tooltip-header {
+            display: flex;
+            justify-content:right;
+            align-items: right;
+        }
+        .tooltip-header button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .tooltip-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -82,93 +117,122 @@
     <section id="calendar-section">
         <h2>Calendario MALI Educación</h2>
         <div id="calendar"></div>
+        <div id="tooltip" class="event-tooltip">
+            <div class="tooltip-header">
+                <button onclick="shareEvent()">➤</button>
+                <button onclick="addToCalendar()">🔔</button>
+                <button onclick="closeTooltip()">X</button>
+            </div>
+            <span id="tooltip-title"></span>
+            <p id="tooltip-datetime"></p>
+            <p id="tooltip-description"></p>
+        </div>
     </section>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
-	        const calendarId = "gustavo.oscorima@gmail.com";
+            const calendarId = "gustavo.oscorima@gmail.com";
+            
             const calendarDiv = document.getElementById("calendar");
-            const daysOfWeek = ["Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            const tooltip = document.getElementById("tooltip");
+            const tooltipTitle = document.getElementById("tooltip-title");
+            const tooltipDatetime = document.getElementById("tooltip-datetime");
+            const tooltipDescription = document.getElementById("tooltip-description");
+
+            const daysOfWeek = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
             
             const today = new Date();
             const year = today.getFullYear();
             const month = today.getMonth() + 1;
             
-            // Definir el primer y último día del mes en formato ISO 8601
             const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
             const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
             
-            // Petición a la API de Google Calendar para obtener eventos del mes
-            fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}`)
+            const colorMapping = {
+                "Cursos de Arte": "#F2357B",
+                "Extensión Profesional": "#025E73",
+                "Visitas": "#F2B544",
+                "Noche MALI": "#52CBD9"
+            };
+            const defaultColor = "#cccccc";
+            
+            fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}&singleEvents=true&orderBy=startTime`)
                 .then(response => response.json())
                 .then(data => {
                     if (!data.items) return;
-                    const events = data.items.filter(event => event.start && (event.start.date || event.start.dateTime));
-                    renderCalendar(month, year, events);
+                    renderCalendar(new Date().getMonth() + 1, new Date().getFullYear(), data.items);
                 })
                 .catch(error => console.error("Error al cargar eventos:", error));
             
+            function getEventColor(description) {
+                if (!description) return defaultColor;
+                for (let key in colorMapping) {
+                    if (description.includes(key)) {
+                        return colorMapping[key];
+                    }
+                }
+                return defaultColor;
+            }
+            
             function renderCalendar(month, year, events) {
                 calendarDiv.innerHTML = "";
-                
-                // Crear los encabezados de los días de la semana
-                daysOfWeek.forEach(day => {
-                    let dayHeader = document.createElement("div");
-                    dayHeader.classList.add("day-header");
-                    dayHeader.textContent = day;
-                    calendarDiv.appendChild(dayHeader);
-                });
-                
                 const firstDay = new Date(year, month - 1, 1).getDay();
                 const lastDate = new Date(year, month, 0).getDate();
-                
-                // Rellenar los espacios vacíos antes del primer día del mes
                 for (let i = 0; i < firstDay; i++) {
                     let emptyCell = document.createElement("div");
                     emptyCell.classList.add("day");
                     calendarDiv.appendChild(emptyCell);
                 }
-                
-                const colors = ["#F2B544","#F2357B", "#025E73", "#52CBD9", "#F2F2F2"];
-                
-                // Generar los días del mes con sus eventos
                 for (let day = 1; day <= lastDate; day++) {
                     let dayCell = document.createElement("div");
                     dayCell.classList.add("day");
-                    
                     let dayNumber = document.createElement("div");
                     dayNumber.classList.add("day-number");
-                    dayNumber.textContent = day.toString().padStart(2, '0'); // Convierte números de 1-9 a 01-09
+                    dayNumber.textContent = day;
                     dayCell.appendChild(dayNumber);
-                    
-                    let dayEvents = events.filter(event => {
-                        let eventDate = event.start.date ? new Date(event.start.date) : new Date(event.start.dateTime);
-                        return eventDate.getDate() === day && eventDate.getMonth() + 1 === month;
-                    });
-                    
+                    let dayEvents = events.filter(event => new Date(event.start.dateTime || event.start.date).getDate() === day);
                     if (dayEvents.length > 0) {
+                        dayCell.classList.add("has-event");
                         let eventContainer = document.createElement("div");
                         eventContainer.classList.add("event-container");
-                        
-                        dayEvents.forEach((event, index) => {
+                        dayEvents.forEach(event => {
                             let eventEl = document.createElement("div");
                             eventEl.classList.add("event");
-                            eventEl.style.background = colors[index % colors.length];
-                            eventEl.style.flex = `1 1 ${100 / dayEvents.length}%`;
-                            eventEl.textContent = event.summary || "Evento sin título";
+                            eventEl.textContent = event.summary;
+                            eventEl.dataset.title = event.summary;
+                            eventEl.dataset.datetime = event.start.dateTime || event.start.date;
+                            eventEl.dataset.description = event.description || "Sin descripción";
+                            eventEl.style.backgroundColor = Object.keys(colorMapping).find(key => event.description && event.description.includes(key)) ? colorMapping[Object.keys(colorMapping).find(key => event.description.includes(key))] : defaultColor;
+                            eventEl.addEventListener("click", function (e) {
+                                openTooltip(e, eventEl);
+                            });
                             eventContainer.appendChild(eventEl);
                         });
-                        
-                        dayCell.style.background = `linear-gradient(${dayEvents.map((_, i) => colors[i % colors.length]).join(", ")})`;
-                        dayNumber.style.color = "white"; // Cambia el color del número cuando hay eventos
                         dayCell.appendChild(eventContainer);
                     }
-                    
                     calendarDiv.appendChild(dayCell);
                 }
             }
+            function openTooltip(event, element) {
+                tooltipTitle.textContent = element.dataset.title;
+                tooltipTitle.style.fontWeight = "bold";
+                tooltipDatetime.textContent = element.dataset.datetime;
+                tooltipDatetime.style.fontSize = "12px";
+                tooltipDescription.innerText = element.dataset.description;
+                tooltipDescription.style.fontSize = "12px";
+                tooltip.style.display = "block";
+                tooltip.style.top = `${event.clientY}px`;
+                tooltip.style.left = `${event.clientX + 10}px`;
+                tooltip.style.scrollbarWidth = "thin";
+                tooltip.style.padding = "30px";
+            }
+            function closeTooltip() {
+                const tooltip = document.getElementById("tooltip");
+                tooltip.style.display = "none";
+            }
         });
+
     </script>
 
 </body>
