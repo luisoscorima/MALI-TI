@@ -71,6 +71,7 @@ button {
 }
 
 .slides__wrapper {
+	margin-top: -70px; /* Ajusta el margen superior */
 	width: 100%;
 	height: 100%;
 
@@ -350,11 +351,24 @@ button {
 
 /* ------------------------------------------- */
 
+.explora-text {
+    font-size: min(4cqw, 3rem); /* Ajusta el tamaño sin afectar otros textos */
+    font-weight: 800;
+    text-align: center;
+    color: #fff;
+    display: block;
+    max-width: 100%;
+    white-space: normal;
+	margin-top: 200%;
+    line-height: 1000%; /* Ajusta la altura de línea para evitar cortes */
+    padding-top: 20px; /* Ajusta este valor si sigue cortado */
+}
+
 
 </style>
 
 <body>
-	<div data-title class="slide-info--text">
+	<div data-title class="slide-info--text explora-text">
 		<span>EXPLORA NUESTRA COLECCIÓN</span>
 	</div>
 	<div class="slider">
