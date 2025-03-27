@@ -386,7 +386,7 @@ button {
 		<div class="slides__wrapper">
 			<div class="slides">
 				<!-- slide 1 -->
-				<div class="slide" data-current>
+				<div class="slide">
 					<div class="slide__inner">
 						<div class="slide--image__wrapper">
 							<a href="http://mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19416"> <!-- Cambiar el link -->
@@ -395,10 +395,10 @@ button {
 						</div>
 					</div>
 				</div>
-				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1280); --dir: 0" data-current></div> <!-- Cambiar fondo -->
+				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1280); --dir: 0"></div> <!-- Cambiar fondo -->
 	
 				<!-- slide 2 -->
-				<div class="slide" data-next>
+				<div class="slide">
 					<div class="slide__inner">
 						<div class="slide--image__wrapper">
 							<a href="http://mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=18424"> <!-- Cambiar el link -->
@@ -407,10 +407,10 @@ button {
 						</div>
 					</div>
 				</div>
-				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=194); --dir: 1" data-next></div> <!-- Cambiar fondo -->
+				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=194); --dir: 1"></div> <!-- Cambiar fondo -->
 	
 				<!-- slide 3 -->
-				<div class="slide" data-previous>
+				<div class="slide">
 					<div class="slide__inner">
 						<div class="slide--image__wrapper">
 							<a href="http://mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=14447"> <!-- Cambiar el link -->
@@ -419,7 +419,7 @@ button {
 						</div>
 					</div>
 				</div>
-				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1303); --dir: -1" data-previous></div><!-- Cambiar fondo -->
+				<div class="slide__bg" style="--bg: url(https://mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1303); --dir: -1"></div><!-- Cambiar fondo -->
 				<!-- slide 4 -->
 				<div class="slide">
 					<div class="slide__inner">
@@ -701,15 +701,13 @@ button {
 		let totalSlides = 0;
 
 		function init() {
-			// Se capturan todos los elementos de slide, info y fondo
+			// Capturamos todos los elementos de slide, info y fondo (sin atributos fijos en el HTML)
 			allSlides = [...document.querySelectorAll(".slide")];
 			allSlidesInfo = [...document.querySelectorAll(".slide-info")];
 			allSlideBgs = [...document.querySelectorAll(".slide__bg")];
 			totalSlides = allSlides.length;
 
 			const loader = document.querySelector(".loader");
-			const slides = allSlides; // ya definidos globalmente
-			const slidesInfo = allSlidesInfo;
 			const buttons = {
 				prev: document.querySelector(".slider--btn__prev"),
 				next: document.querySelector(".slider--btn__next")
@@ -718,12 +716,32 @@ button {
 			loader.style.opacity = 0;
 			loader.style.pointerEvents = "none";
 
-			slides.forEach((slide, i) => {
+			// Inicializamos tilt para cada slide e info
+			allSlides.forEach((slide, i) => {
 				const slideInner = slide.querySelector(".slide__inner");
-				const slideInfoInner = slidesInfo[i].querySelector(".slide-info__inner");
+				const slideInfoInner = allSlidesInfo[i].querySelector(".slide-info__inner");
 				tilt(slide, { target: [slideInner, slideInfoInner] });
 			});
 
+			// Asignamos el estado inicial correcto:
+			// current: index 0, previous: último slide, next: index 1.
+			currentIndex = 0;
+			const prevIndex = wrap(currentIndex - 1, totalSlides);
+			const nextIndex = wrap(currentIndex + 1, totalSlides);
+
+			allSlides[currentIndex].setAttribute("data-current", "");
+			allSlidesInfo[currentIndex].setAttribute("data-current", "");
+			allSlideBgs[currentIndex].setAttribute("data-current", "");
+
+			allSlides[prevIndex].setAttribute("data-previous", "");
+			allSlidesInfo[prevIndex].setAttribute("data-previous", "");
+			allSlideBgs[prevIndex].setAttribute("data-previous", "");
+
+			allSlides[nextIndex].setAttribute("data-next", "");
+			allSlidesInfo[nextIndex].setAttribute("data-next", "");
+			allSlideBgs[nextIndex].setAttribute("data-next", "");
+
+			// Asignamos los eventos a los botones
 			buttons.prev.addEventListener("click", change(-1));
 			buttons.next.addEventListener("click", change(1));
 
@@ -739,10 +757,7 @@ button {
 			const images = [...document.querySelectorAll("img")];
 			const totalImages = images.length;
 			let loadedImages = 0;
-			let progress = {
-				current: 0,
-				target: 0
-			};
+			let progress = { current: 0, target: 0 };
 
 			images.forEach((image) => {
 				imagesLoaded(image, (instance) => {
@@ -771,7 +786,7 @@ button {
 				const prevIndex = wrap(currentIndex - 1, totalSlides);
 				const nextIndex = wrap(currentIndex + 1, totalSlides);
 
-				// Limpiamos atributos de todos los slides, info y fondos
+				// Primero, removemos los atributos de todos los slides, infos y fondos
 				allSlides.forEach(slide => {
 					slide.removeAttribute("data-current");
 					slide.removeAttribute("data-next");
@@ -788,22 +803,24 @@ button {
 					bg.removeAttribute("data-previous");
 				});
 
-				// Asignamos atributos a los slides correspondientes
-				allSlides[currentIndex].setAttribute("data-current", "");
-				allSlidesInfo[currentIndex].setAttribute("data-current", "");
-				allSlideBgs[currentIndex].setAttribute("data-current", "");
-				
-				allSlides[prevIndex].setAttribute("data-previous", "");
-				allSlidesInfo[prevIndex].setAttribute("data-previous", "");
-				allSlideBgs[prevIndex].setAttribute("data-previous", "");
-				
-				allSlides[nextIndex].setAttribute("data-next", "");
-				allSlidesInfo[nextIndex].setAttribute("data-next", "");
-				allSlideBgs[nextIndex].setAttribute("data-next", "");
+				// En el siguiente frame, asignamos los nuevos atributos para activar la transición
+				requestAnimationFrame(() => {
+					allSlides[currentIndex].setAttribute("data-current", "");
+					allSlidesInfo[currentIndex].setAttribute("data-current", "");
+					allSlideBgs[currentIndex].setAttribute("data-current", "");
+
+					allSlides[prevIndex].setAttribute("data-previous", "");
+					allSlidesInfo[prevIndex].setAttribute("data-previous", "");
+					allSlideBgs[prevIndex].setAttribute("data-previous", "");
+
+					allSlides[nextIndex].setAttribute("data-next", "");
+					allSlidesInfo[nextIndex].setAttribute("data-next", "");
+					allSlideBgs[nextIndex].setAttribute("data-next", "");
+				});
 			};
 		}
 
-		// Start
+		// Iniciamos el setup para cargar las imágenes y luego inicializar el slider
 		setup();
 	});
 </script>
