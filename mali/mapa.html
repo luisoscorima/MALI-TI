@@ -94,9 +94,12 @@
     <div class="container">
         <div id="map"></div>
         <div class="locations-container">
-            <h3>Sede Principal</h3>
+            <h3 onclick="resetMarker()" style="cursor: pointer;">
+                <span id="active-marker" style="color:#CF85E2 ;">⬤</span> Sede Principal
+            </h3>
+            <p style="font-size: smaller;">Parque de la Exposición, Av. 9 de Diciembre 125</p>
             <ul class="locations">
-                <li class="district" onclick="toggleAddresses('SanJuandeLurigancho')">San Juan de Lurigancho</li>
+                <li class="district" onclick="moveMarker(this, 'SanJuandeLurigancho')" onclick="toggleAddresses('SanJuandeLurigancho')"> San Juan de Lurigancho</li>
                 <ul id="SanJuandeLurigancho" class="addresses">
                     <li class="school" onclick="selectSchool(-12.0148263,-77.0054427, 'arabiscos')">Innova Schools Arabiscos</li>
                     <div id="arabiscos" class="details">
@@ -182,7 +185,7 @@
                         <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
                     </div>
                 </ul>
-                <li class="district" onclick="toggleAddresses('callao')">Callao</li>
+                <li class="district" onclick="moveMarker(this, 'SanJuandeLurigancho')" onclick="toggleAddresses('callao')"> Callao</li>
                 <ul id="callao" class="addresses">
                     <li onclick="setMarker(-12.0500, -77.1132, 'Dirección 1 en Callao')">Dirección 1</li>
                     <li onclick="setMarker(-12.0530, -77.1160, 'Dirección 2 en Callao')">Dirección 2</li>
@@ -215,7 +218,7 @@
             window.marker.setPosition({ lat, lng });
             window.marker.setTitle(title);
             window.map.setCenter({ lat, lng });
-            window.map.setZoom(15);
+            window.map.setZoom(12); // Volvemos al zoom por defecto
         }
 
         function toggleAddresses(id) {
@@ -243,6 +246,25 @@
                 document.querySelectorAll('.details').forEach(detail => detail.style.display = 'none');
                 element.style.display = 'block';
             }
+        }
+        function moveMarker(element, id) {
+            const marker = document.getElementById("active-marker");
+            
+            // Mueve el marcador ⬤ al lado del distrito seleccionado
+            element.prepend(marker);
+
+            // Alternar visibilidad de direcciones
+            toggleAddresses(id);
+        }
+        function resetMarker() {
+            const marker = document.getElementById("active-marker");
+            const sedePrincipal = document.querySelector("h3"); // Seleccionamos el título de la sede principal
+
+            // Mueve el ⬤ al lado de "Sede Principal"
+            sedePrincipal.prepend(marker);
+
+            // Restablece la posición y zoom del mapa
+            setMarker(-12.0633, -77.0365, "Sede Principal");
         }
     </script>
 
