@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa de Sedes</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -60,6 +61,32 @@
             font-weight: 600;
             color: #333;
         }
+        .details {
+            display: none;
+            padding: 10px;
+            background: #dcdcdc;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        .details button {
+            font-family: 'Poppins', sans-serif; /* Usa la fuente declarada */
+            padding: 5px 10px;
+            background: #CF85E2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; 
+            margin-top: 20px; /* Agrega espacio arriba del botón */
+        }
+        .info-block {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .info-block p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -71,9 +98,89 @@
             <ul class="locations">
                 <li class="district" onclick="toggleAddresses('SanJuandeLurigancho')">San Juan de Lurigancho</li>
                 <ul id="SanJuandeLurigancho" class="addresses">
-                    <li onclick="setMarker(-12.0148263,-77.0054427, 'Dirección 1 en SJL')">Innova Schools Arabiscos</li>
-                    <li onclick="setMarker(-12.0490, -77.0450, 'Dirección 2 en SJL')">Innova Schools Campoy</li>
-                    <li onclick="setMarker(-12.0520, -77.0480, 'Dirección 3 en SJL')">Innova Schools El Sol</li>
+                    <li class="school" onclick="selectSchool(-12.0148263,-77.0054427, 'arabiscos')">Innova Schools Arabiscos</li>
+                    <div id="arabiscos" class="details">
+                        <p>Av. los Hinojos 1237</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <strong>Horario de Atención:</strong>
+                        </div>
+                        <p style="padding-left: 25px;">Lunes a viernes de 8:00 a.m. a 6:00 p.m.</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <strong>Contacto:</strong>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <p>922 123 321</p>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <p>sanjuandelurigancho@mali.pe</p>
+                        </div>
+    
+                        <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
+                    </div>
+
+                    <li class="school" onclick="selectSchool(-12.0490, -77.0450, 'campoy')">Innova Schools Campoy</li>
+                    <div id="campoy" class="details">
+                        <p>Av. los Hinojos 1237</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <strong>Horario de Atención:</strong>
+                        </div>
+                        <p style="padding-left: 25px;">Lunes a viernes de 8:00 a.m. a 6:00 p.m.</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <strong>Contacto:</strong>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <p>922 123 321</p>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <p>sanjuandelurigancho@mali.pe</p>
+                        </div>
+    
+                        <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
+                    </div>
+
+                    <li class="school" onclick="selectSchool(-12.0520, -77.0480, 'elsol')">Innova Schools El Sol</li>
+                    <div id="elsol" class="details">
+                        <p>Av. los Hinojos 1237</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <strong>Horario de Atención:</strong>
+                        </div>
+                        <p style="padding-left: 25px;">Lunes a viernes de 8:00 a.m. a 6:00 p.m.</p>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <strong>Contacto:</strong>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <p>922 123 321</p>
+                        </div>
+    
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <p>sanjuandelurigancho@mali.pe</p>
+                        </div>
+    
+                        <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
+                    </div>
                 </ul>
                 <li class="district" onclick="toggleAddresses('callao')">Callao</li>
                 <ul id="callao" class="addresses">
@@ -113,7 +220,29 @@
 
         function toggleAddresses(id) {
             const element = document.getElementById(id);
+            const isVisible = element.style.display === 'block';
+            
+            document.querySelectorAll('.addresses').forEach(address => address.style.display = 'none');
+            document.querySelectorAll('.details').forEach(detail => detail.style.display = 'none');
+            
+            element.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
             element.style.display = (element.style.display === 'none' || element.style.display === '') ? 'block' : 'none';
+        }
+        function selectSchool(lat, lng, id) {
+            setMarker(lat, lng);
+            const element = document.getElementById(id);
+
+            // Alternar visibilidad del detalle
+            if (element.style.display === 'block') {
+                element.style.display = 'none';
+            } else {
+                document.querySelectorAll('.details').forEach(detail => detail.style.display = 'none');
+                element.style.display = 'block';
+            }
         }
     </script>
 
