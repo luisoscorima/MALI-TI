@@ -119,16 +119,17 @@
   </style>
 </head>
 <body>
-
   <section id="calendar-section">
-    <h2>Calendario MALI Educación</h2>
     <div id="calendar-container">
-        <button onclick="changeMonth(-1)"><i class="fas fa-arrow-left"></i></button>
-        <button onclick="changeMonth(1)"><i class="fas fa-arrow-right"></i></button>
-        <h2 id="month-year"></h2>
-      </div>
+      <button onclick="changeMonth(-1)"><i class="fas fa-arrow-left"></i></button>
+      <button id="btn-today" onclick="goToToday()">Hoy</button>
+      <select id="select-month"></select>
+      <select id="select-year"></select>
+      <button onclick="goToSelectedMonth()">Ir</button>
+      <button onclick="changeMonth(1)"><i class="fas fa-arrow-right"></i></button>
+      <h2 id="month-year"></h2>
+    </div>
     <div id="calendar"></div>
-    
 
     <div id="tooltip" class="event-tooltip">
       <div class="tooltip-header">
@@ -155,19 +156,18 @@
       // Variables y elementos del DOM
       const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
       const calendarId = "gustavo.oscorima@gmail.com";
-      
       const calendarDiv = document.getElementById("calendar");
       const tooltip = document.getElementById("tooltip");
       const tooltipTitle = document.getElementById("tooltip-title");
       const tooltipDatetime = document.getElementById("tooltip-datetime");
       const tooltipDescription = document.getElementById("tooltip-description");
-      
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-
       const monthYearLabel = document.getElementById("month-year");
-
+      const selectMonth = document.getElementById("select-month");
+      const selectYear = document.getElementById("select-year");
+      const today = new Date();
+      let currentYear = today.getFullYear();
+      let currentMonth = today.getMonth() + 1;
+  
       // Días de la semana
       const weekDays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
       
@@ -176,91 +176,85 @@
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
       ];
-
-      // Mostrar el mes y año actual
-      monthYearLabel.textContent = `${monthNames[month]} ${year}`;
-      
-
-      
-      const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
-      const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
-
-
-      
-      // Mapeo de colores y su "emoji" (se usará el carácter ● con estilo de color)
-      const colorMapping = {
-        "Cursos de Arte": "#F2357B",
-        "Extensión Profesional": "#025E73",
-        "Visitas": "#F2B544",
-        "Noche MALI": "#52CBD9"
-      };
-      const defaultColor = "#cccccc";
-      
-      // Se obtiene la información del evento y se renderiza el calendario
-      fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}&singleEvents=true&orderBy=startTime`)
-        .then(response => response.json())
-        .then(data => {
-          if (!data.items) return;
-          renderCalendar(new Date().getMonth() + 1, new Date().getFullYear(), data.items);
-        })
-        .catch(error => console.error("Error al cargar eventos:", error));
-      
-      // Función para obtener el color del evento a partir de la descripción
-      function getEventColor(description) {
-        if (!description) return defaultColor;
-        for (let key in colorMapping) {
-          if (description.includes(key)) {
-            return colorMapping[key];
-          }
-        }
-        return defaultColor;
+  
+      // Mostrar mes y año inicial
+      monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
+  
+      // Consultar los eventos para el mes actual
+      loadEventsAndRender(currentMonth, currentYear);
+  
+      // Función para obtener eventos de Google Calendar
+      function loadEventsAndRender(month, year) {
+        const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
+        const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59).toISOString();
+        fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${firstDayOfMonth}&timeMax=${lastDayOfMonth}&singleEvents=true&orderBy=startTime`)
+          .then(response => response.json())
+          .then(data => {
+            if (!data.items) return;
+            renderCalendar(month, year, data.items);
+          })
+          .catch(error => console.error("Error al cargar eventos:", error));
       }
-      
+  
       // Renderiza el calendario y asigna eventos a cada día
       function renderCalendar(month, year, events) {
         calendarDiv.innerHTML = "";
-
+  
         // Agregar encabezados de días de la semana
         weekDays.forEach(day => {
-                let dayHeader = document.createElement("div");
-                dayHeader.classList.add("day-header");
-                dayHeader.textContent = day;
-                calendarDiv.appendChild(dayHeader);
-            });
-
+          let dayHeader = document.createElement("div");
+          dayHeader.classList.add("day-header");
+          dayHeader.textContent = day;
+          calendarDiv.appendChild(dayHeader);
+        });
+  
         const firstDay = new Date(year, month - 1, 1).getDay();
         const lastDate = new Date(year, month, 0).getDate();
+  
         // Espacios vacíos antes del primer día
         for (let i = 0; i < firstDay; i++) {
           let emptyCell = document.createElement("div");
           emptyCell.classList.add("day");
           calendarDiv.appendChild(emptyCell);
         }
+  
         // Creación de cada día
         for (let day = 1; day <= lastDate; day++) {
           let dayCell = document.createElement("div");
           dayCell.classList.add("day");
-          
+  
           let dayNumber = document.createElement("div");
           dayNumber.classList.add("day-number");
           dayNumber.textContent = day;
           dayCell.appendChild(dayNumber);
-          
-          let dayEvents = events.filter(event => new Date(event.start.dateTime || event.start.date).getDate() === day);
+  
+          let dayEvents = events.filter(event => {
+            let eventDate;
+            if (event.start.dateTime) {
+              eventDate = new Date(event.start.dateTime);
+            } else {
+              const [yearStr, monthStr, dayStr] = event.start.date.split("-");
+              eventDate = new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(dayStr));
+            }
+            return eventDate.getDate() === day &&
+                  eventDate.getMonth() + 1 === month &&
+                  eventDate.getFullYear() === year;
+          });
+  
           if (dayEvents.length > 0) {
             dayCell.classList.add("has-event");
             let eventContainer = document.createElement("div");
             eventContainer.classList.add("event-container");
-            
+  
             dayEvents.forEach(event => {
+              const eventDateUTC = event.start.dateTime || event.start.date;
+              const date = new Date(eventDateUTC);
               let eventEl = document.createElement("div");
               eventEl.classList.add("event");
               eventEl.dataset.title = event.summary;
               eventEl.dataset.datetime = event.start.dateTime || event.start.date;
               eventEl.dataset.description = event.description || "Sin descripción";
-              // Asigna el color en función de la descripción
-              const eventColor = getEventColor(eventEl.dataset.description);
-              eventEl.style.backgroundColor = eventColor;
+              eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
               eventEl.textContent = event.summary;
               eventEl.addEventListener("click", function (e) {
                 openTooltip(e, eventEl);
@@ -273,11 +267,85 @@
           calendarDiv.appendChild(dayCell);
         }
       }
-      
-      // Muestra el tooltip posicionándolo cerca del evento clickeado y añade el “círculo” de color junto al título
+  
+      // Función para obtener el color del evento según la descripción
+      function getEventColor(description) {
+        const colorMapping = {
+          "Cursos de Arte": "#F2357B",
+          "Extensión Profesional": "#025E73",
+          "Visitas": "#F2B544",
+          "Noche MALI": "#52CBD9"
+        };
+        const defaultColor = "#cccccc";
+        if (!description) return defaultColor;
+        for (let key in colorMapping) {
+          if (description.includes(key)) {
+            return colorMapping[key];
+          }
+        }
+        return defaultColor;
+      }
+  
+      // Cambia el mes
+      function changeMonth(offset) {
+        currentMonth += offset;
+        if (currentMonth < 1) {
+          currentMonth = 12;
+          currentYear--;
+        } else if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        }
+        monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
+        loadEventsAndRender(currentMonth, currentYear);
+      }
+  
+      // Cambia al mes actual
+      function goToToday() {
+        const today = new Date();
+        currentMonth = today.getMonth() + 1;
+        currentYear = today.getFullYear();
+        monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
+        loadEventsAndRender(currentMonth, currentYear);
+      }
+
+            // Ir al mes y año seleccionados
+      function goToSelectedMonth() {
+        const selectedMonth = parseInt(selectMonth.value);
+        const selectedYear = parseInt(selectYear.value);
+        if (selectedMonth && selectedYear) {
+          currentMonth = selectedMonth;
+          currentYear = selectedYear;
+          monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
+          loadEventsAndRender(currentMonth, currentYear);
+        }
+      }
+  
+      function populateMonthYearSelectors() {
+        // Añadir meses al selector de mes
+        for (let i = 0; i < monthNames.length; i++) {
+          const option = document.createElement("option");
+          option.value = i + 1;
+          option.textContent = monthNames[i];
+          selectMonth.appendChild(option);
+        }
+        
+        // Añadir años al selector de año (por ejemplo, de 2020 a 2030)
+        for (let i = 2020; i <= 2030; i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = i;
+          selectYear.appendChild(option);
+        }
+
+        // Seleccionar el mes y año actuales
+        selectMonth.value = currentMonth;
+        selectYear.value = currentYear;
+      }
+
+      // Muestra el tooltip
       function openTooltip(event, element) {
         const eventColor = getEventColor(element.dataset.description);
-        // Se usa innerHTML para insertar el "círculo" con estilo de color y el título
         tooltipTitle.innerHTML = `<span style="color: ${eventColor};">⬤</span> ${element.dataset.title}`;
         tooltipDatetime.textContent = element.dataset.datetime;
         tooltipDatetime.style.fontSize = "12px";
@@ -288,48 +356,49 @@
         tooltip.style.left = (event.clientX + 10) + "px";
         tooltip.style.padding = "30px";
       }
-      
+  
       // Cierra el tooltip
       function closeTooltip() {
         tooltip.style.display = "none";
       }
-      
-      // Copia el link actual del HTML al portapapeles
+  
+      // Copiar el enlace al portapapeles
       function shareEvent() {
         const url = window.location.href;
         navigator.clipboard.writeText(url)
           .then(() => alert("Enlace copiado al portapapeles"))
           .catch(err => console.error("Error al copiar:", err));
       }
-      
-      // Añade el evento al calendario del usuario (abre Google Calendar con datos prellenados)
+  
+      // Añadir evento al calendario
       function addToCalendar() {
-        // Se extraen los datos del tooltip
-        let title = tooltipTitle.textContent.replace(/●\s*/, ""); // quita el círculo
+        let title = tooltipTitle.textContent.replace(/●\s*/, "");
         let datetime = tooltipDatetime.textContent;
         let description = tooltipDescription.textContent;
-        
-        // Se asume que datetime está en formato ISO; se crea una fecha de inicio y se asume duración de 1 hora
         let startDate = new Date(datetime);
         let endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
-        
-        // Función para formatear fecha a "YYYYMMDDTHHmmssZ" (en UTC)
+  
         function formatDate(date) {
           return date.toISOString().replace(/[-:.]/g, "").split("Z")[0] + "Z";
         }
         const startStr = formatDate(startDate);
         const endStr = formatDate(endDate);
-        
+  
         const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(description)}`;
         window.open(googleCalendarUrl, "_blank");
       }
-      
+  
       // Hacer las funciones accesibles desde los onclick de los botones del tooltip
       window.closeTooltip = closeTooltip;
       window.shareEvent = shareEvent;
       window.addToCalendar = addToCalendar;
+      window.changeMonth = changeMonth;
+      window.goToToday = goToToday;
+      window.goToSelectedMonth = goToSelectedMonth;
+      populateMonthYearSelectors();
     });
   </script>
+  
 
 </body>
 </html>
