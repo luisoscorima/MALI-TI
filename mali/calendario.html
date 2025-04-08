@@ -420,6 +420,7 @@
         const eventColor = getEventColor(element.dataset.description);
         tooltipTitle.innerHTML = `<span style="color: ${eventColor};">⬤</span> ${element.dataset.title}`;
         tooltipDatetime.textContent = new Date(element.dataset.datetime).toLocaleString();
+        tooltipDatetime.dataset.datetime = element.dataset.datetime;
         tooltipDatetime.style.fontSize = "12px";
         tooltipDescription.innerHTML = `<span style="color: ${eventColor};">፨</span> ${element.dataset.description}`;
         tooltipDescription.style.fontSize = "14px";
@@ -455,17 +456,35 @@
       // Añadir evento al calendario
       function addToCalendar() {
         let title = tooltipTitle.textContent.replace(/●\s*/, "");
-        let datetime = tooltipDatetime.textContent;
+        let datetime = tooltipDatetime.dataset.datetime;
         let description = tooltipDescription.textContent;
+
+        // Verificar si la fecha es válida antes de continuar
         let startDate = new Date(datetime);
+        if (isNaN(startDate.getTime())) {
+          console.error("Fecha no válida:", datetime);
+          return; // Detener la ejecución si la fecha no es válida
+        }
+
         let endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
-  
+
+        // Función para formatear la fecha
         function formatDate(date) {
+          if (isNaN(date.getTime())) {
+            console.error("Fecha no válida para formatear:", date);
+            return ""; // Retornar un valor vacío si la fecha no es válida
+          }
           return date.toISOString().replace(/[-:.]/g, "").split("Z")[0] + "Z";
         }
+
         const startStr = formatDate(startDate);
         const endStr = formatDate(endDate);
-  
+
+        if (!startStr || !endStr) {
+          console.error("Fechas formateadas no válidas:", startStr, endStr);
+          return; // Detener la ejecución si las fechas formateadas no son válidas
+        }
+
         const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(description)}`;
         window.open(googleCalendarUrl, "_blank");
       }
