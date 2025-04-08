@@ -188,6 +188,18 @@
       border-color: #007bff;  /* Borde azul cuando se selecciona */
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
+
+    #social-share-icons a {
+      margin: 5px;
+      font-size: 24px;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    #social-share-icons a:hover {
+      color: #007bff; /* Cambia al color azul al pasar el ratón */
+    }
   </style>
 </head>
 <body>
@@ -205,7 +217,7 @@
 
     <div id="tooltip" class="event-tooltip">
       <div class="tooltip-header">
-        <button onclick="shareEvent()" title="Copiar enlace">
+        <button onclick="shareEvent()" title="Compartir evento">
             <i class="fas fa-share"></i>
         </button>
           
@@ -219,7 +231,28 @@
       </div>
       <span id="tooltip-title" class="tooltip-title"></span>
       <p id="tooltip-datetime"></p>
+      <!-- Tooltip de compartir redes sociales -->
+      <div id="social-share-icons" style="display: none;">
+        <p>Compartir en:</p>
+        <div>
+          <a href="https://www.instagram.com" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" title="TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+          <a href="https://www.facebook.com" target="_blank" title="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
       <p id="tooltip-description"></p>
+
+
+
     </div>
   </section>
 
@@ -429,6 +462,10 @@
         tooltip.style.left = (event.clientX + 10) + "px";
         tooltip.style.padding = "30px";
 
+              // Mostrar los iconos de compartir redes sociales
+        const socialShareIcons = document.getElementById("social-share-icons");
+        socialShareIcons.style.display = "none"; // Inicialmente no mostrar
+
         // Añadir un evento para cerrar el tooltip cuando se haga clic fuera de él
         document.addEventListener("click", closeTooltipIfClickedOutside);
       }
@@ -437,6 +474,8 @@
       function closeTooltip() {
         tooltip.style.display = "none";
         document.removeEventListener("click", closeTooltipIfClickedOutside);
+        const socialShareIcons = document.getElementById("social-share-icons");
+        socialShareIcons.style.display = "none";  // Ocultar iconos de compartir redes sociales
       }
       // Función para cerrar el tooltip si el clic es fuera de él
       function closeTooltipIfClickedOutside(e) {
@@ -447,10 +486,9 @@
   
       // Copiar el enlace al portapapeles
       function shareEvent() {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url)
-          .then(() => alert("Enlace copiado al portapapeles"))
-          .catch(err => console.error("Error al copiar:", err));
+        // Muestra los iconos de las redes sociales en el tooltip
+        const socialShareIcons = document.getElementById("social-share-icons");
+        socialShareIcons.style.display = socialShareIcons.style.display === "none" ? "block" : "none";
       }
   
       // Añadir evento al calendario
