@@ -116,6 +116,34 @@
       font-weight: bold;
       margin: 10px 0;
     }
+
+    /* Estilo general para la barra de desplazamiento del tooltip */
+    .event-tooltip::-webkit-scrollbar {
+      width: 6px; /* Ancho de la barra de desplazamiento */
+    }
+
+    .event-tooltip::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1); /* Color del pulgar de la barra de desplazamiento */
+      border-radius: 10px;
+    }
+
+    .event-tooltip::-webkit-scrollbar-track {
+      background-color: transparent; /* Fondo de la pista de desplazamiento */
+    }
+
+    /* Para Firefox */
+    .event-tooltip {
+      scrollbar-width: thin; /* Barra de desplazamiento más delgada */
+      scrollbar-color: rgba(0, 0, 0, 0.1) transparent; /* Color del pulgar y la pista */
+    }
+
+    /* Ajustar el tamaño y la apariencia del tooltip */
+    .event-tooltip {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+
       /* Estilo general para los botones y selectores */
     button, select {
       font-size: 14px;
@@ -391,19 +419,29 @@
       function openTooltip(event, element) {
         const eventColor = getEventColor(element.dataset.description);
         tooltipTitle.innerHTML = `<span style="color: ${eventColor};">⬤</span> ${element.dataset.title}`;
-        tooltipDatetime.textContent = element.dataset.datetime;
+        tooltipDatetime.textContent = new Date(element.dataset.datetime).toLocaleString();
         tooltipDatetime.style.fontSize = "12px";
         tooltipDescription.innerHTML = `<span style="color: ${eventColor};">፨</span> ${element.dataset.description}`;
         tooltipDescription.style.fontSize = "14px";
         tooltip.style.display = "block";
-        tooltip.style.top = event.clientY + "px";
+        tooltip.style.top = (event.clientY+10) + "px";
         tooltip.style.left = (event.clientX + 10) + "px";
         tooltip.style.padding = "30px";
+
+        // Añadir un evento para cerrar el tooltip cuando se haga clic fuera de él
+        document.addEventListener("click", closeTooltipIfClickedOutside);
       }
   
       // Cierra el tooltip
       function closeTooltip() {
         tooltip.style.display = "none";
+        document.removeEventListener("click", closeTooltipIfClickedOutside);
+      }
+      // Función para cerrar el tooltip si el clic es fuera de él
+      function closeTooltipIfClickedOutside(e) {
+        if (!tooltip.contains(e.target) && !e.target.closest('.event')) {
+          closeTooltip();
+        }
       }
   
       // Copiar el enlace al portapapeles
