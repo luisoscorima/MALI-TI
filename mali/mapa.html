@@ -111,17 +111,17 @@
         <div id="map"></div>
         <div class="locations-container">
             <h3 onclick="resetMarker()" style="cursor: pointer;">
-                <span id="active-marker" style="color:#CF85E2 ;">⬤</span> Sede Principal
+                <span id="active-marker" style="color:#CF85E2 ;">⬤</span> Conoce nuestras sedes
             </h3>
-            <p style="font-size: smaller;">Parque de la Exposición, Av. 9 de Diciembre 125</p>
+            <p style="font-size: smaller;">Conoce nuestras sedes</p>
             <ul class="locations">
-                <li class="district" onclick="moveMarker(this, 'Lima')" onclick="toggleAddresses('Lima')"> Lima</li>
+                <li class="district" onclick="moveMarker(this, 'Lima')" onclick="toggleAddresses('Lima')"> Sede Principal - Lima</li>
                 <ul id="Lima" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0562, -77.0353, 'principal')">Sede Principal</li>
+                    <li class="school" onclick="selectSchool(-12.0562, -77.0353, 'principal')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Museo de Arte de Lima</li>
                     <div id="principal" class="details">
                         <p>Paseo Colón 125 - Cercado - Museo de Arte de Lima</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">
@@ -130,28 +130,54 @@
                             Domingos de 9 a.m. a 5 p.m.
                         </p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosdearte@mali.pe</p>
                         </div>
                         <button onclick="window.open('https://bit.ly/Horarios-Principal', '_blank')">Descargar Brochure</button>
                     </div>
                 </ul>
 
+                <li class="district" onclick="moveMarker(this, 'Chorrillos')" onclick="toggleAddresses('Chorrillos')"> Chorrillos</li>
+                <ul id="Chorrillos" class="addresses">
+                    <li class="school" onclick="selectSchool(-12.1761, -77.0154, 'faisanes')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Innova Schools Faisanes</li>
+                    <div id="faisanes" class="details">
+                        <p>Av. Los Faisanes cdra. 9 s/n - Innova Schools Chorrillos - Los Faisanes</p>
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
+                            <strong>Horario de Atención:</strong>
+                        </div>
+                        <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
+                            <strong>Información:</strong>
+                        </div>
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
+                            <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
+                        </div>
+                        <div class="info-block">
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
+                            <p>cursosdearte@mali.pe</p>
+                        </div>
+                        <button onclick="window.open('https://bit.ly/Horarios-Chorrillos', '_blank')">Descargar Brochure</button>
+                    </div>
+                </ul>
+
                 <li class="district" onclick="moveMarker(this, 'LaMolina')" onclick="toggleAddresses('LaMolina')"> La Molina</li>
                 <ul id="LaMolina" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0826, -76.9521, 'camacho')">Sede La Molina</li>
+                    <li class="school" onclick="selectSchool(-12.0826, -76.9521, 'camacho')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Sede La Molina</li>
                     <div id="camacho" class="details">
                         <p>Av. Javier Prado Este 5193 - C.C. Plaza Camacho. Local 2B</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">
@@ -160,93 +186,41 @@
                             Domingos de 9 a.m. a 5 p.m.
                         </p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosdearte@mali.pe</p>
                         </div>
                         <button onclick="window.open('https://bit.ly/Horarios-Camacho', '_blank')">Descargar Brochure</button>
                     </div>
                 </ul>
 
-                <li class="district" onclick="moveMarker(this, 'SanMiguel')" onclick="toggleAddresses('SanMiguel')"> San Miguel</li>
-                <ul id="SanMiguel" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0820, -77.0880, 'sanmiguel')">Innova Schools San Miguel 1</li>
-                    <div id="sanmiguel" class="details">
-                        <p>Av. Libertad 860, San Miguel - Innova Schools San Miguel 1</p>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
-                            <strong>Horario de Atención:</strong>
-                        </div>
-                        <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
-                            <strong>Información:</strong>
-                        </div>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
-                            <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
-                        </div>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
-                            <p>cursosdearte@mali.pe</p>
-                        </div>
-                        <button onclick="window.open('https://bit.ly/Horarios-SanMiguel1', '_blank')">Descargar Brochure</button>
-                    </div>
-                </ul>
-
-                <li class="district" onclick="moveMarker(this, 'Chorrillos')" onclick="toggleAddresses('Chorrillos')"> Chorrillos</li>
-                <ul id="Chorrillos" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.1761, -77.0154, 'faisanes')">Innova Schools Faisanes</li>
-                    <div id="faisanes" class="details">
-                        <p>Av. Los Faisanes cdra. 9 s/n - Innova Schools Chorrillos - Los Faisanes</p>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
-                            <strong>Horario de Atención:</strong>
-                        </div>
-                        <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
-                            <strong>Información:</strong>
-                        </div>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
-                            <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
-                        </div>
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
-                            <p>cursosdearte@mali.pe</p>
-                        </div>
-                        <button onclick="window.open('https://bit.ly/Horarios-Chorrillos', '_blank')">Descargar Brochure</button>
-                    </div>
-                </ul>
-
                 <li class="district" onclick="moveMarker(this, 'LosOlivos')" onclick="toggleAddresses('LosOlivos')"> Los Olivos</li>
                 <ul id="LosOlivos" class="addresses">
-                    <li class="school" onclick="selectSchool(-11.9817, -77.0550, 'villasol')">Innova Schools Villa Sol</li>
+                    <li class="school" onclick="selectSchool(-11.9817, -77.0550, 'villasol')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Innova Schools Villa Sol</li>
                     <div id="villasol" class="details">
                         <p>Calle Justo Arias Aranguez Mz. G Lote 23 - Innova Schools Los Olivos - Villa Sol</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosdearte@mali.pe</p>
                         </div>
                         <button onclick="window.open('https://bit.ly/Horarios-VillaSol', '_blank')">Descargar Brochure</button>
@@ -255,24 +229,24 @@
 
                 <li class="district" onclick="moveMarker(this, 'PuebloLibre')" onclick="toggleAddresses('PuebloLibre')"> Pueblo Libre</li>
                 <ul id="PuebloLibre" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0713, -77.0631, 'pueblolibre')">Sede Pueblo Libre</li>
+                    <li class="school" onclick="selectSchool(-12.0713, -77.0631, 'pueblolibre')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Sede Pueblo Libre</li>
                     <div id="pueblolibre" class="details">
                         <p>Abraham Lincoln 235, Pueblo Libre - Colegio Cristo Rey</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosdearte@mali.pe</p>
                         </div>
                         <button onclick="window.open('https://bit.ly/Horarios-PuebloLibre', '_blank')">Descargar Brochure</button>
@@ -281,112 +255,83 @@
 
                 <li class="district" onclick="moveMarker(this, 'SanJuandeLurigancho')" onclick="toggleAddresses('SanJuandeLurigancho')"> San Juan de Lurigancho</li>
                 <ul id="SanJuandeLurigancho" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0148263,-77.0054427, 'arabiscos')">Innova Schools Arabiscos</li>
+                    <li class="school" onclick="selectSchool(-12.0148263,-77.0054427, 'arabiscos')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Innova Schools Arabiscos</li>
                     <div id="arabiscos" class="details">
                         <p>Calle Los Hinojos 1237 Urb. Los Jardines de San Juan - Innova Schools SJL - Arabiscos</p>
     
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
     
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
     
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576
                                 Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
     
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosdearte@mali.pe</p>
                         </div>
     
                         <button onclick="window.open('https://bit.ly/Horarios-Arabiscos', '_blank')">Descargar Brochure</button>
                     </div>
+                </ul>
 
-                    <li class="school" onclick="selectSchool(-12.023152138203432, -76.97378307847868, 'campoy')">Innova Schools Campoy</li>
-                    <div id="campoy" class="details">
-                        <p>Av. los Hinojos 1237</p>
-    
+
+                <li class="district" onclick="moveMarker(this, 'SanMiguel')" onclick="toggleAddresses('SanMiguel')"> San Miguel</li>
+                <ul id="SanMiguel" class="addresses">
+                    <li class="school" onclick="selectSchool(-12.0820, -77.0880, 'sanmiguel')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Innova Schools San Miguel 1</li>
+                    <div id="sanmiguel" class="details">
+                        <p>Av. Libertad 860, San Miguel - Innova Schools San Miguel 1</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
-                            <strong>Horario de Atención:</strong>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
+                            <strong> Horario de Atención:</strong>
                         </div>
-                        <p style="padding-left: 25px;">Lunes a viernes de 8:00 a.m. a 6:00 p.m.</p>
-    
+                        <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
-    
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
-                            <p>922 123 321</p>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
+                            <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)</p>
                         </div>
-    
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
-                            <p>sanjuandelurigancho@mali.pe</p>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
+                            <p>cursosdearte@mali.pe</p>
                         </div>
-    
-                        <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
-                    </div>
-
-                    <li class="school" onclick="selectSchool(-11.981490386217851, -77.01032980546165, 'elsol')">Innova Schools El Sol</li>
-                    <div id="elsol" class="details">
-                        <p>Av. los Hinojos 1237</p>
-    
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
-                            <strong>Horario de Atención:</strong>
-                        </div>
-                        <p style="padding-left: 25px;">Lunes a viernes de 8:00 a.m. a 6:00 p.m.</p>
-    
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
-                            <strong>Información:</strong>
-                        </div>
-    
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
-                            <p>922 123 321</p>
-                        </div>
-    
-                        <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
-                            <p>sanjuandelurigancho@mali.pe</p>
-                        </div>
-    
-                        <button onclick="window.open('https://drive.google.com/', '_blank')">Descargar Brochure</button>
+                        <button onclick="window.open('https://bit.ly/Horarios-SanMiguel1', '_blank')">Descargar Brochure</button>
                     </div>
                 </ul>
 
                 <li class="district" onclick="moveMarker(this, 'SedeVirtual')" onclick="toggleAddresses('SedeVirtual')"> Sede Virtual</li>
                 <ul id="SedeVirtual" class="addresses">
-                    <li class="school" onclick="selectSchool(-12.0464, -77.0428, 'virtual')">Sede Virtual</li>
+                    <li class="school" onclick="selectSchool(-12.0464, -77.0428, 'virtual')"><img src="../mali/img/Rectangulo.png" style="height: 20px"> Sede Virtual</li>
                     <div id="virtual" class="details">
                         <p>Plataforma digital del MALI</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-calendar-days"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Horario de Atención:</strong>
                         </div>
                         <p style="padding-left: 25px;">Atención solo por medios digitales o en la sede principal.</p>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-user"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/Rectangulo.png" style="height: 15px"></i></span>
                             <strong>Información:</strong>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-phone"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/WhatsApp.png" style="height: 23px"></span>
                             <p>WhatsApp: 961 505 576<br>Llamadas: (01) 204 0000 (Anexo 1)<br>Soporte: 946 216 569</p>
                         </div>
                         <div class="info-block">
-                            <span style="color:#CF85E3;"><i class="fa-solid fa-envelope"></i></span>
+                            <span style="color:#CF85E3;"><img src="../mali/img/correo.png" style="height: 23px"></span>
                             <p>cursosvirtuales@mali.pe</p>
                         </div>
                         <button onclick="window.open('https://bit.ly/Virtual-Abril', '_blank')">Descargar Brochure</button>
