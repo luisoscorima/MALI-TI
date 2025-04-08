@@ -116,17 +116,61 @@
       font-weight: bold;
       margin: 10px 0;
     }
+      /* Estilo general para los botones y selectores */
+    button, select {
+      font-size: 14px;
+      padding: 8px 12px;
+      background-color: transparent;
+      border: 1px solid transparent;  /* No tiene borde por defecto */
+      color: #333;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    /* Estilo para los botones con borde */
+    #btn-today {
+      background-color: #CF85E2;
+      color: white;
+      border: 2px solid #CF85E2;  /* Borde azul para el botón Hoy */
+      font-weight: bold;
+    }
+
+    /* Estilo para los botones de cambio de mes y año (sin borde) */
+    button:not(#btn-today) {
+      background-color: transparent;
+      color: #CF85E2;
+      border: none;
+    }
+
+    /* Estilo de los botones al pasar el ratón (hover) */
+    button:hover {
+      background-color: #f8f9fa;
+      border-color: #007bff;
+    }
+
+    /* Estilo para el selector de mes y año */
+    select {
+      background-color: transparent;
+      border: 1px solid #e4e4e4; /* Un borde suave */
+    }
+
+    /* Estilo al seleccionar un mes/año */
+    select:focus {
+      border-color: #007bff;  /* Borde azul cuando se selecciona */
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
   </style>
 </head>
 <body>
   <section id="calendar-section">
     <div id="calendar-container">
-      <button onclick="changeMonth(-1)"><i class="fas fa-arrow-left"></i></button>
       <button id="btn-today" onclick="goToToday()">Hoy</button>
+      <button onclick="changeMonth(-1)"><i class="fas fa-arrow-left"></i></button>
+      <button onclick="changeMonth(1)"><i class="fas fa-arrow-right"></i></button>
       <select id="select-month"></select>
       <select id="select-year"></select>
       <button onclick="goToSelectedMonth()">Ir</button>
-      <button onclick="changeMonth(1)"><i class="fas fa-arrow-right"></i></button>
       <h2 id="month-year"></h2>
     </div>
     <div id="calendar"></div>
