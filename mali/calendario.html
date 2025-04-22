@@ -235,16 +235,16 @@
       <div id="social-share-icons" style="display: none;">
         <p>Compartir en:</p>
         <div>
-          <a href="https://www.instagram.com" target="_blank" title="Instagram">
+          <a href="https://www.instagram.com/malieducacion/" target="_blank" title="Instagram">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://www.tiktok.com" target="_blank" title="TikTok">
+          <a href="https://www.tiktok.com/@malieducacion" target="_blank" title="TikTok">
             <i class="fab fa-tiktok"></i>
           </a>
-          <a href="https://www.facebook.com" target="_blank" title="Facebook">
+          <a href="https://www.facebook.com/cursosmali" target="_blank" title="Facebook">
             <i class="fab fa-facebook"></i>
           </a>
-          <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+          <a href="https://pe.linkedin.com/company/museodeartedelima" target="_blank" title="LinkedIn">
             <i class="fab fa-linkedin"></i>
           </a>
         </div>
@@ -375,20 +375,25 @@
   
       // Función para obtener el color del evento según la descripción
       function getEventColor(description) {
-        const colorMapping = {
-          "Cursos de Arte": "#F2357B",
-          "Extensión Profesional": "#025E73",
-          "Visitas": "#F2B544",
-          "Noche MALI": "#52CBD9"
-        };
-        const defaultColor = "#cccccc";
-        if (!description) return defaultColor;
-        for (let key in colorMapping) {
-          if (description.includes(key)) {
-            return colorMapping[key];
-          }
+      const colorMapping = {
+        "Cursos de Arte": "#F2357B",
+        "Extensión Profesional": "#025E73",
+        "Visitas": "#F2B544",
+        "Noche MALI": "#52CBD9"
+      };
+      const defaultColor = "#cccccc";
+
+      if (!description) return defaultColor;
+
+      const descLower = description.trim().toLowerCase();
+
+      for (let key in colorMapping) {
+        if (descLower.startsWith(key.toLowerCase())) {
+          return colorMapping[key];
         }
-        return defaultColor;
+      }
+
+      return defaultColor;
       }
   
       // Cambia el mes
