@@ -60,42 +60,37 @@
       color: white;
     }
     
-    /* Contenedor para los eventos del día */
-    .event-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    
-    /* Estilos de cada evento */
-    .event {
-      /* elimina o comenta estas dos líneas: */
-      /* white-space: nowrap; */
-      /* text-overflow: ellipsis; */
+/* Contenedor para los eventos del día */
+.event-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-      /* en su lugar, añade: */
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;    /* límite a 2 líneas */
-      line-clamp: 2;            /* estándar para compatibilidad */
-      overflow: hidden;
-      text-overflow: ellipsis;   /* recorta con puntos suspensivos */
-      
-      /* deja el resto igual */
-      flex-grow: 1;
-      font-size: 12px;
-      color: #fff;
-      text-align: center;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      padding: 5px;
-    }
-    
+/* Estilos de cada evento */
+.event {
+  flex-grow: 1;
+  font-size: 12px;
+  color: #fff;
+  box-sizing: border-box;
+  display: flex;          
+  align-items: center;    
+  cursor: pointer;
+  padding: 5px;
+  min-width: 0;  /* ¡Clave para que funcione en flex items! */
+  width: 100%;
+}
+
+/* Elemento interno para el texto */
+.event span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
     /* Tooltip estilo globo de texto */
     .event-tooltip {
       display: none;
@@ -366,11 +361,13 @@
               const date = new Date(eventDateUTC);
               let eventEl = document.createElement("div");
               eventEl.classList.add("event");
+              const eventText = document.createElement("span");
+              eventText.textContent = event.summary;  // Texto dentro del span
               eventEl.dataset.title = event.summary;
               eventEl.dataset.datetime = event.start.dateTime || event.start.date;
               eventEl.dataset.description = event.description || "Sin descripción";
               eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
-              eventEl.textContent = event.summary;
+              eventEl.appendChild(eventText);
               eventEl.addEventListener("click", function (e) {
                 openTooltip(e, eventEl);
               });
