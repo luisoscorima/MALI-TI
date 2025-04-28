@@ -469,10 +469,42 @@
         tooltipDatetime.style.fontSize = "12px";
         tooltipDescription.innerHTML = `<span style="color: ${eventColor};">፨</span> ${element.dataset.description}`;
         tooltipDescription.style.fontSize = "14px";
+
         tooltip.style.display = "block";
-        tooltip.style.top = (event.clientY+10) + "px";
-        tooltip.style.left = (event.clientX + 10) + "px";
         tooltip.style.padding = "30px";
+              
+        const tipRect = tooltip.getBoundingClientRect();
+        const calRect = document.getElementById("calendar-section")
+                              .getBoundingClientRect();
+        const offset = 10;
+        // Posición propuesta: abajo-derecha del cursor
+        let top  = event.clientY + offset;
+        let left = event.clientX + offset;
+
+        // 4) Ajuste vertical dentro de #calendar-section
+        if (top + tipRect.height > calRect.bottom) {
+          // si se sale por abajo, arriba del cursor
+          top = event.clientY - tipRect.height - offset;
+        }
+        if (top < calRect.top + offset) {
+          // si se sale por arriba, al borde superior del calendario
+          top = calRect.top + offset;
+        }
+
+        // 5) Ajuste horizontal dentro de #calendar-section
+        if (left + tipRect.width > calRect.right) {
+          // si se sale por la derecha, a la izquierda del cursor
+          left = event.clientX - tipRect.width - offset;
+        }
+        if (left < calRect.left + offset) {
+          // si se sale por la izquierda, al borde izquierdo del calendario
+          left = calRect.left + offset;
+        }
+
+
+          // Finalmente posicionamos
+        tooltip.style.top  = `${top}px`;
+        tooltip.style.left = `${left}px`;
 
               // Mostrar los iconos de compartir redes sociales
         const socialShareIcons = document.getElementById("social-share-icons");
