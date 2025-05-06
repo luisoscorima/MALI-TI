@@ -1,5 +1,5 @@
 // Este archivo contiene la configuración de los enlaces y contactos para la página de contacto del MALI.
-const URLS = {
+  const URLS = {
     BROCHURES: {
       PRINCIPAL: 'https://bit.ly/Horarios-Principal',
       LA_MOLINA: 'https://bit.ly/Horarios-Camacho',
@@ -23,3 +23,13 @@ const URLS = {
       SOPORTE_VIRTUAL: '946 216 569'
     }
   };
+
+  const MAPS_API_KEY = 'AIzaSyBkVP5u46KYPE3hI1nb0w0G7aBnpyOy07I';
+  function loadGoogleMaps() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+  document.addEventListener('DOMContentLoaded', loadGoogleMaps);
