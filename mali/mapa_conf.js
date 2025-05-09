@@ -1,14 +1,14 @@
 // Este archivo contiene la configuración de los enlaces y contactos para la página de contacto del MALI.
   const URLS = {
     BROCHURES: {
-      PRINCIPAL: 'https://bit.ly/Horarios-Principal',
-      LA_MOLINA: 'https://bit.ly/Horarios-Camacho',
-      SAN_MIGUEL: 'https://bit.ly/Horarios-SanMiguel1',
-      CHORRILLOS: 'https://bit.ly/Horarios-Chorrillos',
-      LOS_OLIVOS: 'https://bit.ly/Horarios-VillaSol',
-      SJL: 'https://bit.ly/Horarios-Arabiscos',
-      PUEBLO_LIBRE: 'https://bit.ly/Horarios-PuebloLibre',
-      VIRTUAL: 'https://bit.ly/Virtual-Abril'
+      PRINCIPAL: 'https://drive.google.com/file/d/1EBjwy5tHEZfuroli-e0EubN5eVIEAvH9/view?usp=sharing',
+      LA_MOLINA: 'https://drive.google.com/file/d/1HrI5udhX9UD7yk1ohBPEaOeUyEb30Qjx/view?usp=sharing',
+      SAN_MIGUEL: 'https://drive.google.com/file/d/126G2zJSMaAg5--z9vnUoL4XWxHU48jtU/view?usp=sharing',
+      CHORRILLOS: 'https://drive.google.com/file/d/1uDUGpC78k9lh0q6gdCDZSqWIEl0GniKe/view?usp=sharing',
+      LOS_OLIVOS: 'https://drive.google.com/file/d/1CQ8xPi89ouQy-onLAVzMFnPUar3z82_W/view?usp=sharing',
+      SJL: 'https://drive.google.com/file/d/15qYVLjleAI3h_OYauyGlt-HUlMMXbvJJ/view?usp=sharing',
+      PUEBLO_LIBRE: 'https://drive.google.com/file/d/139KbCvqhZDOfE5MX_NYP4fNpX3RAtZW3/view?usp=sharing',
+      VIRTUAL: 'https://drive.google.com/file/d/1ZF0pwx17aua0I_O0SPD-5yM1mNIhAXOd/view?usp=sharing'
     },
     IMAGES: {
       RECTANGULO: '../mali/img/Rectangulo.png',
