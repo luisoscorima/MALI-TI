@@ -84,6 +84,13 @@
     .day.has-event .day-number {
       color: white;
     }
+
+    /* Añadir este estilo para el día actual */
+    .day.current-day .day-number {
+      font-weight: bold;
+      font-size: 20px;
+      color: #702082;
+    }
     
     /* Contenedor para los eventos del día */
     .event-container {
@@ -358,6 +365,13 @@
           let dayCell = document.createElement("div");
           dayCell.classList.add("day");
   
+          // Verificar si es el día actual
+          if (day === today.getDate() && 
+              month === today.getMonth() + 1 && 
+              year === today.getFullYear()) {
+            dayCell.classList.add("current-day");
+          }
+
           let dayNumber = document.createElement("div");
           dayNumber.classList.add("day-number");
           dayNumber.textContent = day;
