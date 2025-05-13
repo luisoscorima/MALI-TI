@@ -413,12 +413,12 @@
         function initMap() {
             console.log("%c Powered with ❤️ by: Luis Gustavo O. P.", "color: #00bfff; font-weight: bold; font-size: 14px; font-family: 'Archivo', sans-serif; background-color: #000; padding: 5px; border-radius: 5px;");
             const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: -12.060052023522125, lng: -77.03737102968182 }, // Coordenadas de la sede principal
+                center: { lat: -12.060064822464469, lng: -77.03735101905501 }, // Coordenadas de la sede principal
                 zoom: 15,
             });
 
             window.marker = new google.maps.Marker({
-                position: { lat: -12.060052023522125, lng: -77.03737102968182 },
+                position: { lat: -12.060064822464469, lng: -77.03735101905501 },
                 map,
                 title: "Sede Principal",
                 icon: {
@@ -479,7 +479,7 @@
             sedePrincipal.prepend(marker);
 
             // Restablece la posición y zoom del mapa
-            setMarker(-12.060622858893389, -77.03723147968729, "Sede Principal");
+            setMarker(-12.060064822464469, -77.03735101905501, "Sede Principal");
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkVP5u46KYPE3hI1nb0w0G7aBnpyOy07I&callback=initMap">
