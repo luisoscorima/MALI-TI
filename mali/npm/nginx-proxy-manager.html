@@ -125,6 +125,103 @@
         margin-bottom: 10px;
         text-align: center;
     }
+        /* Ajustes generales de responsive */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+        
+        .container {
+            margin: 20px auto;
+        }
+        
+        .logo-header {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .blog-slider {
+            padding: 15px;
+            border-radius: 15px;
+        }
+        
+        .blog-slider__item {
+            flex-direction: column;
+            height: auto !important;
+        }
+        
+        .blog-slider__img {
+            width: 100% !important;
+            height: 200px !important;
+            transform: translateY(-30px) !important;
+            margin-bottom: -30px;
+        }
+        
+        .blog-slider__content {
+            padding: 0 15px 20px !important;
+            margin-top: 0 !important;
+            text-align: center;
+        }
+        
+        .blog-slider__title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .blog-slider__text {
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .blog-slider__button {
+            padding: 12px 25px;
+            font-size: 0.9em;
+        }
+        
+        .blog-slider__pagination {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            transform: none !important;
+            margin: 15px 0;
+        }
+        
+        p {
+            font-size: 0.9em;
+            padding: 0 10px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .blog-slider__img {
+            height: 180px !important;
+        }
+        
+        .blog-slider__title {
+            font-size: 1.2em;
+        }
+        
+        .blog-slider__text {
+            font-size: 0.85em;
+        }
+        
+        .blog-slider__button {
+            width: 100%;
+        }
+    }
+    
+    /* Mejoras de diseño para móviles */
+    .blog-slider__pagination .swiper-pagination-bullet {
+        width: 8px !important;
+        height: 8px !important;
+        margin: 0 4px !important;
+    }
+    
+    .blog-slider__pagination .swiper-pagination-bullet-active {
+        width: 20px !important;
+        border-radius: 4px !important;
+    }
     </style>
 </head>
 <body>
