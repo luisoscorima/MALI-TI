@@ -1,0 +1,232 @@
+body { 
+    font-family: 'Roboto', sans-serif;
+    background-color: #fffaf3;
+  }
+
+  h2, .navbar-brand {
+    font-family: 'Playfair Display', serif;
+  }
+  p{
+    color: #616060;
+  }
+  
+  .navbar {
+    background: linear-gradient(to right, #8d6e63, #a1887f);
+  }
+
+  .navbar-brand, .nav-link {
+    color: white !important;
+  }
+
+  footer {
+    background-color: #4e342e;
+    color: white;
+    padding: 30px 0;
+  }
+
+  h6{
+    color: #4b2e28;
+  }
+
+  small{
+    color: brown;
+  }
+
+  footer{
+    background-color: #4b2e28;
+    color: white;
+  }
+
+  .mivi{
+    color: #302b26;
+    border: 1px solid black;
+  }
+
+  .img-uniforme{
+    width: 450px;            /* Se adapta al ancho del contenedor */
+  height: 400px;          /* Altura fija uniforme */
+  object-fit: cover;      /* Recorta sin deformar */
+  border-radius: 8px;     /* Esquinas redondeadas opcionales */
+  }
+
+  h2{
+    color: #4b2e28;
+  }
+  .lead{
+    color: brown;
+  }
+
+  /*ESto es Nosotros*/
+  .seccion-nosotros{
+    
+      background-color: #fff3e0;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  
+
+  .seccion-nosotros p.lead {
+    font-size: 1.15rem;
+    color: #5d4037;
+    font-weight: 400;
+    line-height: 1.8;
+  }
+
+  .tarjeta-mivi {
+    background-color: #fff3e0;
+    padding: 25px;
+    border: 2px solid #a1887f;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+  
+  .tarjeta-mivi h4 {
+    color: #5d4037;
+  }
+  
+  .tarjeta-mivi p {
+    font-size: 1rem;
+    color: #4e342e;
+    line-height: 1.6;
+  }
+
+  .tarjeta-nosotros {
+    background-color: #fff3e0;
+    padding: 25px;
+    border: 2px solid #a1887f;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .tarjeta-nosotros h4 {
+    color: #5d4037;
+  }
+  
+  .tarjeta-nosotros p {
+    color: #4e342e;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .img-uniforme {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .custom-carousel-caption {
+    background: #8d6e63b9;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .custom-carousel-caption h5 {
+    color: #d6c6c6;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .custom-carousel-caption p {
+    color: #c0b0b0;
+    font-size: 1.2em;
+    margin: 0;
+  }
+  
+  /* Paleta y tipografías */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@400;500&display=swap');
+
+:root{
+  --marron-pan:#4e342e;
+  --crema-pan:#fef8f2;
+  --oro-pan:#d4a373;
+}
+
+body{
+  font-family:'Roboto',sans-serif;
+  background-color:var(--crema-pan);
+  color:var(--marron-pan);
+}
+
+/* Tarjetas de producto */
+.tarjeta-pan{
+  border:none;
+  border-radius:1rem;
+  box-shadow:0 4px 10px rgba(0,0,0,.06);
+  transition:transform .2s ease,box-shadow .2s ease;
+  background:#fff;
+}
+
+.tarjeta-pan:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 16px rgba(0,0,0,.1);
+}
+
+.tarjeta-pan img{
+  border-radius:1rem 1rem 0 0;
+  height:150px;
+  object-fit:cover;
+}
+
+.tarjeta-pan h6{
+  font-family:'Playfair Display',serif;
+  color:var(--marron-pan);
+}
+
+.precio-pan{
+  font-weight:500;
+}
+
+.precio-pan small{
+  font-size:.75rem;
+  color:#6c757d;
+}
+
+/* Contador */
+.contador-pan{
+  max-width:120px;
+  margin:0 auto 0.75rem;
+}
+
+.contador-pan input{
+  width:50px;
+  border:none;
+}
+
+.contador-pan button{
+  width:40px;
+  background:var(--crema-pan);
+  border:1px solid var(--marron-pan);
+  color:var(--marron-pan);
+  font-weight:700;
+}
+
+.contador-pan button:hover{
+  background:var(--marron-pan);
+  color:#fff;
+}
+
+/* Botón añadir */
+.btn-pan-add{
+  background:var(--marron-pan);
+  border:none;
+}
+
+.btn-primary.añadirCarrito {
+  background-color: var(--marron-pan) !important; /* o el color que prefieras */
+  border-color: var(--marron-pan) !important;
+}
+
+/* Hover */
+.btn-primary.añadirCarrito:hover {
+  background-color: var(--oro-pan) !important;
+  border-color: var(--oro-pan) !important;
+}
