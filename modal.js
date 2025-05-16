@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', iniciarModalSucursales); 
+document.addEventListener('DOMContentLoaded', iniciarModalSucursales);
+
 export function iniciarModalSucursales() {
   const modal = document.getElementById('modal1');
   if (!modal) return;
@@ -28,4 +29,28 @@ export function iniciarModalSucursales() {
       mapa: 'https://www.google.com/maps/place/Calle+los+Malotes+456+Callao'
     }
   };
+
+  // Escuchar clics en los botones que abren el modal
+  document.querySelectorAll('[data-bs-target="#modal1"]').forEach(button => {
+    button.addEventListener('click', function() {
+      const sede = this.getAttribute('data-sede');
+      const sucursal = sucursalesPanaderia[sede];
+      
+      if (sucursal) {
+        tituloModal.textContent = sucursal.nombre;
+        cuerpoModal.innerHTML = `
+          <p>${sucursal.descripcion}</p>
+          <a href="${sucursal.mapa}" target="_blank" class="btn btn-primary">Ver en mapa</a>
+        `;
+      }
+    });
+  });
+
+  // También puedes actualizar el botón "Ver ubicación" en el footer del modal
+  modal.querySelector('.modal-footer .btn-secondary').addEventListener('click', function() {
+    const activeSede = modal.getAttribute('data-active-sede');
+    if (activeSede && sucursalesPanaderia[activeSede]) {
+      window.open(sucursalesPanaderia[activeSede].mapa, '_blank');
+    }
+  });
 }
