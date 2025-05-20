@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto - Panadería Ramos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="Principal.html">Panadería Ramos</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto me-3">
+        <li class="nav-item"><a class="nav-link" href="Principal.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="Nosotros.html">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="Productos.html">Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+      </ul>
+     <a href="login.html" id="btnCarritoPan"
+         class="btn position-relative" style="background-color:#4e342e;">
+         <i class="bi bi-cart3 text-white"></i>
+         <span id="badgeCarritoPan"
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+         0
+       </span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Carrusel -->
+<div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img/panaderia_contacto_1.jpg" class="d-block" style="width: 100%; height: 500px; object-fit: cover;" alt="">
+      <div class="carousel-caption custom-carousel-caption d-none d-md-block">
+        <h5><a href="./Productos.html">Deléitate con lo recién horneado</a></h5>
+        <p> ¡Contáctanos y haz tu pedido hoy mismo!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/panaderia_contacto_2.jpg" class="d-block" style="width: 100%; height: 500px; object-fit: cover;" alt="">
+      <div class="carousel-caption custom-carousel-caption d-none d-md-block">
+        <h5><a href="./Productos.html">¿Antojo de un sabor único?</a></h5>
+        <p>Llama ahora y disfruta de nuestras especialidades artesanales.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/panaderia_contacto_3.jpg" class="d-block" style="width: 100%; height: 500px; object-fit: cover;" alt=" ">
+      <div class="carousel-caption custom-carousel-caption d-none d-md-block">
+        <h5><a href="./Productos.html">Endulza tu día con nuestras delicias</a></h5>
+        <p>¡Comunícate y descubre la auténtica tradición panadera!</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+</div>
+
+<section class="py-5" style="background-color: #fef8f2;">
+  <div class="container">
+    <h2 class="mb-4 text-center">Conoce lo que ofrecemos</h2>
+    <div class="row text-center justify-content-center">
+
+      <!-- Categoría: Panadería -->
+      <div class="col-6 col-md-4 col-lg-2 mb-4">
+        <img src="img/uno.png" class="img-fluid rounded shadow-sm mb-2" alt="Panadería">
+        <h6 class="fw-bold" >Panes</h6>
+        <small >12 productos</small>
+      </div>
+
+      <!-- Categoría: Bollería -->
+      <div class="col-6 col-md-4 col-lg-2 mb-4">
+        <img src="img/dos.png" class="img-fluid rounded shadow-sm mb-2" alt="Bollería">
+        <h6 class="fw-bold" >Empanadas</h6>
+        <small >8 productos</small>
+      </div>
+
+      <!-- Categoría: Postres -->
+      <div class="col-6 col-md-4 col-lg-2 mb-4">
+        <img src="img/tres.png" class="img-fluid rounded shadow-sm mb-2" alt="Postres">
+        <h6 class="fw-bold" >Postres</h6>
+        <small >10 productos</small>
+      </div>
+
+      <!-- Categoría: Pasteles Salados -->
+      <div class="col-6 col-md-4 col-lg-2 mb-4">
+        <img src="img/cuatro.png" class="img-fluid rounded shadow-sm mb-2" alt="Pasteles Salados">
+        <h6 class="fw-bold" >Pasteles</h6>
+        <small >8 productos</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <h2 class="mb-4 text-center">Mas cerca de ti</h2>
+    <div class="row">
+      <!-- Tarjeta para Sede 1 -->
+      <div class="col-md-6">
+        <div class="card mb-3 border-0">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="img/sede1.jpeg" class="img-fluid rounded-start" alt="Sucursal Centro">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h6 class="fw-bold" >Sucursal Centro</h6>
+                <p class="card-text">Ubicada en el corazón de la ciudad, donde la tradición y el sabor se unen para ofrecerte lo mejor.</p>
+                <p class="card-text"><small class="text-body-secondary">Av. Central 123, Ciudad</small></p>
+                <a class="btn btn-success" data-bs-toggle="modal" data-servicio data-bs-target="#modal1" data-sede="centro" style="background-color: #4e342e">Conoce más</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Tarjeta para Sede 2 -->
+      <div class="col-md-6">
+        <div class="card mb-3 border-0">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="img/sede2.jpeg" class="img-fluid rounded-start" alt="Sucursal Norte">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h6 class="fw-bold" >Sucursal Norte</h6>
+                <p class="card-text">Disfruta de un ambiente moderno y cálido en nuestra sucursal del norte.</p>
+                <p class="card-text"><small class="text-body-secondary">Calle Norte 456, Ciudad</small></p>
+                <a class="btn btn-success" data-bs-toggle="modal" data-servicio data-bs-target="#modal1" data-sede="norte" style="background-color: #4e342e">Conoce más</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Tarjeta para Sede 3 -->
+      <div class="col-md-6">
+        <div class="card mb-3 border-0">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="img/sede3.jpeg" class="img-fluid rounded-start" alt="Sucursal Sur">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h6 class="fw-bold" >Sucursal Sur</h6>
+                <p class="card-text">En el sur encontrarás un sabor auténtico y una atención personalizada.</p>
+                <p class="card-text"><small class="text-body-secondary">Boulevard Sur 789, Ciudad</small></p>
+                <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal1" data-sede="sur" style="background-color: #4e342e">Conoce más</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Tarjeta para Sede 4 -->
+      <div class="col-md-6">
+        <div class="card mb-3 border-0">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="img/sede 4.jpeg" class="img-fluid rounded-start" alt="Sucursal Este">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h6 class="fw-bold" >Sucursal Este</h6>
+                <p class="card-text">Visítanos en el este y descubre el sabor que nos distingue.</p>
+                <p class="card-text"><small class="text-body-secondary">Avenida Este 101, Ciudad</small></p>
+                <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal1" data-sede="este" style="background-color: #4e342e">Conoce más</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+  <!-- Modal --> 
+  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modal1Label" class="modal-title"> Conoce mas acerca de:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ver ubicación</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="container mb-5">
+    <h2 class="mb-4 text-center">Solicita un delivery</h2>
+    <form>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input class="form-control mb-4" type="text" placeholder="Nombre" required> 
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico:</label>
+        <input class="form-control mb-4" type="email" placeholder="E-mail" required>
+      </div>
+      <div class="mb-3">
+        <label for="tel" class="form-label">Teléfono:</label>
+        <input class="form-control mb-4" type="tel" placeholder="Celular" required>
+      </div>
+      <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección:</label>
+        <input class="form-control mb-4" type="text" placeholder="Ingresa tu dirección" required> 
+      </div>
+      <div class="mb-3">
+        <label for="mensaje" class="form-label">Referencia:</label>
+        <textarea class="form-control" placeholder="Ingresa una referencia" rows="9"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="background-color: #4e342e; display: block; margin: 0 auto;">Enviar</button>
+    </form>
+  </section>
+</section>
+
+
+<footer class="border-bottom border-body">
+
+  <div class="container text-center">
+      <p class="mb-1">Nos ubicamos en Av. 28 de Julio 1270, Las Flores</p>
+      <p class="mb-2">Comunicarse al (01)446 2512</p>
+      <p class="mb-0">&copy; RAMOS Todos los derechos son reservados 2025</p>
+  </div>
+  <div class="modal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title">Modal title</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <p>Modal body text goes here.</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary">Save changes</button>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script type="module" src="modal.js"></script>
+</body>
+</html>
