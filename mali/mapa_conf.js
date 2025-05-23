@@ -8,7 +8,8 @@
       LOS_OLIVOS: 'https://drive.google.com/file/d/1CQ8xPi89ouQy-onLAVzMFnPUar3z82_W/view?usp=sharing',
       SJL: 'https://drive.google.com/file/d/15qYVLjleAI3h_OYauyGlt-HUlMMXbvJJ/view?usp=sharing',
       PUEBLO_LIBRE: 'https://drive.google.com/file/d/139KbCvqhZDOfE5MX_NYP4fNpX3RAtZW3/view?usp=sharing',
-      VIRTUAL: 'https://drive.google.com/file/d/1ZF0pwx17aua0I_O0SPD-5yM1mNIhAXOd/view?usp=sharing'
+      VIRTUAL: 'https://drive.google.com/file/d/1ZF0pwx17aua0I_O0SPD-5yM1mNIhAXOd/view?usp=sharing',
+      BELLAVISTA: 'https://drive.google.com/file/d/1id4CMFX_TSsTA8D3wa78eElgpzjTP45l/view?usp=sharing'
     },
     IMAGES: {
       RECTANGULO: '../mali/img/Rectangulo.png',
