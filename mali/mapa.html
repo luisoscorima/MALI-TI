@@ -130,6 +130,26 @@
         .info-block p {
             margin: 0;
         }
+
+        /* Responsive: stack map over locations on small screens */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            #map,
+            .locations-container {
+                width: 100%;
+            }
+            #map {
+                height: 300px; /* slightly smaller to fit on phones */
+            }
+            .locations-container {
+                max-height: none; /* let page scroll naturally */
+                overflow-y: visible;
+                padding-right: 0;
+            }
+        }
     </style>
 </head>
 <body>
