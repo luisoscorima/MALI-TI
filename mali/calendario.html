@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario MALI Educación</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     @font-face {
       font-family: 'BentonSansFB';
@@ -12,27 +13,32 @@
       font-weight: normal;
       font-style: normal;
     }
+
     @font-face {
       font-family: 'BentonSansFB';
       src: url('fonts/BentonSansFB-BookOblique.woff2') format('woff2');
       font-weight: normal;
       font-style: italic;
     }
+
     @font-face {
       font-family: 'BentonSansFB';
       src: url('fonts/BentonSansFB-Bold.woff2') format('woff2');
       font-weight: bold;
       font-style: normal;
     }
+
     @font-face {
       font-family: 'BentonSansFB';
       src: url('fonts/BentonSansFB-BoldOblique.woff2') format('woff2');
       font-weight: bold;
       font-style: italic;
     }
+
     body {
       font-family: 'BentonSansFB', sans-serif;
     }
+
     /* Estilos generales del contenedor del calendario */
     #calendar-section {
       width: 100vw;
@@ -40,24 +46,42 @@
       margin: auto;
       font-family: 'BentonSansFB', sans-serif;
     }
+
     h2 {
       text-align: center;
     }
+
     /* Contenedor principal del calendario con grid para los días */
     #calendar {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      /* equal columns with a solid minimum per day */
       gap: 15px;
       padding: 15px;
+      overflow-x: auto;
+      /* allow horizontal scroll on small screens */
+      -webkit-overflow-scrolling: touch;
+      /* smooth scroll on iOS */
     }
-    
+
+    /* Ensure grid children don't force column expansion */
+    #calendar>* {
+      min-width: 0;
+    }
+
     /* Encabezado de los días de la semana */
     .day-header {
       font-weight: bold;
       text-align: center;
       padding: 10px;
+      white-space: nowrap;
+      /* keep on one line */
+      overflow: hidden;
+      /* avoid growing columns */
+      text-overflow: ellipsis;
+      /* show ellipsis if too long */
     }
-    
+
     /* Estilo de cada día en el calendario */
     .day {
       border: 1px solid #f3f3f3;
@@ -71,7 +95,7 @@
       overflow: hidden;
       background: #f3f3f3;
     }
-    
+
     /* Número del día en la esquina superior derecha */
     .day-number {
       position: absolute;
@@ -81,6 +105,7 @@
       font-weight: normal;
       color: black;
     }
+
     .day.has-event .day-number {
       color: white;
     }
@@ -91,7 +116,7 @@
       font-size: 20px;
       color: #c670da;
     }
-    
+
     /* Contenedor para los eventos del día */
     .event-container {
       width: 100%;
@@ -107,11 +132,12 @@
       font-size: 15px;
       color: #fff;
       box-sizing: border-box;
-      display: flex;          
-      align-items: center;    
+      display: flex;
+      align-items: center;
       cursor: pointer;
       padding: 5px;
-      min-width: 0;  /* ¡Clave para que funcione en flex items! */
+      min-width: 0;
+      /* ¡Clave para que funcione en flex items! */
       width: 100%;
     }
 
@@ -137,17 +163,20 @@
       max-height: 250px;
       overflow-y: auto;
     }
+
     .tooltip-header {
       display: flex;
       justify-content: right;
       align-items: right;
     }
+
     .tooltip-header button {
       background: none;
       border: none;
       cursor: pointer;
       font-size: 16px;
     }
+
     .tooltip-title {
       font-size: 18px;
       font-weight: bold;
@@ -156,22 +185,27 @@
 
     /* Estilo general para la barra de desplazamiento del tooltip */
     .event-tooltip::-webkit-scrollbar {
-      width: 6px; /* Ancho de la barra de desplazamiento */
+      width: 6px;
+      /* Ancho de la barra de desplazamiento */
     }
 
     .event-tooltip::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.1); /* Color del pulgar de la barra de desplazamiento */
+      background-color: rgba(0, 0, 0, 0.1);
+      /* Color del pulgar de la barra de desplazamiento */
       border-radius: 10px;
     }
 
     .event-tooltip::-webkit-scrollbar-track {
-      background-color: transparent; /* Fondo de la pista de desplazamiento */
+      background-color: transparent;
+      /* Fondo de la pista de desplazamiento */
     }
 
     /* Para Firefox */
     .event-tooltip {
-      scrollbar-width: thin; /* Barra de desplazamiento más delgada */
-      scrollbar-color: rgba(0, 0, 0, 0.1) transparent; /* Color del pulgar y la pista */
+      scrollbar-width: thin;
+      /* Barra de desplazamiento más delgada */
+      scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+      /* Color del pulgar y la pista */
     }
 
     /* Ajustar el tamaño y la apariencia del tooltip */
@@ -181,12 +215,14 @@
     }
 
 
-      /* Estilo general para los botones y selectores */
-    button, select {
+    /* Estilo general para los botones y selectores */
+    button,
+    select {
       font-size: 14px;
       padding: 8px 12px;
       background-color: transparent;
-      border: 1px solid transparent;  /* No tiene borde por defecto */
+      border: 1px solid transparent;
+      /* No tiene borde por defecto */
       color: #333;
       cursor: pointer;
       border-radius: 0px;
@@ -197,7 +233,8 @@
     #btn-today {
       background-color: #702082;
       color: white;
-      border: 2px solid #702082;  /* Borde azul para el botón Hoy */
+      border: 2px solid #702082;
+      /* Borde azul para el botón Hoy */
       font-weight: bold;
     }
 
@@ -217,12 +254,14 @@
     /* Estilo para el selector de mes y año */
     select {
       background-color: transparent;
-      border: 1px solid #e4e4e4; /* Un borde suave */
+      border: 1px solid #e4e4e4;
+      /* Un borde suave */
     }
 
     /* Estilo al seleccionar un mes/año */
     select:focus {
-      border-color: #007bff;  /* Borde azul cuando se selecciona */
+      border-color: #007bff;
+      /* Borde azul cuando se selecciona */
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 
@@ -235,10 +274,12 @@
     }
 
     #social-share-icons a:hover {
-      color: #007bff; /* Cambia al color azul al pasar el ratón */
+      color: #007bff;
+      /* Cambia al color azul al pasar el ratón */
     }
   </style>
 </head>
+
 <body>
   <section id="calendar-section">
     <div id="calendar-container">
@@ -256,15 +297,15 @@
     <div id="tooltip" class="event-tooltip">
       <div class="tooltip-header">
         <button onclick="shareEvent()" title="Compartir evento">
-            <i class="fas fa-share"></i>
+          <i class="fas fa-share"></i>
         </button>
-          
+
         <button onclick="addToCalendar()" title="Añadir al calendario">
-            <i class="fas fa-bell"></i>
+          <i class="fas fa-bell"></i>
         </button>
-          
+
         <button onclick="closeTooltip()" title="Cerrar">
-            <i class="fas fa-times"></i>
+          <i class="fas fa-times"></i>
         </button>
       </div>
       <span id="tooltip-title" class="tooltip-title"></span>
@@ -290,7 +331,7 @@
       <p id="tooltip-description"></p>
     </div>
   </section>
-  
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -309,22 +350,22 @@
       const today = new Date();
       let currentYear = today.getFullYear();
       let currentMonth = today.getMonth() + 1;
-  
+
       // Días de la semana
       const weekDays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-      
+
       // Nombres de los meses
       const monthNames = [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
       ];
-  
+
       // Mostrar mes y año inicial
       monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
-  
+
       // Consultar los eventos para el mes actual
       loadEventsAndRender(currentMonth, currentYear);
-  
+
       // Función para obtener eventos de Google Calendar
       function loadEventsAndRender(month, year) {
         const firstDayOfMonth = new Date(year, month - 1, 1).toISOString();
@@ -337,11 +378,11 @@
           })
           .catch(error => console.error("Error al cargar eventos:", error));
       }
-  
+
       // Renderiza el calendario y asigna eventos a cada día
       function renderCalendar(month, year, events) {
         calendarDiv.innerHTML = "";
-  
+
         // Agregar encabezados de días de la semana
         weekDays.forEach(day => {
           let dayHeader = document.createElement("div");
@@ -349,26 +390,26 @@
           dayHeader.textContent = day;
           calendarDiv.appendChild(dayHeader);
         });
-  
+
         const firstDay = new Date(year, month - 1, 1).getDay();
         const lastDate = new Date(year, month, 0).getDate();
-  
+
         // Espacios vacíos antes del primer día
         for (let i = 0; i < firstDay; i++) {
           let emptyCell = document.createElement("div");
           emptyCell.classList.add("day");
           calendarDiv.appendChild(emptyCell);
         }
-  
+
         // Creación de cada día
         for (let day = 1; day <= lastDate; day++) {
           let dayCell = document.createElement("div");
           dayCell.classList.add("day");
-  
+
           // Verificar si es el día actual
-          if (day === today.getDate() && 
-              month === today.getMonth() + 1 && 
-              year === today.getFullYear()) {
+          if (day === today.getDate() &&
+            month === today.getMonth() + 1 &&
+            year === today.getFullYear()) {
             dayCell.classList.add("current-day");
           }
 
@@ -376,7 +417,7 @@
           dayNumber.classList.add("day-number");
           dayNumber.textContent = day;
           dayCell.appendChild(dayNumber);
-  
+
           let dayEvents = events.filter(event => {
             let eventDate;
             if (event.start.dateTime) {
@@ -386,15 +427,15 @@
               eventDate = new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(dayStr));
             }
             return eventDate.getDate() === day &&
-                  eventDate.getMonth() + 1 === month &&
-                  eventDate.getFullYear() === year;
+              eventDate.getMonth() + 1 === month &&
+              eventDate.getFullYear() === year;
           });
-  
+
           if (dayEvents.length > 0) {
             dayCell.classList.add("has-event");
             let eventContainer = document.createElement("div");
             eventContainer.classList.add("event-container");
-  
+
             dayEvents.forEach(event => {
               const eventDateUTC = event.start.dateTime || event.start.date;
               const date = new Date(eventDateUTC);
@@ -418,30 +459,30 @@
           calendarDiv.appendChild(dayCell);
         }
       }
-  
+
       // Función para obtener el color del evento según la descripción
       function getEventColor(description) {
-      const colorMapping = {
-        "Cursos de Arte": "#F2357B",
-        "Extensión Profesional": "#025E73",
-        "Visitas": "#F2B544",
-        "Noche MALI": "#52CBD9"
-      };
-      const defaultColor = "#cccccc";
+        const colorMapping = {
+          "Cursos de Arte": "#F2357B",
+          "Extensión Profesional": "#025E73",
+          "Visitas": "#F2B544",
+          "Noche MALI": "#52CBD9"
+        };
+        const defaultColor = "#cccccc";
 
-      if (!description) return defaultColor;
+        if (!description) return defaultColor;
 
-      const descLower = description.trim().toLowerCase();
+        const descLower = description.trim().toLowerCase();
 
-      for (let key in colorMapping) {
-        if (descLower.startsWith(key.toLowerCase())) {
-          return colorMapping[key];
+        for (let key in colorMapping) {
+          if (descLower.startsWith(key.toLowerCase())) {
+            return colorMapping[key];
+          }
         }
+
+        return defaultColor;
       }
 
-      return defaultColor;
-      }
-  
       // Cambia el mes
       function changeMonth(offset) {
         currentMonth += offset;
@@ -455,7 +496,7 @@
         monthYearLabel.textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
         loadEventsAndRender(currentMonth, currentYear);
       }
-  
+
       // Cambia al mes actual
       function goToToday() {
         const today = new Date();
@@ -465,7 +506,7 @@
         loadEventsAndRender(currentMonth, currentYear);
       }
 
-            // Ir al mes y año seleccionados
+      // Ir al mes y año seleccionados
       function goToSelectedMonth() {
         const selectedMonth = parseInt(selectMonth.value);
         const selectedYear = parseInt(selectYear.value);
@@ -476,7 +517,7 @@
           loadEventsAndRender(currentMonth, currentYear);
         }
       }
-  
+
       function populateMonthYearSelectors() {
         // Añadir meses al selector de mes
         for (let i = 0; i < monthNames.length; i++) {
@@ -485,7 +526,7 @@
           option.textContent = monthNames[i];
           selectMonth.appendChild(option);
         }
-        
+
         // Añadir años al selector de año (por ejemplo, de 2020 a 2030)
         for (let i = 2020; i <= 2030; i++) {
           const option = document.createElement("option");
@@ -511,48 +552,49 @@
 
         tooltip.style.display = "block";
         tooltip.style.padding = "30px";
-              
+
+        // Use viewport-aware positioning near the click with small, constant offsets
+        const offset = 10; // px
         const tipRect = tooltip.getBoundingClientRect();
-        const calRect = document.getElementById("calendar-section")
-                              .getBoundingClientRect();
-        const offset = 10;
-        // Posición propuesta: abajo-derecha del cursor
-        let top  = event.clientY + offset;
-        let left = event.clientX + offset;
 
-        // 4) Ajuste vertical dentro de #calendar-section
-        if (top + tipRect.height > calRect.bottom) {
-          // si se sale por abajo, arriba del cursor
-          top = event.clientY - tipRect.height - offset;
-        }
-        if (top < calRect.top + offset) {
-          // si se sale por arriba, al borde superior del calendario
-          top = calRect.top + offset;
-        }
+        // Click coordinates relative to the page (handles scroll)
+        const clickX = event.clientX + window.scrollX;
+        const clickY = event.clientY + window.scrollY;
 
-        // 5) Ajuste horizontal dentro de #calendar-section
-        if (left + tipRect.width > calRect.right) {
-          // si se sale por la derecha, a la izquierda del cursor
-          left = event.clientX - tipRect.width - offset;
-        }
-        if (left < calRect.left + offset) {
-          // si se sale por la izquierda, al borde izquierdo del calendario
-          left = calRect.left + offset;
+        // Default: place to the right and below the click point
+        let left = clickX + offset;
+        let top = clickY + offset;
+
+        // Viewport bounds (also include scroll for absolute positioning)
+        const viewportRight = window.innerWidth + window.scrollX;
+        const viewportBottom = window.innerHeight + window.scrollY;
+
+        // Horizontal collision: if overflow on the right, place to the left of the click
+        if (left + tipRect.width > viewportRight - offset) {
+          left = clickX - tipRect.width - offset;
         }
 
+        // Vertical collision: if overflow on the bottom, place above the click
+        if (top + tipRect.height > viewportBottom - offset) {
+          top = clickY - tipRect.height - offset;
+        }
 
-          // Finalmente posicionamos
-        tooltip.style.top  = `${top}px`;
+        // Final clamps to avoid negative positions (keep near the edge but within viewport)
+        left = Math.max(window.scrollX + offset, left);
+        top = Math.max(window.scrollY + offset, top);
+
+        // Apply final position near the click
         tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
 
-              // Mostrar los iconos de compartir redes sociales
+        // Mostrar los iconos de compartir redes sociales
         const socialShareIcons = document.getElementById("social-share-icons");
         socialShareIcons.style.display = "none"; // Inicialmente no mostrar
 
         // Añadir un evento para cerrar el tooltip cuando se haga clic fuera de él
         document.addEventListener("click", closeTooltipIfClickedOutside);
       }
-  
+
       // Cierra el tooltip
       function closeTooltip() {
         tooltip.style.display = "none";
@@ -566,14 +608,14 @@
           closeTooltip();
         }
       }
-  
+
       // Copiar el enlace al portapapeles
       function shareEvent() {
         // Muestra los iconos de las redes sociales en el tooltip
         const socialShareIcons = document.getElementById("social-share-icons");
         socialShareIcons.style.display = socialShareIcons.style.display === "none" ? "block" : "none";
       }
-  
+
       // Añadir evento al calendario
       function addToCalendar() {
         let title = tooltipTitle.textContent.replace(/●\s*/, "");
@@ -609,7 +651,7 @@
         const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startStr}/${endStr}&details=${encodeURIComponent(description)}`;
         window.open(googleCalendarUrl, "_blank");
       }
-  
+
       // Hacer las funciones accesibles desde los onclick de los botones del tooltip
       window.closeTooltip = closeTooltip;
       window.shareEvent = shareEvent;
@@ -620,7 +662,8 @@
       populateMonthYearSelectors();
     });
   </script>
-  
+
 
 </body>
+
 </html>
