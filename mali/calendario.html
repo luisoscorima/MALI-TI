@@ -62,6 +62,7 @@
       /* allow horizontal scroll on small screens */
       -webkit-overflow-scrolling: touch;
       /* smooth scroll on iOS */
+  box-sizing: border-box;
     }
 
     /* Encabezados de días (separados del grid de 7x5) */
@@ -70,7 +71,15 @@
       grid-template-columns: repeat(7, minmax(120px, 1fr));
       gap: 15px;
       padding: 0 15px;
+      position: relative;
+      overflow-x: auto; /* sincroniza con el grid */
+      overflow-y: hidden;
+      background: #fff; /* asegurar contraste del texto */
+      scrollbar-width: none; /* Firefox: ocultar barra */
+      -ms-overflow-style: none; /* IE/Edge: ocultar barra */
+      box-sizing: border-box;
     }
+    #weekday-headers::-webkit-scrollbar { display: none; }
 
     /* Ensure grid children don't force column expansion */
     #calendar>* {
@@ -401,6 +410,23 @@
         display: none !important;
       }
     }
+
+    /* En pantallas bajas, evitar confusión: desactivar sticky y bloquear scroll horizontal */
+    @media (max-width: 640px) and (max-height: 968px) {
+      html, body, #calendar-section { overflow-x: hidden !important; }
+      #calendar-container { position: static !important; top: auto !important; }
+      #weekday-headers { display: none !important; }
+      #calendar {
+        display: flex !important;
+        flex-direction: column;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y; /* priorizar scroll vertical */
+        overscroll-behavior-x: contain; /* evitar desplazamiento lateral */
+      }
+    }
   </style>
 </head>
 
@@ -466,7 +492,8 @@
       const apiKey = "AIzaSyBYX8PghzeYplVqrSDUmNfrYm6jNmz4W4c";
       const calendarId = "talleresmali@mali.pe";
       const calendarDiv = document.getElementById("calendar");
-      const tooltip = document.getElementById("tooltip");
+  const tooltip = document.getElementById("tooltip");
+  const weekdayHeaders = document.getElementById('weekday-headers');
       const tooltipTitle = document.getElementById("tooltip-title");
       const tooltipDatetime = document.getElementById("tooltip-datetime");
       const tooltipDescription = document.getElementById("tooltip-description");
@@ -511,10 +538,10 @@
         calendarDiv.innerHTML = "";
 
         // Encabezados (se mantienen fuera del grid 7x5)
-        const headersDiv = document.getElementById('weekday-headers');
+  const headersDiv = weekdayHeaders;
   const isMobile = window.matchMedia('(max-width: 640px)').matches;
   if (headersDiv && !isMobile) {
-          headersDiv.innerHTML = "";
+    headersDiv.innerHTML = "";
           weekDays.forEach(day => {
             const h = document.createElement('div');
             h.classList.add('day-header');
@@ -629,14 +656,7 @@
           cells.forEach(c => calendarDiv.appendChild(c));
         } else {
           // ----- Móvil: mantener orden secuencial (sin wrap visual) -----
-          // Agregar encabezados al contenedor de calendario (aunque están ocultos por CSS móvil, no es necesario)
-          // Generar placeholders antes del primer día para conservar offset de la semana
-          for (let i = 0; i < firstDay; i++) {
-            const empty = document.createElement('div');
-            empty.classList.add('day');
-            calendarDiv.appendChild(empty);
-          }
-
+          // Pintar en orden ascendente estricto 1..lastDate (sin placeholders)
           for (let d = 1; d <= lastDate; d++) {
             const cell = document.createElement('div');
             cell.classList.add('day');
@@ -683,6 +703,10 @@
         requestAnimationFrame(() => {
           setCalendarHeightForMobile();
           scrollToTodayInMobile();
+          // sincronizar headers con scroll horizontal del calendario en desktop
+          if (!isMobile && weekdayHeaders) {
+            weekdayHeaders.scrollLeft = calendarDiv.scrollLeft;
+          }
         });
       }
 
@@ -911,11 +935,40 @@
         const delta = dayRect.top - calRect.top; // distancia visible hasta el día
         // Considerar la altura del header sticky para que no oculte el día actual
         const header = document.getElementById('calendar-container');
-        const headerH = header ? header.getBoundingClientRect().height : 0;
+        let headerH = 0;
+        if (header) {
+          const cs = getComputedStyle(header);
+          const isSticky = cs.position === 'sticky';
+          if (isSticky && Math.abs(header.getBoundingClientRect().top) < 2) {
+            headerH = header.getBoundingClientRect().height;
+          }
+        }
         const margin = 8; // respiro adicional
         const target = Math.max(0, current + delta - headerH - margin);
         calendarDiv.scrollTo({ top: target, behavior: 'smooth' });
       }
+
+      // Mantener encabezados alineados con scroll horizontal del calendario (solo desktop)
+      let isSyncingScroll = false;
+      calendarDiv.addEventListener('scroll', () => {
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        if (!isMobile && weekdayHeaders) {
+          if (isSyncingScroll) return;
+          isSyncingScroll = true;
+          weekdayHeaders.scrollLeft = calendarDiv.scrollLeft;
+          isSyncingScroll = false;
+        }
+      });
+      // Sincronizar también cuando se desplace el header (por gestos o trackpad)
+      weekdayHeaders.addEventListener('scroll', () => {
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        if (!isMobile && calendarDiv) {
+          if (isSyncingScroll) return;
+          isSyncingScroll = true;
+          calendarDiv.scrollLeft = weekdayHeaders.scrollLeft;
+          isSyncingScroll = false;
+        }
+      });
 
       window.addEventListener('resize', setCalendarHeightForMobile);
       window.addEventListener('orientationchange', setCalendarHeightForMobile);
