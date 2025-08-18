@@ -277,6 +277,121 @@
       color: #007bff;
       /* Cambia al color azul al pasar el ratón */
     }
+
+    /* --- Responsive móvil: mejorar lectura sin cambiar lógica JS --- */
+    @media (max-width: 640px) {
+
+      /* Header fijo arriba */
+      #calendar-container {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: #fff;
+        padding: 8px 12px;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* Lista vertical de días para una lectura más cómoda */
+      #calendar {
+        display: flex !important;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+        overflow-x: hidden;
+        /* no scroll horizontal */
+        overflow-y: auto;
+        /* scroll vertical dentro del calendario */
+        -webkit-overflow-scrolling: touch;
+        /* inercia en iOS */
+        max-height: 70vh;
+        /* fallback si JS está deshabilitado */
+      }
+
+      /* Oculta encabezados para ahorrar espacio */
+      .day-header {
+        display: none !important;
+      }
+
+      /* Tarjetas de día más altas y legibles */
+      .day {
+        min-width: 0;
+        width: 100% !important;
+        height: auto !important;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 4px #0001;
+        background: #fff;
+        position: static !important;
+        padding: 8px;
+        /* Coloca número a la izquierda y eventos a la derecha */
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        column-gap: 8px;
+        align-items: start;
+        overflow: visible !important;
+      }
+
+      /* Número de día visible arriba, estilo marca */
+      .day-number {
+        position: static !important;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: normal;
+        margin: 0;
+        color: #000000;
+      }
+
+      /* Evitar que el número se "pierda" en días con eventos */
+      .day.has-event .day-number {
+        color: #000000;
+      }
+
+      .day.current-day .day-number {
+        font-weight: bold;
+        font-size: 20px;
+        color: #c670da;
+      }
+
+      /* Contenedor de eventos fluido */
+      .event-container {
+        min-height: 0;
+        max-height: none;
+        height: auto !important;
+        /* crecer según # de eventos */
+        overflow: visible;
+        /* no recortar */
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      /* Chips de evento tocables */
+      .event {
+        min-height: 44px;
+        font-size: 1rem;
+        margin: 0;
+        padding: 8px 10px;
+        flex: 0 0 auto;
+        align-items: center;
+        border-radius: 2px;
+        /* no estirar, mantener altura natural */
+      }
+
+      /* Tooltip adaptado al ancho del móvil */
+      .event-tooltip {
+        width: 300px;
+        max-width: 300px;
+      }
+
+      /* Ocultar celdas vacías (espaciadores previos al día 1) */
+      .day:empty {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -458,6 +573,11 @@
           }
           calendarDiv.appendChild(dayCell);
         }
+        // Ajustes móviles: altura y auto-scroll a hoy
+        requestAnimationFrame(() => {
+          setCalendarHeightForMobile();
+          scrollToTodayInMobile();
+        });
       }
 
       // Función para obtener el color del evento según la descripción
@@ -660,6 +780,39 @@
       window.goToToday = goToToday;
       window.goToSelectedMonth = goToSelectedMonth;
       populateMonthYearSelectors();
+
+      // ===== Utilidades Responsive Móvil =====
+      function setCalendarHeightForMobile() {
+        if (!window.matchMedia('(max-width: 640px)').matches) {
+          calendarDiv.style.maxHeight = '';
+          return;
+        }
+        const header = document.getElementById('calendar-container');
+        const headerRect = header.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const desired = Math.max(320, viewportH - headerRect.height - 12);
+        calendarDiv.style.maxHeight = desired + 'px';
+      }
+
+      function scrollToTodayInMobile() {
+        if (!window.matchMedia('(max-width: 640px)').matches) return;
+        const todayCell = calendarDiv.querySelector('.day.current-day');
+        if (!todayCell) return;
+        // Desplazamiento preciso relativo al contenedor scrollable
+        const calRect = calendarDiv.getBoundingClientRect();
+        const dayRect = todayCell.getBoundingClientRect();
+        const current = calendarDiv.scrollTop;
+        const delta = dayRect.top - calRect.top; // distancia visible hasta el día
+        // Considerar la altura del header sticky para que no oculte el día actual
+        const header = document.getElementById('calendar-container');
+        const headerH = header ? header.getBoundingClientRect().height : 0;
+        const margin = 8; // respiro adicional
+        const target = Math.max(0, current + delta - headerH - margin);
+        calendarDiv.scrollTo({ top: target, behavior: 'smooth' });
+      }
+
+      window.addEventListener('resize', setCalendarHeightForMobile);
+      window.addEventListener('orientationchange', setCalendarHeightForMobile);
     });
   </script>
 
