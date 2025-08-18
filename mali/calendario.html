@@ -64,6 +64,14 @@
       /* smooth scroll on iOS */
     }
 
+    /* Encabezados de días (separados del grid de 7x5) */
+    #weekday-headers {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      gap: 15px;
+      padding: 0 15px;
+    }
+
     /* Ensure grid children don't force column expansion */
     #calendar>* {
       min-width: 0;
@@ -308,9 +316,10 @@
       }
 
       /* Oculta encabezados para ahorrar espacio */
-      .day-header {
+  .day-header {
         display: none !important;
       }
+  #weekday-headers { display: none !important; }
 
       /* Tarjetas de día más altas y legibles */
       .day {
@@ -406,6 +415,8 @@
       <button onclick="goToSelectedMonth()">Ir</button>
       <h2 id="month-year"></h2>
     </div>
+  <!-- Encabezados de días se insertarán aquí si no existen -->
+  <div id="weekday-headers"></div>
     <div id="calendar"></div>
     <span style="font-size: 10px;color: #f0f0f0;">Powered by: Luis Gustavo O. P.</span>
 
@@ -496,83 +507,178 @@
 
       // Renderiza el calendario y asigna eventos a cada día
       function renderCalendar(month, year, events) {
+        // Limpiar contenedores
         calendarDiv.innerHTML = "";
 
-        // Agregar encabezados de días de la semana
-        weekDays.forEach(day => {
-          let dayHeader = document.createElement("div");
-          dayHeader.classList.add("day-header");
-          dayHeader.textContent = day;
-          calendarDiv.appendChild(dayHeader);
-        });
+        // Encabezados (se mantienen fuera del grid 7x5)
+        const headersDiv = document.getElementById('weekday-headers');
+  const isMobile = window.matchMedia('(max-width: 640px)').matches;
+  if (headersDiv && !isMobile) {
+          headersDiv.innerHTML = "";
+          weekDays.forEach(day => {
+            const h = document.createElement('div');
+            h.classList.add('day-header');
+            h.textContent = day;
+            headersDiv.appendChild(h);
+          });
+  } else if (headersDiv) { headersDiv.innerHTML = ""; }
 
-        const firstDay = new Date(year, month - 1, 1).getDay();
+        // Parámetros del mes
+        const firstDay = new Date(year, month - 1, 1).getDay(); // 0=Dom..6=Sab
         const lastDate = new Date(year, month, 0).getDate();
 
-        // Espacios vacíos antes del primer día
-        for (let i = 0; i < firstDay; i++) {
-          let emptyCell = document.createElement("div");
-          emptyCell.classList.add("day");
-          calendarDiv.appendChild(emptyCell);
+        // Pre-agrupa eventos por día del mes actual y los ordena por hora de inicio
+        const eventsInMonth = (events || []).filter(ev => {
+          let d;
+          if (ev.start?.dateTime) d = new Date(ev.start.dateTime);
+          else if (ev.start?.date) {
+            const [ys, ms, ds] = ev.start.date.split('-');
+            d = new Date(parseInt(ys), parseInt(ms) - 1, parseInt(ds));
+          }
+          return d && (d.getMonth() + 1) === month && d.getFullYear() === year;
+        });
+
+        const dayMap = new Map(); // day number -> array of events
+        for (const ev of eventsInMonth) {
+          let d;
+          if (ev.start?.dateTime) d = new Date(ev.start.dateTime);
+          else {
+            const [ys, ms, ds] = ev.start.date.split('-');
+            d = new Date(parseInt(ys), parseInt(ms) - 1, parseInt(ds));
+          }
+          const dayNum = d.getDate();
+          if (!dayMap.has(dayNum)) dayMap.set(dayNum, []);
+          dayMap.get(dayNum).push(ev);
+        }
+        // Ordenar eventos por hora de inicio dentro de cada día
+        for (const [dayNum, list] of dayMap.entries()) {
+          list.sort((a, b) => {
+            const ta = a.start?.dateTime ? new Date(a.start.dateTime).getTime() : 0;
+            const tb = b.start?.dateTime ? new Date(b.start.dateTime).getTime() : 0;
+            return ta - tb;
+          });
         }
 
-        // Creación de cada día
-        for (let day = 1; day <= lastDate; day++) {
-          let dayCell = document.createElement("div");
-          dayCell.classList.add("day");
-
-          // Verificar si es el día actual
-          if (day === today.getDate() &&
-            month === today.getMonth() + 1 &&
-            year === today.getFullYear()) {
-            dayCell.classList.add("current-day");
-          }
-
-          let dayNumber = document.createElement("div");
-          dayNumber.classList.add("day-number");
-          dayNumber.textContent = day;
-          dayCell.appendChild(dayNumber);
-
-          let dayEvents = events.filter(event => {
-            let eventDate;
-            if (event.start.dateTime) {
-              eventDate = new Date(event.start.dateTime);
-            } else {
-              const [yearStr, monthStr, dayStr] = event.start.date.split("-");
-              eventDate = new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(dayStr));
-            }
-            return eventDate.getDate() === day &&
-              eventDate.getMonth() + 1 === month &&
-              eventDate.getFullYear() === year;
+        if (!isMobile) {
+          // ----- Escritorio: 7x5 con wrap -----
+          // Crea 35 celdas fijas (7x5)
+          const cells = new Array(35).fill(null).map(() => {
+            const div = document.createElement('div');
+            div.classList.add('day');
+            div.setAttribute('role', 'gridcell');
+            return div;
           });
 
-          if (dayEvents.length > 0) {
-            dayCell.classList.add("has-event");
-            let eventContainer = document.createElement("div");
-            eventContainer.classList.add("event-container");
+          // Colocar cada día con regla de wrap
+          for (let d = 1; d <= lastDate; d++) {
+            let idx = firstDay + (d - 1);
+            if (idx >= 35) idx = idx - 35; // wrap a primera fila/columna correspondiente
+            const cell = cells[idx];
 
-            dayEvents.forEach(event => {
-              const eventDateUTC = event.start.dateTime || event.start.date;
-              const date = new Date(eventDateUTC);
-              let eventEl = document.createElement("div");
-              eventEl.classList.add("event");
-              const eventText = document.createElement("span");
-              eventText.textContent = event.summary;  // Texto dentro del span
-              eventEl.dataset.title = event.summary;
-              eventEl.dataset.datetime = event.start.dateTime || event.start.date;
-              eventEl.dataset.description = event.description || "Sin descripción";
-              eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
-              eventEl.appendChild(eventText);
-              eventEl.addEventListener("click", function (e) {
-                openTooltip(e, eventEl);
-              });
-              eventContainer.appendChild(eventEl);
-              eventEl.title = event.summary;
-            });
-            dayCell.appendChild(eventContainer);
+            // Día actual
+            if (d === today.getDate() && month === (today.getMonth() + 1) && year === today.getFullYear()) {
+              cell.classList.add('current-day');
+            }
+
+            // Número del día
+            const dayNumber = document.createElement('div');
+            dayNumber.classList.add('day-number');
+            dayNumber.textContent = String(d);
+            cell.appendChild(dayNumber);
+
+            // Eventos del día
+            const dayEvents = dayMap.get(d) || [];
+            if (dayEvents.length > 0) {
+              cell.classList.add('has-event');
+              const eventContainer = document.createElement('div');
+              eventContainer.classList.add('event-container');
+              for (const ev of dayEvents) {
+                const eventEl = document.createElement('div');
+                eventEl.classList.add('event');
+                const eventText = document.createElement('span');
+                eventText.textContent = ev.summary || '';
+                eventEl.dataset.title = ev.summary || '';
+                eventEl.dataset.datetime = ev.start.dateTime || ev.start.date;
+                eventEl.dataset.description = ev.description || 'Sin descripción';
+                eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
+                eventEl.appendChild(eventText);
+                eventEl.addEventListener('click', (e) => openTooltip(e, eventEl));
+                eventEl.title = ev.summary || '';
+                eventContainer.appendChild(eventEl);
+              }
+              cell.appendChild(eventContainer);
+            }
+
+            // Accesibilidad
+            cell.tabIndex = 0;
+            const ariaCount = dayEvents.length;
+            cell.setAttribute('aria-label', `Día ${d} de ${monthNames[month - 1]}. ${ariaCount} evento${ariaCount === 1 ? '' : 's'}`);
           }
-          calendarDiv.appendChild(dayCell);
+
+          // Las celdas vacías (sin día válido) no son foco ni anunciadas
+          for (let i = 0; i < 35; i++) {
+            if (!cells[i].querySelector('.day-number')) {
+              cells[i].setAttribute('aria-hidden', 'true');
+              cells[i].tabIndex = -1;
+            }
+          }
+
+          // Render final fijo 7x5
+          calendarDiv.setAttribute('role', 'grid');
+          calendarDiv.setAttribute('aria-label', `Calendario de ${monthNames[month - 1]} ${year}`);
+          cells.forEach(c => calendarDiv.appendChild(c));
+        } else {
+          // ----- Móvil: mantener orden secuencial (sin wrap visual) -----
+          // Agregar encabezados al contenedor de calendario (aunque están ocultos por CSS móvil, no es necesario)
+          // Generar placeholders antes del primer día para conservar offset de la semana
+          for (let i = 0; i < firstDay; i++) {
+            const empty = document.createElement('div');
+            empty.classList.add('day');
+            calendarDiv.appendChild(empty);
+          }
+
+          for (let d = 1; d <= lastDate; d++) {
+            const cell = document.createElement('div');
+            cell.classList.add('day');
+            if (d === today.getDate() && month === (today.getMonth() + 1) && year === today.getFullYear()) {
+              cell.classList.add('current-day');
+            }
+            const dayNumber = document.createElement('div');
+            dayNumber.classList.add('day-number');
+            dayNumber.textContent = String(d);
+            cell.appendChild(dayNumber);
+
+            const dayEvents = dayMap.get(d) || [];
+            if (dayEvents.length > 0) {
+              cell.classList.add('has-event');
+              const eventContainer = document.createElement('div');
+              eventContainer.classList.add('event-container');
+              for (const ev of dayEvents) {
+                const eventEl = document.createElement('div');
+                eventEl.classList.add('event');
+                const eventText = document.createElement('span');
+                eventText.textContent = ev.summary || '';
+                eventEl.dataset.title = ev.summary || '';
+                eventEl.dataset.datetime = ev.start.dateTime || ev.start.date;
+                eventEl.dataset.description = ev.description || 'Sin descripción';
+                eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
+                eventEl.appendChild(eventText);
+                eventEl.addEventListener('click', (e) => openTooltip(e, eventEl));
+                eventEl.title = ev.summary || '';
+                eventContainer.appendChild(eventEl);
+              }
+              cell.appendChild(eventContainer);
+            }
+
+            // Accesibilidad
+            cell.tabIndex = 0;
+            const ariaCount = dayEvents.length;
+            cell.setAttribute('aria-label', `Día ${d} de ${monthNames[month - 1]}. ${ariaCount} evento${ariaCount === 1 ? '' : 's'}`);
+
+            calendarDiv.appendChild(cell);
+          }
         }
+
         // Ajustes móviles: altura y auto-scroll a hoy
         requestAnimationFrame(() => {
           setCalendarHeightForMobile();
