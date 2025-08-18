@@ -7,6 +7,22 @@
   <title>Calendario MALI Educación</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
+    /* Capado global y variables de densidad */
+    :root {
+      --cap-height: 800px;
+      --gap: 15px;
+      --day-height: 120px;
+      --day-gap: 15px;
+      --header-font: 18px;
+      --event-font: 15px;
+      --control-font: 14px;
+      --control-pad-v: 8px;
+      --control-pad-h: 12px;
+    }
+    html, body {
+      height: 100%;
+      overflow: hidden; /* evitar scroll en body/iframe */
+    }
     @font-face {
       font-family: 'BentonSansFB';
       src: url('fonts/BentonSansFB-Book.woff2') format('woff2');
@@ -45,6 +61,10 @@
       max-width: 100%;
       margin: auto;
       font-family: 'BentonSansFB', sans-serif;
+      max-height: var(--cap-height); /* límite global */
+      overflow: hidden; /* un solo scroll interno */
+      display: flex;
+      flex-direction: column;
     }
 
     h2 {
@@ -56,13 +76,16 @@
       display: grid;
       grid-template-columns: repeat(7, minmax(120px, 1fr));
       /* equal columns with a solid minimum per day */
-      gap: 15px;
+      gap: var(--day-gap);
       padding: 15px;
       overflow-x: auto;
       /* allow horizontal scroll on small screens */
       -webkit-overflow-scrolling: touch;
       /* smooth scroll on iOS */
-  box-sizing: border-box;
+      box-sizing: border-box;
+      /* ocupa el espacio restante bajo el cap y maneja el scroll vertical cuando sea necesario */
+      flex: 1 1 auto;
+      overflow-y: auto;
     }
 
     /* Encabezados de días (separados del grid de 7x5) */
@@ -90,7 +113,7 @@
     .day-header {
       font-weight: bold;
       text-align: center;
-      padding: 10px;
+      padding: 6px 10px;
       white-space: nowrap;
       /* keep on one line */
       overflow: hidden;
@@ -102,7 +125,7 @@
     /* Estilo de cada día en el calendario */
     .day {
       border: 1px solid #f3f3f3;
-      height: 120px;
+      height: var(--day-height);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -146,17 +169,30 @@
     /* Estilos de cada evento */
     .event {
       flex-grow: 1;
-      font-size: 15px;
+      font-size: var(--event-font);
       color: #fff;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       cursor: pointer;
-      padding: 5px;
+      padding: 4px 5px;
       min-width: 0;
       /* ¡Clave para que funcione en flex items! */
       width: 100%;
     }
+    /* Etiqueta de agregación +N */
+    .event-aggregator {
+      font-size: calc(var(--event-font) - 1px);
+      color: #702082;
+      padding: 2px 4px;
+      cursor: pointer;
+      user-select: none;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+    }
+    .event-aggregator:hover { text-decoration: underline; }
 
     /* Elemento interno para el texto */
     .event span {
@@ -177,7 +213,7 @@
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
       z-index: 1000;
       width: 300px;
-      max-height: 250px;
+      max-height: calc(var(--cap-height) - 150px);
       overflow-y: auto;
     }
 
@@ -235,8 +271,8 @@
     /* Estilo general para los botones y selectores */
     button,
     select {
-      font-size: 14px;
-      padding: 8px 12px;
+      font-size: var(--control-font);
+      padding: var(--control-pad-v) var(--control-pad-h);
       background-color: transparent;
       border: 1px solid transparent;
       /* No tiene borde por defecto */
@@ -296,7 +332,7 @@
     }
 
     /* --- Responsive móvil: mejorar lectura sin cambiar lógica JS --- */
-    @media (max-width: 640px) {
+  @media (max-width: 640px) {
 
       /* Header fijo arriba */
       #calendar-container {
@@ -314,14 +350,11 @@
         flex-direction: column;
         gap: 8px;
         padding: 8px;
-        overflow-x: hidden;
-        /* no scroll horizontal */
-        overflow-y: auto;
-        /* scroll vertical dentro del calendario */
-        -webkit-overflow-scrolling: touch;
-        /* inercia en iOS */
-        max-height: 70vh;
-        /* fallback si JS está deshabilitado */
+        overflow-x: hidden; /* no scroll horizontal */
+        overflow-y: auto;   /* scroll vertical dentro del calendario */
+        -webkit-overflow-scrolling: touch; /* inercia en iOS */
+        max-height: none; /* controlado por el cap y flex */
+        flex: 1 1 auto;
       }
 
       /* Oculta encabezados para ahorrar espacio */
@@ -389,8 +422,8 @@
 
       /* Chips de evento tocables */
       .event {
-        min-height: 44px;
-        font-size: 1rem;
+        min-height: 40px;
+        font-size: 0.95rem;
         margin: 0;
         padding: 8px 10px;
         flex: 0 0 auto;
@@ -425,6 +458,40 @@
         -webkit-overflow-scrolling: touch;
         touch-action: pan-y; /* priorizar scroll vertical */
         overscroll-behavior-x: contain; /* evitar desplazamiento lateral */
+      }
+    }
+
+    /* Modo compacto cuando la altura disponible <= 800px */
+    #calendar-section.compact {
+      --gap: 12px;
+      --day-gap: 10px;
+      --day-height: 110px; /* 5 filas = 550 + gaps 40 + paddings => < 800 con headers */
+      --header-font: 16px;
+      --event-font: 14px;
+      --control-font: 13px;
+      --control-pad-v: 6px;
+      --control-pad-h: 10px;
+    }
+    #calendar-section.compact h2#month-year {
+      font-size: 20px;
+      margin: 4px 0;
+    }
+    #calendar-section.compact #calendar { gap: var(--day-gap); }
+    #calendar-section.compact .day-header { padding: 4px 8px; font-size: 13px; }
+    #calendar-section.compact .day-number { font-size: 16px; }
+    #calendar-section.compact .event { padding: 3px 4px; }
+    #calendar-section.compact #weekday-headers { padding: 0 10px; }
+    #calendar-section.compact #calendar { padding: 10px; }
+
+    /* Compacto en móvil: tarjetas más densas y clamp de texto */
+    @media (max-width: 640px) {
+      #calendar-section.compact .day { grid-template-columns: 2.6rem 1fr; }
+      #calendar-section.compact .event span {
+        display: -webkit-box;
+  line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   </style>
@@ -533,7 +600,7 @@
       }
 
       // Renderiza el calendario y asigna eventos a cada día
-      function renderCalendar(month, year, events) {
+  function renderCalendar(month, year, events) {
         // Limpiar contenedores
         calendarDiv.innerHTML = "";
 
@@ -619,7 +686,10 @@
               cell.classList.add('has-event');
               const eventContainer = document.createElement('div');
               eventContainer.classList.add('event-container');
+              const maxEventsVisible = getMaxEventsVisible();
+              let shown = 0;
               for (const ev of dayEvents) {
+                if (shown >= maxEventsVisible) break;
                 const eventEl = document.createElement('div');
                 eventEl.classList.add('event');
                 const eventText = document.createElement('span');
@@ -632,6 +702,18 @@
                 eventEl.addEventListener('click', (e) => openTooltip(e, eventEl));
                 eventEl.title = ev.summary || '';
                 eventContainer.appendChild(eventEl);
+                shown++;
+              }
+              const remaining = dayEvents.length - shown;
+              if (remaining > 0) {
+                const agg = document.createElement('button');
+                agg.className = 'event-aggregator';
+                agg.textContent = `+${remaining} más`;
+                agg.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  showRemainingEvents(dayEvents, cell, isMobile);
+                });
+                eventContainer.appendChild(agg);
               }
               cell.appendChild(eventContainer);
             }
@@ -673,7 +755,10 @@
               cell.classList.add('has-event');
               const eventContainer = document.createElement('div');
               eventContainer.classList.add('event-container');
+              const maxEventsVisible = getMaxEventsVisible();
+              let shown = 0;
               for (const ev of dayEvents) {
+                if (shown >= maxEventsVisible) break;
                 const eventEl = document.createElement('div');
                 eventEl.classList.add('event');
                 const eventText = document.createElement('span');
@@ -686,6 +771,18 @@
                 eventEl.addEventListener('click', (e) => openTooltip(e, eventEl));
                 eventEl.title = ev.summary || '';
                 eventContainer.appendChild(eventEl);
+                shown++;
+              }
+              const remaining = dayEvents.length - shown;
+              if (remaining > 0) {
+                const agg = document.createElement('button');
+                agg.className = 'event-aggregator';
+                agg.textContent = `+${remaining} más`;
+                agg.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  showRemainingEvents(dayEvents, cell, isMobile);
+                });
+                eventContainer.appendChild(agg);
               }
               cell.appendChild(eventContainer);
             }
@@ -707,7 +804,80 @@
           if (!isMobile && weekdayHeaders) {
             weekdayHeaders.scrollLeft = calendarDiv.scrollLeft;
           }
+          // ajustar altura de filas para encajar dentro de 800px en desktop
+          if (!isMobile) adjustDayHeightToFit();
         });
+      }
+
+      // Determina cuántos eventos mostrar en vista compacta
+      function getMaxEventsVisible() {
+        const section = document.getElementById('calendar-section');
+        const isCompact = section.classList.contains('compact');
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        if (isMobile) return isCompact ? 2 : 3;
+        return isCompact ? 2 : 3; // celdas de 110-120px permiten 2-3 líneas
+      }
+
+      // Muestra los eventos restantes
+      function showRemainingEvents(dayEvents, cell, isMobile) {
+        if (isMobile) {
+          const container = cell.querySelector('.event-container');
+          // Evitar duplicados si ya se expandió
+          if (container.dataset.expanded === 'true') return;
+          container.dataset.expanded = 'true';
+          // Quitar agregador existente
+          const agg = container.querySelector('.event-aggregator');
+          if (agg) agg.remove();
+          // Añadir todos los restantes a partir de los ya visibles
+          const already = container.querySelectorAll('.event').length;
+          for (let i = already; i < dayEvents.length; i++) {
+            const ev = dayEvents[i];
+            const eventEl = document.createElement('div');
+            eventEl.classList.add('event');
+            const eventText = document.createElement('span');
+            eventText.textContent = ev.summary || '';
+            eventEl.dataset.title = ev.summary || '';
+            eventEl.dataset.datetime = ev.start.dateTime || ev.start.date;
+            eventEl.dataset.description = ev.description || 'Sin descripción';
+            eventEl.style.backgroundColor = getEventColor(eventEl.dataset.description);
+            eventEl.appendChild(eventText);
+            eventEl.addEventListener('click', (e) => openTooltip(e, eventEl));
+            eventEl.title = ev.summary || '';
+            container.appendChild(eventEl);
+          }
+        } else {
+          // En escritorio: abrir tooltip tipo lista con todos los eventos del día
+          const rect = cell.getBoundingClientRect();
+          // Crear un tooltip temporal que liste los eventos
+          const html = dayEvents.map(ev => {
+            const dt = ev.start.dateTime || ev.start.date;
+            const color = getEventColor(ev.description || '');
+            return `<div style="display:flex;align-items:center;gap:6px;margin:4px 0;">
+                      <span style="color:${color}">⬤</span>
+                      <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${(ev.summary||'')}</span>
+                    </div>`;
+          }).join('');
+          tooltipTitle.textContent = `Eventos del día`;
+          tooltipDatetime.textContent = '';
+          tooltipDescription.innerHTML = html;
+          tooltip.style.display = 'block';
+          const offset = 10;
+          const tipRect = tooltip.getBoundingClientRect();
+          let left = rect.left + window.scrollX + offset;
+          let top = rect.top + window.scrollY + offset;
+          const viewportRight = window.innerWidth + window.scrollX;
+          const viewportBottom = window.innerHeight + window.scrollY;
+          if (left + tipRect.width > viewportRight - offset) {
+            left = rect.right + window.scrollX - tipRect.width - offset;
+          }
+          if (top + tipRect.height > viewportBottom - offset) {
+            top = rect.bottom + window.scrollY - tipRect.height - offset;
+          }
+          left = Math.max(window.scrollX + offset, left);
+          top = Math.max(window.scrollY + offset, top);
+          tooltip.style.left = `${left}px`;
+          tooltip.style.top = `${top}px`;
+        }
       }
 
       // Función para obtener el color del evento según la descripción
@@ -913,14 +1083,19 @@
 
       // ===== Utilidades Responsive Móvil =====
       function setCalendarHeightForMobile() {
+        const section = document.getElementById('calendar-section');
+        // Activar modo compacto cuando la altura disponible sea <= 800px
+        const available = window.innerHeight;
+        if (available <= 820) section.classList.add('compact'); else section.classList.remove('compact');
         if (!window.matchMedia('(max-width: 640px)').matches) {
+          // Desktop: el flex/overflow del calendario maneja el scroll interno
           calendarDiv.style.maxHeight = '';
           return;
         }
         const header = document.getElementById('calendar-container');
         const headerRect = header.getBoundingClientRect();
-        const viewportH = window.innerHeight;
-        const desired = Math.max(320, viewportH - headerRect.height - 12);
+        const cap = parseInt(getComputedStyle(section).getPropertyValue('--cap-height')) || 800;
+        const desired = Math.max(280, cap - headerRect.height - 10);
         calendarDiv.style.maxHeight = desired + 'px';
       }
 
@@ -972,6 +1147,38 @@
 
       window.addEventListener('resize', setCalendarHeightForMobile);
       window.addEventListener('orientationchange', setCalendarHeightForMobile);
+  // Primera evaluación del modo compacto
+  setCalendarHeightForMobile();
+
+      // Ajusta --day-height para encajar 5 filas dentro del cap de 800px (solo desktop)
+      function adjustDayHeightToFit() {
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        if (isMobile) return;
+        const section = document.getElementById('calendar-section');
+        const cap = parseInt(getComputedStyle(section).getPropertyValue('--cap-height')) || 800;
+        const header = document.getElementById('calendar-container');
+        const headersDiv = document.getElementById('weekday-headers');
+        const headerH = header ? header.offsetHeight : 0;
+        const headersH = (headersDiv && headersDiv.childElementCount) ? headersDiv.offsetHeight : 0;
+        const csCal = getComputedStyle(calendarDiv);
+        const padTop = parseFloat(csCal.paddingTop) || 0;
+        const padBottom = parseFloat(csCal.paddingBottom) || 0;
+        const rowGap = parseFloat(csCal.rowGap) || parseFloat(csCal.gap) || 0;
+        const rows = 5;
+        const totalGaps = rowGap * (rows - 1);
+        const availableForRows = cap - headerH - headersH - padTop - padBottom - totalGaps;
+        const minRow = 90; // accesible
+        let perRow = Math.floor(availableForRows / rows);
+        if (isNaN(perRow) || perRow <= 0) return;
+        if (perRow < minRow) perRow = minRow; // en caso de poco espacio, permite scroll vertical del calendario
+        section.style.setProperty('--day-height', perRow + 'px');
+      }
+
+      // Re-ajustar al redimensionar
+      window.addEventListener('resize', () => {
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        if (!isMobile) adjustDayHeightToFit();
+      });
     });
   </script>
 
