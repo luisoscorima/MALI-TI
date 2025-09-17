@@ -8,7 +8,10 @@
 	@import url("https://api.fontshare.com/v2/css?f[]=archivo@100,200,300,400,500,600,700,800,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
 
 	:root {
-		--slide-width: min(25vw, 300px);
+		/* Base y escala del contenido (no afecta al fondo) */
+		--slide-width-base: min(25vw, 300px);
+		--content-scale: 0.8; /* reduce solo el contenido ~80% */
+		--slide-width: calc(var(--slide-width-base) * var(--content-scale));
 		--slide-aspect: 9/16;
 		--slide-transition-duration: 800ms;
 		--slide-transition-easing: ease;
@@ -252,7 +255,7 @@
 	.slide-info {
 		--padding: 0px;
 		position: relative;
-		width: 500px;
+		width: calc(500px * var(--content-scale));
 		height: 100%;
 		aspect-ratio: var(--slide-aspect);
 		user-select: none;
@@ -375,8 +378,10 @@
 	}
 
 	@media (max-width: 768px) {
+	/* En móviles: escala de contenido 1 y base más compacta por viewport */
 	:root {
-		--slide-width: 25vw;
+		--content-scale: 1;
+		--slide-width-base: 25vw;
 	}
 
 	.slide-info {
