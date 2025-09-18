@@ -37,8 +37,12 @@
 	}
 
 	body {
-		display: block; /* evitar centrado vertical en iframes cuadrados */
-		overflow: hidden;
+			display: block; /* evitar centrado vertical en iframes cuadrados */
+			/* Permitir scroll vertical para no cortar el footer dentro del iframe */
+			overflow-x: hidden;
+			overflow-y: auto;
+			min-height: 100vh;
+			-webkit-overflow-scrolling: touch;
 		background: rgba(0, 0, 0, 0.787);
 	}
 
@@ -57,6 +61,7 @@
 		height: auto; /* Altura flexible: imágenes de distintos tamaños */
 		display: flex;
 		align-items: center;
+			max-width: 100vw; /* Nunca exceder el ancho del viewport */
 		margin-inline: auto; /* centrar horizontalmente */
 		margin-top: var(--header-gap);
 		margin-bottom: var(--footer-gap);
@@ -100,6 +105,9 @@
 	.header-title {
 		position: fixed;
 		top: 6px;
+		/* On devices with notches, respect safe-area at the top */
+		top: 6px; /* fallback */
+		top: calc(6px + env(safe-area-inset-top));
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 500;
@@ -116,8 +124,8 @@
 
 	/* -------------------- FOOTER/ENLACES -------------------- */
 	.footer-links {
-		position: relative;
-		bottom: 6px;
+		position: sticky; /* se mantiene visible al llegar al fondo */
+		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 600;
@@ -126,8 +134,12 @@
 		font-size: clamp(0.75rem, 1.2vw, 0.95rem);
 		text-align: center;
 		max-width: min(90vw, 920px);
+		width: fit-content;
 		line-height: 1.35;
 		padding: 6px 10px;
+		/* safe-area bottom padding */
+		padding-bottom: calc(6px + env(safe-area-inset-bottom));
+		margin-bottom: env(safe-area-inset-bottom);
 		background: rgba(0,0,0,0.35);
 		border-radius: 8px;
 	}
@@ -135,8 +147,8 @@
 	@media (max-width: 768px) {
 		.footer-links {
 			width: max-content;
-			position: relative;
-			bottom: 0px !important; /* Evita conflicto con créditos verticales */
+			position: sticky;
+			bottom: 0; /* Evita salir de pantalla */
 		}
 		.header-title {
 			width: inherit;
@@ -391,6 +403,19 @@
 		.slide-info--text__wrapper { bottom: 12%; }
 	}
 
+	/* Ajustes adicionales para retrato muy alto (<= 9:16) */
+	@media (max-aspect-ratio: 9/16) {
+		:root {
+			/* Mantén el contenido legible pero compacta los espacios */
+			--content-scale: 0.68;
+			--slide-width-base: 32vw;
+			--header-gap: clamp(2px, 1vh, 8px);
+			--footer-gap: clamp(2px, 1vh, 10px);
+		}
+		/* Acerca ligeramente el bloque de textos de la imagen */
+		.slide-info--text__wrapper { bottom: 10.5%; }
+	}
+
 	.slide-info--text {
 		font-family: var(--font-clash-display);
 		color: #fff;
@@ -472,7 +497,7 @@
 		--content-scale: 0.7;
 		--slide-width-base: 30vw;
 		/* Gaps algo más pequeños en móviles */
-		--header-gap: clamp(10px, 2vh, 20px)
+		--header-gap: clamp(10px, 2vh, 20px);
 		--footer-gap: clamp(0px, 0vh, 0px);
 	}
 
