@@ -38,9 +38,8 @@
 
 	body {
 			display: block; /* evitar centrado vertical en iframes cuadrados */
-			/* Permitir scroll vertical para no cortar el footer dentro del iframe */
-			overflow-x: hidden;
-			overflow-y: auto;
+				/* No permitir scroll: todo debe quedar en pantalla */
+				overflow: hidden;
 			min-height: 100vh;
 			-webkit-overflow-scrolling: touch;
 		background: rgba(0, 0, 0, 0.787);
@@ -124,9 +123,9 @@
 
 	/* -------------------- FOOTER/ENLACES -------------------- */
 	.footer-links {
-		position: sticky; /* se mantiene visible al llegar al fondo */
-		bottom: 0;
+		position: fixed; /* siempre visible pegado abajo */
 		left: 50%;
+		bottom: calc(4px + env(safe-area-inset-bottom));
 		transform: translateX(-50%);
 		z-index: 600;
 		color: #ddd;
@@ -137,9 +136,6 @@
 		width: fit-content;
 		line-height: 1.35;
 		padding: 6px 10px;
-		/* safe-area bottom padding */
-		padding-bottom: calc(6px + env(safe-area-inset-bottom));
-		margin-bottom: env(safe-area-inset-bottom);
 		background: rgba(0,0,0,0.35);
 		border-radius: 8px;
 	}
@@ -147,8 +143,10 @@
 	@media (max-width: 768px) {
 		.footer-links {
 			width: max-content;
-			position: relative;
-			bottom: 0; /* Evita salir de pantalla */
+			position: fixed;
+			left: 50%;
+			bottom: calc(4px + env(safe-area-inset-bottom));
+			transform: translateX(-50%);
 		}
 		.header-title {
 			width: inherit;
@@ -494,11 +492,12 @@
 	@media (max-width: 768px) {
 	/* En móviles: escala de contenido 0.7 y base más compacta por viewport */
 	:root {
-		--content-scale: 0.7;
+		--content-scale: 0.8;
 		--slide-width-base: 30vw;
 		/* Gaps algo más pequeños en móviles */
-		--header-gap: clamp(10px, 2vh, 20px);
-		--footer-gap: clamp(0px, 0vh, 0px);
+		/*Calcular el alto de la pantalla y sacar la mitad del alto*/
+		--header-gap: calc(50vh - 25vw);
+		--footer-gap: calc(50vh - 25vw);
 	}
 
 	/* Oculta créditos verticales en móviles para no estorbar */
