@@ -132,6 +132,14 @@
 		border-radius: 8px;
 	}
 
+	@media (max-width: 768px) {
+		.footer-links {
+			width: max-content;
+			position: relative;
+			bottom: 0px !important; /* Evita conflicto con créditos verticales */
+		}
+	}
+
 	.footer-links a {
 		color: #fff;
 		text-decoration: underline;
