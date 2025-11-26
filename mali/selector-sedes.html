@@ -147,16 +147,15 @@
             transform: translate(-110%, -50%) scale(.95); /* conservar posición base al ocultar */
             pointer-events: none;
         }
-        /* Dropdown específico para botón circular */
-        .btn-circle .dropdown {
+        /* Dropdown específico para botón circular (fuera del botón por compatibilidad Safari) */
+        .sede-wrapper .dropdown {
             width: 280px;
             left: 50%;
             top: auto;
             bottom: calc(100% + 10px); /* desplegar hacia arriba */
             transform: translate(-50%, 10px); /* animación inversa */
         }
-        .btn-circle.active .dropdown,
-        .btn-circle.btn.active .dropdown {
+        .sede-wrapper .btn.active + .dropdown {
             transform: translate(-50%, 0);
         }
 
@@ -403,12 +402,12 @@
             <button class="btn btn-circle" id="sede-selector" aria-expanded="false" aria-haspopup="true" aria-label="Elige tu sede">
                 <span class="btn-text">Elige tu sede</span>
                 <i class="material-icons">place</i>
-                <div class="dropdown" role="menu">
-                    <ul id="sedes-list">
-                        <!-- Las sedes se cargarán dinámicamente aquí -->
-                    </ul>
-                </div>
             </button>
+            <div class="dropdown" role="menu">
+                <ul id="sedes-list">
+                    <!-- Las sedes se cargarán dinámicamente aquí -->
+                </ul>
+            </div>
             <div id="sede-tooltip" class="tooltip-sede" role="tooltip">Elige tu sede</div>
         </div>
     </div>
@@ -420,6 +419,7 @@
             const sedesList = document.getElementById('sedes-list');
             const btnText = btn.querySelector('.btn-text');
             const tooltip = document.getElementById('sede-tooltip');
+            const dropdown = document.querySelector('.sede-wrapper .dropdown');
             
             // Cargar sedes desde mapa_conf.js
             if (typeof CONFIG !== 'undefined' && CONFIG.sedes) {
@@ -482,8 +482,15 @@
                 btn.setAttribute('aria-expanded', isActive);
                 if (isActive) {
                     tooltip.classList.add('hidden');
+                    // asegurar que el dropdown se muestre en Safari
+                    dropdown.style.opacity = '1';
+                    dropdown.style.visibility = 'visible';
+                    dropdown.style.pointerEvents = 'auto';
                 } else {
                     tooltip.classList.remove('hidden');
+                    dropdown.style.opacity = '';
+                    dropdown.style.visibility = '';
+                    dropdown.style.pointerEvents = '';
                 }
             });
 
@@ -499,6 +506,9 @@
                         btn.classList.remove('active');
                         btn.setAttribute('aria-expanded', 'false');
                         tooltip.classList.remove('hidden');
+                        dropdown.style.opacity = '';
+                        dropdown.style.visibility = '';
+                        dropdown.style.pointerEvents = '';
                     } else {
                         // Asegurar que el tooltip se mantenga visible fuera de apertura
                         tooltip.classList.remove('hidden');
@@ -512,6 +522,9 @@
                         btn.classList.remove('active');
                         btn.setAttribute('aria-expanded', 'false');
                         tooltip.classList.remove('hidden');
+                        dropdown.style.opacity = '';
+                        dropdown.style.visibility = '';
+                        dropdown.style.pointerEvents = '';
                     } else {
                         tooltip.classList.remove('hidden');
                     }
