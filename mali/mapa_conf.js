@@ -12,9 +12,9 @@
       BELLAVISTA: 'https://drive.google.com/file/d/1id4CMFX_TSsTA8D3wa78eElgpzjTP45l/view?usp=sharing'
     },
     IMAGES: {
-      RECTANGULO: '../mali/img/Rectangulo.png',
-      WHATSAPP: '../mali/img/WhatsApp.png',
-      CORREO: '../mali/img/correo.png',
+      RECTANGULO: 'https://mali-assets.s3.us-east-1.amazonaws.com/assets-educacion/Rectangulo.png',
+      WHATSAPP: 'https://mali-assets.s3.us-east-1.amazonaws.com/assets-educacion/WhatsApp.png',
+      CORREO: 'https://mali-assets.s3.us-east-1.amazonaws.com/assets-educacion/correo.png',
     },
     CONTACTOS: {
       WHATSAPP: '961 505 576',
