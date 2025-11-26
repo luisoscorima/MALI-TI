@@ -61,6 +61,7 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
+            margin: 0 auto;
         }
 
         .btn {
@@ -77,10 +78,13 @@
             padding: 16px 20px;
             color: #FFFFFF;
             font-family: 'BentonSansFB', sans-serif;
+            font-size: 14px;
             letter-spacing: 1.2px;
             cursor: pointer;
             transition: all 0.3s ease;
             overflow: visible;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .btn:hover {
@@ -204,9 +208,12 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             padding: 16px 20px;
             color: #666;
-
+            font-size: 14px;
             text-decoration: none;
             transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            cursor: pointer;
         }
 
         .dropdown a:hover {
@@ -235,13 +242,84 @@
 
         /* Responsive */
         @media (max-width: 640px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
             .container {
                 max-width: 100%;
-                padding: 16px;
+                padding: 10px;
+            }
+
+            .btn {
+                font-size: 13px;
+                padding: 14px 16px;
+                letter-spacing: 0.8px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+            }
+
+            .material-icons {
+                font-size: 18px;
             }
 
             .dropdown {
-                max-height: 300px;
+                max-height: 60vh;
+                left: 0;
+                right: 0;
+                width: 100%;
+            }
+
+            .dropdown a {
+                padding: 14px 16px;
+                font-size: 13px;
+            }
+
+            .sede-icon {
+                font-size: 16px;
+            }
+
+            .dropdown::before {
+                left: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 12px 14px;
+            }
+
+            .dropdown {
+                max-height: 50vh;
+            }
+
+            .dropdown a {
+                padding: 12px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* Mejoras táctiles para dispositivos móviles */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:active {
+                background: #5a1a6a;
+            }
+
+            .dropdown li:active {
+                background: #e8e8e8;
+            }
+
+            .dropdown a:active {
+                background: #f0f0f0;
             }
         }
     </style>
@@ -320,18 +398,31 @@
             
             // Toggle dropdown
             btn.addEventListener('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
                 const isActive = btn.classList.toggle('active');
                 btn.setAttribute('aria-expanded', isActive);
             });
+
+            // También agregar soporte para touch en dispositivos móviles
+            btn.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+            }, { passive: true });
             
-            // Cerrar dropdown al hacer click fuera
+            // Cerrar dropdown al hacer click/touch fuera
             document.addEventListener('click', function(e) {
                 if (!btn.contains(e.target)) {
                     btn.classList.remove('active');
                     btn.setAttribute('aria-expanded', 'false');
                 }
             });
+
+            document.addEventListener('touchstart', function(e) {
+                if (!btn.contains(e.target)) {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            }, { passive: true });
             
             // Cerrar con tecla Escape
             document.addEventListener('keydown', function(e) {
