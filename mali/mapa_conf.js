@@ -24,3 +24,54 @@
       SOPORTE_VIRTUAL: '946 216 569'
     }
   };
+
+  // Configuración de sedes MALI
+  const CONFIG = {
+    sedes: [
+      {
+        id: 'principal',
+        nombre: 'MALI Principal',
+        url: URLS.BROCHURES.PRINCIPAL
+      },
+      {
+        id: 'la-molina',
+        nombre: 'MALI La Molina',
+        url: URLS.BROCHURES.LA_MOLINA
+      },
+      {
+        id: 'san-miguel',
+        nombre: 'MALI San Miguel',
+        url: URLS.BROCHURES.SAN_MIGUEL
+      },
+      {
+        id: 'chorrillos',
+        nombre: 'MALI Chorrillos',
+        url: URLS.BROCHURES.CHORRILLOS
+      },
+      {
+        id: 'los-olivos',
+        nombre: 'MALI Los Olivos',
+        url: URLS.BROCHURES.LOS_OLIVOS
+      },
+      {
+        id: 'sjl',
+        nombre: 'MALI San Juan de Lurigancho',
+        url: URLS.BROCHURES.SJL
+      },
+      {
+        id: 'pueblo-libre',
+        nombre: 'MALI Pueblo Libre',
+        url: URLS.BROCHURES.PUEBLO_LIBRE
+      },
+      {
+        id: 'bellavista',
+        nombre: 'MALI Bellavista',
+        url: URLS.BROCHURES.BELLAVISTA
+      },
+      {
+        id: 'virtual',
+        nombre: 'MALI Virtual',
+        url: URLS.BROCHURES.VIRTUAL
+      }
+    ]
+  };
