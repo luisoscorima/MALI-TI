@@ -203,7 +203,8 @@
 		}
 
 		.slides,
-		.slides--infos {
+		.slides--infos,
+		.slides__backgrounds {
 			width: 100%;
 			height: 100%;
 
@@ -567,911 +568,9 @@
 		</button>
 
 		<div class="slides__wrapper">
-			<!---------------- CONTENEDOR DE CADA SLIDE -------------------->
-			<div class="slides">
-				<!-- Item 1 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19992">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1657"
-									alt="Hew Locke: what have we here?" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1657); --dir: 0">
-				</div>
-
-				<!-- Item 2 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19981">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643"
-									alt="Pintura boliviana del siglo XX" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643); --dir: 0">
-				</div>
-
-				<!-- Item 3 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19983">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1645"
-									alt="Pedro Peschiera: Obra reciente = recent work" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1645); --dir: 0">
-				</div>
-
-				<!-- Item 4 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19791">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1295"
-									alt="Mirando al arte colonial. Arquitectura y arte jesuita en el Virreinato del Perú: un estudio de problemas específicos" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1295); --dir: 0">
-				</div>
-
-				<!-- Item 5 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19798">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1301"
-									alt="Resistir el paso del tiempo y la pérdida de la memoria" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1301); --dir: 0">
-				</div>
-
-				<!-- Item 6 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19810">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1372"
-									alt="Museo digital: inteligencias y artificios = Digital museum: intelligences and artifices" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1372); --dir: 0">
-				</div>
-
-				<!-- Item 7 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19785">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1272"
-									alt="&quot;Nosotros también somos peruanos&quot;: la marginación en el Perú, siglos XVI a XXI" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1272); --dir: 0">
-				</div>
-
-				<!-- Item 8 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19789">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1293"
-									alt="Th. Cron." />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1293); --dir: 0">
-				</div>
-
-				<!-- Item 9 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19811">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1373"
-									alt="Virginia Pérez-Ratton. Centroamérica: deseo de lugar = Central America: Desiring a Place" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1373); --dir: 0">
-				</div>
-
-				<!-- Item 10 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19816">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1378"
-									alt="Marcelo Brodsky: Exílios, Escombros, Resistências" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1378); --dir: 0">
-				</div>
-
-				<!-- Item 11 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19828">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1390"
-									alt="Aby Warburg en/sobre América: Historia, sobrevivencias y repercusiones" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1390); --dir: 0">
-				</div>
-
-				<!-- Item 12 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19829">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1392"
-									alt="Agentas culturales del siglo XX. Desafíos de una gestión" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1392); --dir: 0">
-				</div>
-
-				<!-- Item 13 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19790">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1294"
-									alt="Intelectuales, política y producción cultural en el Perú de los 70" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1294); --dir: 0">
-				</div>
-
-				<!-- Item 14 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19984">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1646"
-									alt="Pittura coloniale del Perù" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1646); --dir: 0">
-				</div>
-
-				<!-- Item 15 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19986">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1650"
-									alt="Cecilia Vicuña. Veroír el fracaso iluminado" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1650); --dir: 0">
-				</div>
-
-				<!-- Item 16 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19987">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1651"
-									alt="Cecilia Vicuña. Veroír el fracaso iluminado = Seehearing the Enlightened Failure" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1651); --dir: 0">
-				</div>
-
-				<!-- Item 17 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19990">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1654"
-									alt="Grito: Regina José Galindo" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1654); --dir: 0">
-				</div>
-
-				<!-- Item 18 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19957">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1615"
-									alt="Luis Castellanos: la intuición de la extrañeza. 30 años de trayectoria" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1615); --dir: 0">
-				</div>
-
-				<!-- Item 19 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19931">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1584"
-									alt="Painting the Conquest: The Mexican Indians and the European Renaissance" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1584); --dir: 0">
-				</div>
-
-				<!-- Item 20 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19933">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1586"
-									alt="In the Light of Italy: Corot and Early Open-Air Painting" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1586); --dir: 0">
-				</div>
-
-				<!-- Item 21 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19930">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1583"
-									alt="Son encantados" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1583); --dir: 0">
-				</div>
-
-				<!-- Item 22 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19857">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1464"
-									alt="The First Homosexuals: The Birth of a New Identity, 1869-1939" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1464); --dir: 0">
-				</div>
-
-				<!-- Item 23 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19864">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1471"
-									alt="La gran cocina mestiza de Arequipa" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1471); --dir: 0">
-				</div>
-
-				<!-- Item 24 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=119867">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1474"
-									alt="Itinerarios: 33 ensayos y retratos escritos" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1474); --dir: 0">
-				</div>
-
-				<!-- Item 25 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19869">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1476"
-									alt="Relecturas del fracaso. Comunidades, género y raza en perspectiva histórica" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1476); --dir: 0">
-				</div>
-
-				<!-- Item 26 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19831">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1394"
-									alt="El surrealismo y el arte fantástico de México" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1394); --dir: 0">
-				</div>
-
-				<!-- Item 27 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19837">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1400"
-									alt="En la vanguardia indigenista: la portada de Julia Codesido para los Siete ensayos de interpretación de la realidad peruana" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1400); --dir: 0">
-				</div>
-
-				<!-- Item 28 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19838">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1401"
-									alt="Arte en las celebraciones centenarias del Perú, 1921-1924" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1401); --dir: 0">
-				</div>
-
-				<!-- Item 29 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19840">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1403"
-									alt="Estudios sobre la historia del arte en Chile Republicano" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1403); --dir: 0">
-				</div>
-
-				<!-- Item 30 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19846">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1411"
-									alt="Javi Vargas: florecen luces sobre nuestras pieles" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1411); --dir: 0">
-				</div>
-
-				<!-- Item 31 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19847">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1412"
-									alt="Cristina Flores Pescorán. Las predicciones" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1412); --dir: 0">
-				</div>
-
-				<!-- Item 32 -->
-				<div class="slide">
-					<div class="slide__inner">
-						<div class="slide--image__wrapper">
-							<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19850">
-								<img class="slide--image"
-									src="https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1415"
-									alt="Agítese antes de usar. Proximidad y reciprocidad en las prácticas artísticas / educativas" />
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="slide__bg"
-					style="--bg: url(https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1415); --dir: 0">
-				</div>
-			</div> <!-- Fin del contenedor -->
-
-			<!---------------- CONTENEDOR DE LA INFORMACIÓN DE CADA SLIDE -------------------->
-			<div class="slides--infos">
-				<!-- Info 1 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Hew Locke: what have we here?</span></div>
-							<div data-subtitle class="slide-info--text"><span>Seligman, Isabel; Khanna, Indra.</span></div>
-							<div data-description class="slide-info--text"><span>Seligman, Isabel; Khanna, Indra. <i>Hew
-									Locke: what have we here?.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 2 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Pintura boliviana del siglo XX</span></div>
-							<div data-subtitle class="slide-info--text"><span>Romero Moreno, Fernando.</span></div>
-							<div data-description class="slide-info--text"><span>Romero Moreno, Fernando. <i>Pintura
-									boliviana del siglo XX.</i> 1989.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 3 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Pedro Peschiera: Obra reciente = recent
-								work</span></div>
-							<div data-subtitle class="slide-info--text"><span>Wiesse, Ricardo.</span></div>
-							<div data-description class="slide-info--text"><span>Wiesse, Ricardo. <i>Pedro Peschiera: Obra
-									reciente = recent work.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 4 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Mirando al arte colonial. Arquitectura y arte
-								jesuita en el Virreinato del Perú: un estudio de problemas específicos</span></div>
-							<div data-subtitle class="slide-info--text"><span>Kubiak, Ewa.</span></div>
-							<div data-description class="slide-info--text"><span>Kubiak, Ewa. <i>Mirando al arte colonial.
-									Arquitectura y arte jesuita en el Virreinato del Perú: un estudio de problemas
-									específicos.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 5 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Resistir el paso del tiempo y la pérdida de
-								la memoria. Intimidad y poder a través del retrato pictórico femenino en el Perú
-								decimonónico</span></div>
-							<div data-subtitle class="slide-info--text"><span>Leonardini, Nanda.</span></div>
-							<div data-description class="slide-info--text"><span>Leonardini, Nanda. <i>Resistir el paso
-									del tiempo y la pérdida de la memoria. Intimidad y poder a través del retrato
-									pictórico femenino en el Perú decimonónico.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 6 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Museo digital: inteligencias y artificios =
-								Digital museum: intelligences and artifices</span></div>
-							<div data-subtitle class="slide-info--text"><span>Mariátegui, José-Carlos [et al.].</span></div>
-							<div data-description class="slide-info--text"><span>Mariátegui, José-Carlos [et al.]. <i>Museo
-									digital: inteligencias y artificios = Digital museum: intelligences and
-									artifices.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 7 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>"Nosotros también somos peruanos": la
-								marginación en el Perú, siglos XVI a XXI</span></div>
-							<div data-subtitle class="slide-info--text"><span>Rosas Lauro, Claudia.</span></div>
-							<div data-description class="slide-info--text"><span>Rosas Lauro, Claudia. <i>"Nosotros también
-									somos peruanos": la marginación en el Perú, siglos XVI a XXI.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 8 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Th. Cron.</span></div>
-							<div data-subtitle class="slide-info--text"><span>Arce, Irene [et al].</span></div>
-							<div data-description class="slide-info--text"><span>Arce, Irene [et al]. <i>Th. Cron.</i>
-								2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 9 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Virginia Pérez-Ratton. Centroamérica: deseo
-								de lugar = Central America: Desiring a Place</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel A. [et al.].</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel A. [et al.]. <i>Virginia
-									Pérez-Ratton. Centroamérica: deseo de lugar = Central America: Desiring a
-									Place.</i> 2019.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 10 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Marcelo Brodsky: Exílios, Escombros,
-								Resistências</span></div>
-							<div data-subtitle class="slide-info--text"><span>Brodsky, Marcelo.</span></div>
-							<div data-description class="slide-info--text"><span>Brodsky, Marcelo. <i>Marcelo Brodsky:
-									Exílios, Escombros, Resistências.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 11 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Aby Warburg en/sobre América: Historia,
-								sobrevivencias y repercusiones</span></div>
-							<div data-subtitle class="slide-info--text"><span>Báez Rubí, Linda [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>Báez Rubí, Linda [ed.]. <i>Aby Warburg
-									en/sobre América: Historia, sobrevivencias y repercusiones.</i> 2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 12 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Agentas culturales del siglo XX. Desafíos de
-								una gestión</span></div>
-							<div data-subtitle class="slide-info--text"><span>De la Torre, Graciela.</span></div>
-							<div data-description class="slide-info--text"><span>De la Torre, Graciela. <i>Agentas
-									culturales del siglo XX. Desafíos de una gestión.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 13 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Intelectuales, política y producción cultural
-								en el Perú de los 70</span></div>
-							<div data-subtitle class="slide-info--text"><span>Mitrovic Pease, Mijail [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>Mitrovic Pease, Mijail [ed.].
-								<i>Intelectuales, política y producción cultural en el Perú de los 70.</i>
-								2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 14 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Pittura coloniale del Perù</span></div>
-							<div data-subtitle class="slide-info--text"><span>Belli Barsali, Isa.</span></div>
-							<div data-description class="slide-info--text"><span>Belli Barsali, Isa. <i>Pittura
-									coloniale del Perù.</i> 1966.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 15 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Cecilia Vicuña. Veroír el fracaso
-								iluminado</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel [ed.]. <i>Cecilia Vicuña.
-									Veroír el fracaso iluminado.</i> 2021.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 16 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Cecilia Vicuña. Veroír el fracaso iluminado
-								= Seehearing the Enlightened Failure</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel [ed.]. <i>Cecilia Vicuña.
-									Veroír el fracaso iluminado = Seehearing the Enlightened Failure.</i>
-								2020.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 17 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Grito: Regina José Galindo</span></div>
-							<div data-subtitle class="slide-info--text"><span>Galindo, Regina José.</span></div>
-							<div data-description class="slide-info--text"><span>Galindo, Regina José. <i>Grito: Regina
-									José Galindo.</i> 2022.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 18 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Luis Castellanos: la intuición de la
-								extrañeza. 30 años de trayectoria</span></div>
-							<div data-subtitle class="slide-info--text"><span>Castellanos, Luis.</span></div>
-							<div data-description class="slide-info--text"><span>Castellanos, Luis. <i>Luis Castellanos:
-									la intuición de la extrañeza. 30 años de trayectoria.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 19 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Painting the Conquest: The Mexican Indians and
-								the European Renaissance</span></div>
-							<div data-subtitle class="slide-info--text"><span>Gruzinski, Serge.</span></div>
-							<div data-description class="slide-info--text"><span>Gruzinski, Serge. <i>Painting the
-									Conquest: The Mexican Indians and the European Renaissance.</i> 1992.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 20 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>In the Light of Italy: Corot and Early
-								Open-Air Painting</span></div>
-							<div data-subtitle class="slide-info--text"><span>Conisbee, Philip.</span></div>
-							<div data-description class="slide-info--text"><span>Conisbee, Philip. <i>In the Light of
-									Italy: Corot and Early Open-Air Painting.</i> 1996.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 21 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Son encantados</span></div>
-							<div data-subtitle class="slide-info--text"><span>Silva Meinel, Javier.</span></div>
-							<div data-description class="slide-info--text"><span>Silva Meinel, Javier. <i>Son
-									encantados.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 22 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>The First Homosexuals: The Birth of a New
-								Identity, 1869-1939</span></div>
-							<div data-subtitle class="slide-info--text"><span>Katz, Jonathan D.</span></div>
-							<div data-description class="slide-info--text"><span>Katz, Jonathan D. <i>The First
-									Homosexuals: The Birth of a New Identity, 1869-1939.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 23 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>La gran cocina mestiza de Arequipa</span></div>
-							<div data-subtitle class="slide-info--text"><span>Ruiz Rosas, Alonso.</span></div>
-							<div data-description class="slide-info--text"><span>Ruiz Rosas, Alonso. <i>La gran cocina
-									mestiza de Arequipa.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 24 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Itinerarios: 33 ensayos y retratos
-								escritos</span></div>
-							<div data-subtitle class="slide-info--text"><span>Wiesse, Ricardo.</span></div>
-							<div data-description class="slide-info--text"><span>Wiesse, Ricardo. <i>Itinerarios: 33
-									ensayos y retratos escritos.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 25 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Relecturas del fracaso. Comunidades, género y
-								raza en perspectiva histórica</span></div>
-							<div data-subtitle class="slide-info--text"><span>Henderson, Magally Alegre.</span></div>
-							<div data-description class="slide-info--text"><span>Henderson, Magally Alegre. <i>Relecturas
-									del fracaso. Comunidades, género y raza en perspectiva histórica.</i>
-								2024.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 26 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>El surrealismo y el arte fantástico de
-								México</span></div>
-							<div data-subtitle class="slide-info--text"><span>Rodríguez Prampolini, Ida.</span></div>
-							<div data-description class="slide-info--text"><span>Rodríguez Prampolini, Ida. <i>El
-									surrealismo y el arte fantástico de México.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 27 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>En la vanguardia indigenista: la portada de
-								Julia Codesido para los Siete ensayos de interpretación de la realidad peruana</span></div>
-							<div data-subtitle class="slide-info--text"><span>Majluf, Natalia.</span></div>
-							<div data-description class="slide-info--text"><span>Majluf, Natalia. <i>En la vanguardia
-									indigenista: la portada de Julia Codesido para los Siete ensayos de
-									interpretación de la realidad peruana.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 28 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Arte en las celebraciones centenarias del Perú,
-								1921-1924</span></div>
-							<div data-subtitle class="slide-info--text"><span>Cruz Quintanilla, Pablo.</span></div>
-							<div data-description class="slide-info--text"><span>Cruz Quintanilla, Pablo. <i>Arte en las
-									celebraciones centenarias del Perú, 1921-1924.</i> 2025.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 29 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Estudios sobre la historia del arte en Chile
-								Republicano</span></div>
-							<div data-subtitle class="slide-info--text"><span>Pereira Salas, Eugenio.</span></div>
-							<div data-description class="slide-info--text"><span>Pereira Salas, Eugenio. <i>Estudios sobre
-									la historia del arte en Chile Republicano.</i> 1992.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 30 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Javi Vargas: florecen luces sobre nuestras
-								pieles</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel A. [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel A. [ed.]. <i>Javi Vargas:
-									florecen luces sobre nuestras pieles.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 31 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Cristina Flores Pescorán. Las
-								predicciones</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel A.</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel A. <i>Cristina Flores
-									Pescorán. Las predicciones.</i> 2023.</span></div>
-						</div>
-					</div>
-				</div>
-				<!-- Info 32 -->
-				<div class="slide-info">
-					<div class="slide-info__inner">
-						<div class="slide-info--text__wrapper">
-							<div data-title class="slide-info--text"><span>Agítese antes de usar. Proximidad y
-								reciprocidad en las prácticas artísticas / educativas</span></div>
-							<div data-subtitle class="slide-info--text"><span>López, Miguel A. [ed.].</span></div>
-							<div data-description class="slide-info--text"><span>López, Miguel A. [ed.]. <i>Agítese antes
-									de usar. Proximidad y reciprocidad en las prácticas artísticas / educativas.</i>
-								2023.</span></div>
-						</div>
-					</div>
-				</div>
-			</div> <!-- Fin del contenedor -->
+			<div class="slides" id="slidesContainer" aria-live="polite"></div>
+			<div class="slides__backgrounds" id="slidesBackgrounds" aria-hidden="true"></div>
+			<div class="slides--infos" id="slidesInfoContainer"></div>
 		</div>
 		<button class="slider--btn slider--btn__next">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -1500,12 +599,137 @@
 </body>
 
 <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+<script src="./carrusel-data.js"></script>
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 		console.log("El DOM está listo");
 		console.log(typeof imagesLoaded);
 		console.log("%c Powered with ❤️ by: Luis Gustavo O. P.", "color: #00bfff; font-weight: bold; font-size: 14px; font-family: 'Archivo', sans-serif; background-color: #000; padding: 5px; border-radius: 5px;");
+
+		const carouselData = Array.isArray(window.MALI_CAROUSEL_ITEMS) ? window.MALI_CAROUSEL_ITEMS : [];
+		buildCarouselFromData(carouselData);
+		if (!carouselData.length) {
+			console.warn("No se encontraron ítems en carrusel-data.js. El carrusel quedará vacío hasta que agregues datos.");
+		}
+
+		function buildCarouselFromData(items) {
+			const slidesRoot = document.getElementById("slidesContainer");
+			const infoRoot = document.getElementById("slidesInfoContainer");
+			const bgRoot = document.getElementById("slidesBackgrounds");
+
+			if (!slidesRoot || !infoRoot || !bgRoot) {
+				console.error("No se encontraron los contenedores del carrusel en el DOM.");
+				return;
+			}
+
+			slidesRoot.textContent = "";
+			infoRoot.textContent = "";
+			bgRoot.textContent = "";
+
+			const slideFragment = document.createDocumentFragment();
+			const infoFragment = document.createDocumentFragment();
+			const backgroundFragment = document.createDocumentFragment();
+
+			items.forEach((item, index) => {
+				if (!isValidItem(item)) {
+					console.warn(`Ítem ${index + 1} omitido por datos incompletos.`, item);
+					return;
+				}
+
+				slideFragment.appendChild(createSlide(item));
+				infoFragment.appendChild(createSlideInfo(item));
+				backgroundFragment.appendChild(createBackground(item));
+			});
+
+			slidesRoot.appendChild(slideFragment);
+			infoRoot.appendChild(infoFragment);
+			bgRoot.appendChild(backgroundFragment);
+		}
+
+		function isValidItem(item) {
+			return Boolean(item && item.title && item.imageSrc);
+		}
+
+		function createSlide(item) {
+			const slide = document.createElement("div");
+			slide.className = "slide";
+
+			const slideInner = document.createElement("div");
+			slideInner.className = "slide__inner";
+
+			const imageWrapper = document.createElement("div");
+			imageWrapper.className = "slide--image__wrapper";
+
+			const img = document.createElement("img");
+			img.className = "slide--image";
+			img.src = item.imageSrc;
+			img.alt = item.imageAlt || item.title || "Nueva adquisición MALI";
+
+			if (item.link) {
+				const anchor = document.createElement("a");
+				anchor.href = item.link;
+				anchor.appendChild(img);
+				imageWrapper.appendChild(anchor);
+			} else {
+				imageWrapper.appendChild(img);
+			}
+
+			slideInner.appendChild(imageWrapper);
+			slide.appendChild(slideInner);
+			return slide;
+		}
+
+		function createSlideInfo(item) {
+			const info = document.createElement("div");
+			info.className = "slide-info";
+
+			const infoInner = document.createElement("div");
+			infoInner.className = "slide-info__inner";
+
+			const textWrapper = document.createElement("div");
+			textWrapper.className = "slide-info--text__wrapper";
+
+			const titleBlock = createInfoText("data-title", item.title);
+			const subtitleBlock = createInfoText("data-subtitle", item.subtitle);
+			const descriptionBlock = createInfoText("data-description", item.descriptionHtml, true);
+
+			[titleBlock, subtitleBlock, descriptionBlock].forEach((block) => {
+				if (block) {
+					textWrapper.appendChild(block);
+				}
+			});
+
+			infoInner.appendChild(textWrapper);
+			info.appendChild(infoInner);
+			return info;
+		}
+
+		function createInfoText(attribute, content, allowHtml = false) {
+			if (!content) return null;
+			const block = document.createElement("div");
+			block.className = "slide-info--text";
+			block.setAttribute(attribute, "");
+			const span = document.createElement("span");
+			if (allowHtml) {
+				span.innerHTML = content;
+			} else {
+				span.textContent = content;
+			}
+			block.appendChild(span);
+			return block;
+		}
+
+		function createBackground(item) {
+			const bg = document.createElement("div");
+			bg.className = "slide__bg";
+			const bgUrl = item.backgroundSrc || item.imageSrc;
+			if (bgUrl) {
+				bg.style.setProperty("--bg", `url(${bgUrl})`);
+			}
+			bg.style.setProperty("--dir", "0");
+			return bg;
+		}
 
 		// -------------------------------------------------
 		// ------------------ Utilities --------------------
@@ -1669,6 +893,11 @@
 			allSlideBgs = allSlideBgs.slice(0, minLen);
 			totalSlides = minLen;
 
+			if (minLen === 0) {
+				console.warn("No hay elementos suficientes para iniciar el carrusel.");
+				return;
+			}
+
 			// Leer la duración de transición desde CSS para bloquear correctamente
 			const root = document.documentElement;
 			const durVar = getComputedStyle(root).getPropertyValue("--slide-transition-duration").trim();
@@ -1691,8 +920,10 @@
 			// Inicializamos tilt para cada slide e info
 			allSlides.forEach((slide, i) => {
 				const slideInner = slide.querySelector(".slide__inner");
-				const slideInfoInner = allSlidesInfo[i].querySelector(".slide-info__inner");
-				tilt(slide, { target: [slideInner, slideInfoInner] });
+				const slideInfoInner = allSlidesInfo[i]?.querySelector(".slide-info__inner");
+				if (slideInner && slideInfoInner) {
+					tilt(slide, { target: [slideInner, slideInfoInner] });
+				}
 			});
 
 			// Limpiamos cualquier estado previo
@@ -1743,10 +974,23 @@
 
 		function setup() {
 			const loaderText = document.querySelector(".loader__text");
+			const loaderOverlay = document.querySelector(".loader");
 			const images = [...document.querySelectorAll("img")];
 			const totalImages = images.length;
 			let loadedImages = 0;
 			let progress = { current: 0, target: 0 };
+
+			if (totalImages === 0) {
+				if (loaderText) {
+					loaderText.textContent = "100%";
+				}
+				if (loaderOverlay) {
+					loaderOverlay.style.opacity = 0;
+					loaderOverlay.style.pointerEvents = "none";
+				}
+				init();
+				return;
+			}
 
 			images.forEach((image) => {
 				imagesLoaded(image, (instance) => {
@@ -1760,7 +1004,9 @@
 			raf.add(({ id }) => {
 				progress.current = lerp(progress.current, progress.target, 0.06);
 				const progressPercent = Math.round(progress.current * 100);
-				loaderText.textContent = `${progressPercent}%`;
+				if (loaderText) {
+					loaderText.textContent = `${progressPercent}%`;
+				}
 				if (progressPercent === 100) {
 					init();
 					raf.remove(id);
@@ -1792,15 +1038,24 @@
 
 				// Helper para limpiar atributos de un índice específico
 				const clearAt = (i) => {
-					allSlides[i].removeAttribute("data-current");
-					allSlides[i].removeAttribute("data-next");
-					allSlides[i].removeAttribute("data-previous");
-					allSlidesInfo[i].removeAttribute("data-current");
-					allSlidesInfo[i].removeAttribute("data-next");
-					allSlidesInfo[i].removeAttribute("data-previous");
-					allSlideBgs[i].removeAttribute("data-current");
-					allSlideBgs[i].removeAttribute("data-next");
-					allSlideBgs[i].removeAttribute("data-previous");
+					const slide = allSlides[i];
+					const info = allSlidesInfo[i];
+					const bg = allSlideBgs[i];
+					if (slide) {
+						slide.removeAttribute("data-current");
+						slide.removeAttribute("data-next");
+						slide.removeAttribute("data-previous");
+					}
+					if (info) {
+						info.removeAttribute("data-current");
+						info.removeAttribute("data-next");
+						info.removeAttribute("data-previous");
+					}
+					if (bg) {
+						bg.removeAttribute("data-current");
+						bg.removeAttribute("data-next");
+						bg.removeAttribute("data-previous");
+					}
 				};
 
 				// Limpiar solamente los implicados en el cambio
@@ -1812,9 +1067,18 @@
 
 				// Asignar roles nuevos de forma atómica (mismo ciclo de render)
 				const setRole = (i, role) => {
-					allSlides[i].setAttribute(role, "");
-					allSlidesInfo[i].setAttribute(role, "");
-					allSlideBgs[i].setAttribute(role, "");
+					const slide = allSlides[i];
+					const info = allSlidesInfo[i];
+					const bg = allSlideBgs[i];
+					if (slide) {
+						slide.setAttribute(role, "");
+					}
+					if (info) {
+						info.setAttribute(role, "");
+					}
+					if (bg) {
+						bg.setAttribute(role, "");
+					}
 				};
 
 				setRole(newCurr, "data-current");
