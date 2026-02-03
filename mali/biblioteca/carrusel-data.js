@@ -14,7 +14,7 @@ const MALI_CAROUSEL_ITEMS = [
   },
   {
     title: "Pintura boliviana del siglo XX",
-    subtitle: "Romero Moreno, Fernando.",
+    subtitle: "Romero Moreno, Fernand.",
     descriptionHtml: "Romero Moreno, Fernando. <i>Pintura boliviana del siglo XX.</i> 1989.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19981",
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643",
