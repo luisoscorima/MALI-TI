@@ -6,7 +6,7 @@ const MALI_CAROUSEL_ITEMS = [
   {
     title: "Hew Locke: what have we here?",
     subtitle: "Seligman, Isabel; Khanna, Indra.",
-    descriptionHtml: "Seligman, Isabel; Khanna, Indra. <i>Hew Locke: what have we here?.</i> 2024.",
+    descriptionHtml: "Seligman, Rosalyn; Khanna, Indra. <i>Hew Locke: what have we here?.</i> 2024.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19992",
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1657",
     imageAlt: "Hew Locke: what have we here?",
