@@ -6,7 +6,7 @@ const MALI_CAROUSEL_ITEMS = [
   {
     title: "Hew Locke: what have we here?",
     subtitle: "Seligman, Isabel; Khanna, Indra.",
-    descriptionHtml: "Seligman, Rosalyn; Khanna, Indra. <i>Hew Locke: what have we here?.</i> 2024.",
+    descriptionHtml: "Seligman, Isabel; Khanna, Indra. <i>Hew Locke: what have we here?.</i> 2024.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19992",
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1657",
     imageAlt: "Hew Locke: what have we here?",
@@ -14,7 +14,7 @@ const MALI_CAROUSEL_ITEMS = [
   },
   {
     title: "Pintura boliviana del siglo XX",
-    subtitle: "Romero Moreno, Fernan.",
+    subtitle: "Romero Moreno, Fernando.",
     descriptionHtml: "Romero Moreno, Fernando. <i>Pintura boliviana del siglo XX.</i> 1989.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19981",
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643",
