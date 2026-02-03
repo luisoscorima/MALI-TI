@@ -375,6 +375,143 @@
             font-weight: 600;
             color: rgba(255, 255, 255, 0.3);
         }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+            }
+
+            .slideshow {
+                height: 100vh;
+            }
+
+            .slideshow .slide .caption {
+                padding: 0 20px;
+            }
+
+            .slideshow .slide .title {
+                font-size: 28px;
+                margin: 0 auto 10px;
+                max-width: 100%;
+            }
+
+            .slideshow .slide .text {
+                font-size: 14px;
+                max-width: 100%;
+                margin: 0 auto 15px;
+            }
+
+            .slideshow .slide .text p {
+                margin: 0;
+            }
+
+            .slideshow .slide .btn {
+                padding: 10px 16px;
+                font-size: 11px;
+            }
+
+            .slideshow .arrows .arrow {
+                padding: 15px;
+                margin: -25px 0 0;
+            }
+
+            .slideshow .arrows .prev {
+                left: 10px;
+            }
+
+            .slideshow .arrows .next {
+                right: 10px;
+            }
+
+            .slideshow .arrows .svg {
+                width: 12px;
+                height: 22px;
+            }
+
+            .slideshow .pagination {
+                bottom: 20px;
+            }
+
+            .slideshow .pagination .item {
+                padding: 10px 3px;
+                width: 40px;
+                height: 28px;
+            }
+
+            .slideshow .pagination .item::before {
+                top: 12px;
+                left: 3px;
+                width: 34px;
+                height: 1px;
+            }
+
+            .credits {
+                bottom: 70px;
+                right: 10px;
+            }
+
+            .credits p {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slideshow .slide .title {
+                font-size: 22px;
+                letter-spacing: 0.2em;
+            }
+
+            .slideshow .slide .text {
+                font-size: 12px;
+                line-height: 1.3;
+            }
+
+            .slideshow .slide .caption {
+                padding: 0 15px;
+            }
+
+            .slideshow .slide .btn {
+                padding: 9px 14px;
+                font-size: 10px;
+                margin: 10px 0 0;
+            }
+
+            .slideshow .arrows .arrow {
+                padding: 12px;
+            }
+
+            .slideshow .arrows .prev {
+                left: 5px;
+            }
+
+            .slideshow .arrows .next {
+                right: 5px;
+            }
+
+            .slideshow .pagination {
+                bottom: 15px;
+            }
+
+            .slideshow .pagination .item {
+                padding: 8px 2px;
+                width: 36px;
+                height: 24px;
+            }
+
+            .slideshow .pagination .item::before {
+                width: 32px;
+            }
+
+            .credits {
+                bottom: 60px;
+                right: 5px;
+            }
+
+            .credits p {
+                font-size: 8px;
+            }
+        }
     </style>
 </head>
 
