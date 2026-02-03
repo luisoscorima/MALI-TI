@@ -6,6 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interfaz MALI</title>
     <style>
+        @font-face {
+            font-family: "BentonSansFB";
+            src: url("../educacion/fonts/BentonSansFB-Book.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "BentonSansFB";
+            src: url("../educacion/fonts/BentonSansFB-BookOblique.woff2") format("woff2");
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "BentonSansFB";
+            src: url("../educacion/fonts/BentonSansFB-Bold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "BentonSansFB";
+            src: url("../educacion/fonts/BentonSansFB-BoldOblique.woff2") format("woff2");
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
+
         html,
         body {
             width: 100%;
@@ -15,7 +47,7 @@
         }
 
         body {
-            font: 14px/2 "Open sans", sans-serif;
+            font: 14px/2 "BentonSansFB", sans-serif;
             letter-spacing: 0.05em;
             background: #000;
         }
@@ -177,7 +209,7 @@
                     margin: 0 auto 15px;
                     max-width: 1000px;
                     font: 300 50px/1.2 "Oswald", sans-serif;
-                    letter-spacing: 0.35em;
+                    letter-spacing: 0em;
                     text-transform: uppercase;
                 }
 
