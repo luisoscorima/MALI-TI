@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido al MALI</title>
+    <link rel="icon" href="https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/Logo_MALI_Blanco.png"
+        type="image/png">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0033 0%, #3d0066 25%, #4d1a7f 50%, #3d0066 75%, #1a0033 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Fira Sans', sans-serif;
+            display: flex;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            animation: fadeIn 0.6s ease-in;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-header {
+            width: 180px;
+            margin: 0 auto 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-header:hover {
+            transform: scale(1.05);
+        }
+
+        .blog-slider {
+            background: #fff;
+            box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(10px);
+        }
+
+        .blog-slider__item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 15px;
+            padding: 10px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .blog-slider__item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-slider__img {
+            width: 300px;
+            flex-shrink: 0;
+            height: 300px;
+            border-radius: 15px;
+            transform: translateX(-80px);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease;
+        }
+
+        .blog-slider__item:hover .blog-slider__img {
+            transform: translateX(-80px) scale(1.05);
+        }
+
+        .blog-slider__img:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+
+        /* Colores individuales */
+        .slide-1 .blog-slider__img {
+            background: #e74c3c;
+            background-image: url(https://coleccion.mali.pe/internal/media/logodispatcher/_MG_9040-21.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-2 .blog-slider__img {
+            background: #1abc9c;
+            background-image: url(https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/vista_panoramica_biblioteca.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-3 .blog-slider__img {
+            background: #9b59b6;
+            background-image: url(https://storage.googleapis.com/enciclopedia-arte-peruano-stage/compress_1765395869219_Banner%20Archivo%20Mariotti-Luy.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-4 .blog-slider__img {
+            background: #2c3e50;
+            background-image: url(https://archivo.mali.pe/themes/default/assets/pawtucket/graphics//banners/banner01-min.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-5 .blog-slider__img {
+            background: #e67e22;
+            background-image: url(https://www.podfeet.com/blog/wp-content/uploads/2021/09/GitHub-Copilot-logo-1040x650.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-6 .blog-slider__img {
+            background: #9b59b6;
+            background-image: url(https://d7umqicpi7263.cloudfront.net/img/product/982260d4-f11e-4487-968a-67d38df733a3.com/1b046aceacf91b11bba61cff5e10c72f);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-7 .blog-slider__img {
+            background: #355ddf;
+            background-image: url(https://techbagfrontend.s3-ap-south-1.amazonaws.com/logos/9RfDBVGvpz5TH3Vc9yfbdr.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-8 .blog-slider__img {
+            background: #2c3e50;
+            background-image: url(https://nicolargo.github.io/glances/public/images/glances.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-9 .blog-slider__img {
+            background: #0f9d58;
+            background-image: url(https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/Logo_MALI_Blanco.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide-10 .blog-slider__img {
+            background: #f39c12;
+            background-image: url(http://3.210.230.147:8092/static/favicon.ico);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .blog-slider__content {
+            padding-right: 25px;
+        }
+
+        .blog-slider__code {
+            color: #7b7992;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .blog-slider__title {
+            font-size: 24px;
+            color: #0d0925;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .blog-slider__text {
+            color: #4e4a67;
+            margin-bottom: 30px;
+            line-height: 1.6em;
+            font-size: 15px;
+        }
+
+        .blog-slider__button {
+            background-image: linear-gradient(147deg, #48e472 0%, #0f9d58 74%);
+            padding: 15px 28px;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(15, 157, 88, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .blog-slider__button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(15, 157, 88, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .blog-slider__button:active {
+            transform: translateY(-1px);
+        }
+
+        .blog-slider__second-button {
+            background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .blog__button {
+            background-image: linear-gradient(147deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 40px;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .blog__button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .blog__button:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .blog-slider__img {
+                transform: translateY(-50%);
+                width: 90%;
+                height: 200px;
+            }
+
+            .blog-slider__content {
+                margin-top: -30px;
+                padding: 0 30px;
+            }
+        }
+
+        p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* Ajustes generales de responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 20px auto;
+            }
+
+            .logo-header {
+                width: 120px;
+                margin-bottom: 20px;
+            }
+
+            .blog-slider {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .blog-slider__item {
+                flex-direction: column;
+                height: auto !important;
+            }
+
+            .blog-slider__img {
+                width: 100% !important;
+                height: 200px !important;
+                transform: translateY(-30px) !important;
+                margin-bottom: -30px;
+            }
+
+            .blog-slider__content {
+                padding: 0 15px 20px !important;
+                margin-top: 0 !important;
+                text-align: center;
+            }
+
+            .blog-slider__title {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            .blog-slider__text {
+                font-size: 0.9em;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .blog-slider__button {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+
+            .blog__button {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+
+            .blog-slider__pagination {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+                margin: 15px 0;
+            }
+
+            p {
+                font-size: 0.9em;
+                padding: 0 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-slider__img {
+                height: 180px !important;
+            }
+
+            .blog-slider__title {
+                font-size: 1.2em;
+            }
+
+            .blog-slider__text {
+                font-size: 0.85em;
+            }
+
+            .blog-slider__button {
+                width: 100%;
+            }
+
+            .blog__button {
+                width: 100%;
+            }
+        }
+
+        /* Mejoras de diseño para móviles */
+        .blog-slider__pagination {
+            display: none;
+        }
+
+        .blog-slider__pagination .swiper-pagination-bullet {
+            width: 10px !important;
+            height: 10px !important;
+            margin: 0 !important;
+            background: rgba(255, 255, 255, 0.5) !important;
+            transition: all 0.3s ease !important;
+            display: block !important;
+        }
+
+        .blog-slider__pagination .swiper-pagination-bullet-active {
+            width: 10px !important;
+            height: 28px !important;
+            border-radius: 5px !important;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/Logo_MALI_Cuadrado_Texto.png"
+            class="logo-header" alt="Logo MALI">
+        <div>
+            <p>Esta es la página de bienvenida de los sistemas del Museo de Arte de Lima. Para continuar,
+                deslice entre las siguientes opciones:</p>
+        </div>
+        <div class="blog-slider">
+            <div class="blog-slider__wrp swiper-wrapper">
+                <!-- COLECCIÓN MALI -->
+                <div class="blog-slider__item swiper-slide slide-1">
+                    <div class="blog-slider__img"></div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code"></span>
+                        <div class="blog-slider__title">COLECCIÓN MALI</div>
+                        <div class="blog-slider__text">MALI en Línea</div>
+                        <a href="https://coleccion.mali.pe" target="_blank" class="blog-slider__button">VISÍTANOS
+                            AQUÍ</a>
+                    </div>
+                </div>
+
+                <!-- BIBLIOTECA MALI -->
+                <div class="blog-slider__item swiper-slide slide-2">
+                    <div class="blog-slider__img"></div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code"></span>
+                        <div class="blog-slider__title">BIBLIOTECA MALI</div>
+                        <div class="blog-slider__text">Conoce nuestras últimas adquisiciones</div>
+                        <a href="https://biblioteca.mali.pe" target="_blank" class="blog-slider__button">VISÍTANOS
+                            AQUÍ</a>
+                    </div>
+                </div>
+
+                <!-- HISTORIAS -->
+                <div class="blog-slider__item swiper-slide slide-3">
+                    <div class="blog-slider__img"></div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code"></span>
+                        <div class="blog-slider__title">HISTORIAS</div>
+                        <div class="blog-slider__text">Plataforma digital sobre arte en el Perú impulsada por la
+                            Fundación Telefónica y el Museo de Arte de Lima</div>
+                        <a href="https://historias.pe" target="_blank" class="blog-slider__button">CONOCE MÁS</a>
+                    </div>
+                </div>
+
+                <!-- Archivo de Arte Peruano -->
+                <div class="blog-slider__item swiper-slide slide-4">
+                    <div class="blog-slider__img"></div>
+                    <div class="blog-slider__content">
+                        <span class="blog-slider__code"></span>
+                        <div class="blog-slider__title">Archivo de Arte Peruano</div>
+                        <div class="blog-slider__text">Archivos MALI en Línea</div>
+                        <a href="https://archivo.mali.pe" target="_blank" class="blog-slider__button">CONOCE MÁS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blog-slider__pagination"></div>
+        <div>
+            <p>Desarrollado e impulsado por <strong>Luis G. Oscorima P.</strong></p>
+        </div>
+
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script>
+            var swiper = new Swiper('.blog-slider', {
+                spaceBetween: 30,
+                effect: 'fade',
+                loop: true,
+                mousewheel: { invert: false },
+                pagination: {
+                    el: '.blog-slider__pagination',
+                    clickable: true,
+                }
+            });
+        </script>
+</body>
+
+</html>
