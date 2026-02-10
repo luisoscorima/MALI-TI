@@ -45,7 +45,7 @@
 			overflow: hidden;
 			min-height: 100vh;
 			-webkit-overflow-scrolling: touch;
-			background: rgba(0, 0, 0, 0.787);
+			background: #f5f5f5;
 		}
 
 		button {
@@ -75,7 +75,7 @@
 		}
 
 		.slider--btn {
-			--size: 40px;
+			--size: 80px;
 
 			display: inline-flex;
 			justify-content: center;
@@ -87,7 +87,7 @@
 			& svg {
 				width: var(--size);
 				height: var(--size);
-				stroke: white;
+				stroke: #ffffff;
 			}
 
 			&:hover {
@@ -122,12 +122,12 @@
 			z-index: 500;
 			pointer-events: none;
 			/* el título no intercepta clics */
-			color: #fff;
+			color: #000000;
 			font-family: var(--font-clash-display);
 			font-weight: 800;
 			letter-spacing: 0.06em;
 			text-align: center;
-			text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+			text-shadow: 0 2px 4px rgba(67, 67, 67, 0.9);
 			font-size: clamp(1rem, 2.4vw, 2rem);
 			padding: 4px 10px;
 		}
@@ -140,7 +140,7 @@
 			bottom: calc(4px + env(safe-area-inset-bottom));
 			transform: translateX(-50%);
 			z-index: 600;
-			color: #ddd;
+			color: #444;
 			font-family: var(--font-archivo);
 			font-size: clamp(0.75rem, 1.2vw, 0.95rem);
 			text-align: center;
@@ -148,7 +148,8 @@
 			width: fit-content;
 			line-height: 1.35;
 			padding: 6px 10px;
-			background: rgba(0, 0, 0, 0.35);
+			background: rgba(255, 255, 255, 0.9);
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 			border-radius: 8px;
 		}
 
@@ -175,7 +176,7 @@
 		}
 
 		.footer-links a {
-			color: #fff;
+			color: #1a5fb4;
 			text-decoration: underline;
 			text-underline-offset: 3px;
 		}
@@ -195,8 +196,8 @@
 			font-family: var(--font-archivo);
 			font-size: 12px;
 			letter-spacing: 0.08em;
-			color: rgba(255, 255, 255, 0.7);
-			opacity: 0.2;
+			color: rgba(0, 0, 0, 0.35);
+			opacity: 0.7;
 			user-select: none;
 			pointer-events: none;
 			z-index: 650;
@@ -271,14 +272,14 @@
 
 		.slide[data-current] {
 			& .slide--image {
-				filter: brightness(0.8);
+				filter: brightness(1);
 				overflow: visible;
 			}
 		}
 
 		.slide:not([data-current]) {
 			& .slide--image {
-				filter: brightness(0.5);
+				filter: brightness(0.88);
 				overflow: hidden;
 			}
 		}
@@ -325,6 +326,7 @@
 		.slide__bg {
 			position: fixed;
 			inset: -20%;
+			background-color: #e8e8e8;
 			background-image: var(--bg);
 			background-size: cover;
 			background-position: center center;
@@ -342,8 +344,8 @@
 			}
 
 			&::before {
-				background: rgba(0, 0, 0, 0.8);
-				backdrop-filter: blur(8px);
+				background: rgba(255, 255, 255, 0.75);
+				backdrop-filter: blur(10px);
 			}
 
 			&:not([data-current]) {
@@ -477,6 +479,7 @@
 			}
 
 			&[data-description] {
+				text-shadow: 0 2px 4px rgb(0, 0, 0);
 				font-size: min(2.2cqw, 1.4rem);
 				font-family: var(--font-archivo);
 				font-weight: 400;
@@ -492,7 +495,7 @@
 			/* Ajusta el tamaño sin afectar otros textos */
 			font-weight: 800;
 			text-align: center;
-			color: #fff;
+			color: #1a1a1a;
 			display: block;
 			max-width: 100%;
 			white-space: normal;
