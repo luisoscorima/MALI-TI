@@ -209,9 +209,11 @@
                 .title {
                     margin: 0 auto 15px;
                     max-width: 1000px;
-                    font: 300 50px/1.2 "BentonSansFB", Arial, Helvetica, sans-serif;
-                    letter-spacing: 0em;
+                    font: 500 50px/1.2 "BentonSansFB", Arial, Helvetica, sans-serif;
+                    letter-spacing: 0.15em;
                     text-transform: uppercase;
+                    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.35);
+                    paint-order: stroke fill;
                 }
 
                 .text {
@@ -340,9 +342,11 @@
         .slideshow .slide .title {
             margin: 0 auto 15px;
             max-width: 1000px;
-            font: 300 50px/1.2 "BentonSansFB", Arial, Helvetica, sans-serif;
-            letter-spacing: 0.35em;
+            font: 500 50px/1.2 "BentonSansFB", Arial, Helvetica, sans-serif;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.35);
+            paint-order: stroke fill;
         }
 
         .slideshow .slide .text {
@@ -491,7 +495,7 @@
         @media (max-width: 480px) {
             .slideshow .slide .title {
                 font-size: 22px;
-                letter-spacing: 0.2em;
+                letter-spacing: 0.1em;
             }
 
             .slideshow .slide .text {
@@ -638,6 +642,23 @@
                                 alt="" class="image" />
                         </div>
                     </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="caption">
+                                <div class="title">ARCHI</div>
+                                <div class="text">
+                                    <p>Archivo Digital de Arte Peruano</p>
+                                </div>
+                                <a href="https://archi.pe" class="btn">
+                                    <span class="btn-inner">Explora aquí</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <img src="https://storage.googleapis.com/enciclopedia-arte-peruano-stage/1636235715374_image%209.png"
+                                alt="" class="image" />
+                        </div>
+                    </div>
                 </div>
                 <div class="pagination">
                     <div class="item is-active">
@@ -654,6 +675,9 @@
                     </div>
                     <div class="item">
                         <span class="icon">5</span>
+                    </div>
+                    <div class="item">
+                        <span class="icon">6</span>
                     </div>
                 </div>
                 <div class="arrows">
