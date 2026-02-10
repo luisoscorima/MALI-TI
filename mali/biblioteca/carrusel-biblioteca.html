@@ -605,13 +605,11 @@
 	<div class="footer-links">
 		<p>
 			Para ver los registros de la Hemeroteca puede hacer clic
-			<a
-				href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AREVISTA&amp;sort_by=relevance">aquí</a>.
+			<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AREVISTA&amp;sort_by=relevance" target="_top" rel="noopener">aquí</a>.
 		</p>
 		<p>
 			Para ver los registros de la Documentación de Arte Peruano puede hacer clic
-			<a
-				href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AARCHIVO&amp;sort_by=relevance">aquí</a>.
+			<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AARCHIVO&amp;sort_by=relevance" target="_top" rel="noopener">aquí</a>.
 		</p>
 	</div>
 
@@ -686,6 +684,8 @@
 			if (item.link) {
 				const anchor = document.createElement("a");
 				anchor.href = item.link;
+				anchor.setAttribute("target", "_top");
+				anchor.setAttribute("rel", "noopener");
 				anchor.appendChild(img);
 				imageWrapper.appendChild(anchor);
 			} else {
