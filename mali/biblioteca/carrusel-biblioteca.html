@@ -5,8 +5,33 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Carrusel MALI</title>
+	<link rel="icon" href="https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/Logo_MALI_Cuadrado_Texto.png" type="image/png">
 	<style>
-		@import url("https://api.fontshare.com/v2/css?f[]=archivo@100,200,300,400,500,600,700,800,900&f[]=clash-display@200,300,400,500,600,700&display=swap");
+		/* BentonSansFB desde mali/educacion/fonts, respaldo Arial y Helvetica */
+		@font-face {
+			font-family: 'BentonSansFB';
+			src: url('../educacion/fonts/BentonSansFB-Book.woff2') format('woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'BentonSansFB';
+			src: url('../educacion/fonts/BentonSansFB-BookOblique.woff2') format('woff2');
+			font-weight: normal;
+			font-style: italic;
+		}
+		@font-face {
+			font-family: 'BentonSansFB';
+			src: url('../educacion/fonts/BentonSansFB-Bold.woff2') format('woff2');
+			font-weight: bold;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'BentonSansFB';
+			src: url('../educacion/fonts/BentonSansFB-BoldOblique.woff2') format('woff2');
+			font-weight: bold;
+			font-style: italic;
+		}
 
 		:root {
 			/* Base y escala del contenido (no afecta al fondo) */
@@ -22,8 +47,7 @@
 			--header-gap: 40px;
 			--footer-gap: 36px;
 
-			--font-archivo: "Archivo", sans-serif;
-			--font-clash-display: "Clash Display", sans-serif;
+			--font-primary: "BentonSansFB", Arial, Helvetica, sans-serif;
 		}
 
 		* {
@@ -45,7 +69,7 @@
 			overflow: hidden;
 			min-height: 100vh;
 			-webkit-overflow-scrolling: touch;
-			background: rgba(0, 0, 0, 0.787);
+			background: #f5f5f5;
 		}
 
 		button {
@@ -75,7 +99,7 @@
 		}
 
 		.slider--btn {
-			--size: 40px;
+			--size: 80px;
 
 			display: inline-flex;
 			justify-content: center;
@@ -87,7 +111,7 @@
 			& svg {
 				width: var(--size);
 				height: var(--size);
-				stroke: white;
+				stroke: #ffffff;
 			}
 
 			&:hover {
@@ -122,12 +146,12 @@
 			z-index: 500;
 			pointer-events: none;
 			/* el título no intercepta clics */
-			color: #ec32d0;
-			font-family: var(--font-clash-display);
+			color: #000000;
+			font-family: var(--font-primary);
 			font-weight: 800;
 			letter-spacing: 0.06em;
 			text-align: center;
-			text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+			text-shadow: 0 2px 4px rgba(67, 67, 67, 0.9);
 			font-size: clamp(1rem, 2.4vw, 2rem);
 			padding: 4px 10px;
 		}
@@ -140,15 +164,16 @@
 			bottom: calc(4px + env(safe-area-inset-bottom));
 			transform: translateX(-50%);
 			z-index: 600;
-			color: #ddd;
-			font-family: var(--font-archivo);
+			color: #444;
+			font-family: var(--font-primary);
 			font-size: clamp(0.75rem, 1.2vw, 0.95rem);
 			text-align: center;
 			max-width: min(90vw, 920px);
 			width: fit-content;
 			line-height: 1.35;
 			padding: 6px 10px;
-			background: rgba(0, 0, 0, 0.35);
+			background: rgba(255, 255, 255, 0.9);
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 			border-radius: 8px;
 		}
 
@@ -175,7 +200,7 @@
 		}
 
 		.footer-links a {
-			color: #fff;
+			color: #1a5fb4;
 			text-decoration: underline;
 			text-underline-offset: 3px;
 		}
@@ -192,11 +217,11 @@
 			transform: translateY(-50%);
 			writing-mode: vertical-rl;
 			text-orientation: mixed;
-			font-family: var(--font-archivo);
+			font-family: var(--font-primary);
 			font-size: 12px;
 			letter-spacing: 0.08em;
-			color: rgba(255, 255, 255, 0.7);
-			opacity: 0.2;
+			color: rgba(0, 0, 0, 0.35);
+			opacity: 0.7;
 			user-select: none;
 			pointer-events: none;
 			z-index: 650;
@@ -271,14 +296,14 @@
 
 		.slide[data-current] {
 			& .slide--image {
-				filter: brightness(0.8);
+				filter: brightness(1);
 				overflow: visible;
 			}
 		}
 
 		.slide:not([data-current]) {
 			& .slide--image {
-				filter: brightness(0.5);
+				filter: brightness(0.88);
 				overflow: hidden;
 			}
 		}
@@ -325,6 +350,7 @@
 		.slide__bg {
 			position: fixed;
 			inset: -20%;
+			background-color: #e8e8e8;
 			background-image: var(--bg);
 			background-size: cover;
 			background-position: center center;
@@ -342,8 +368,8 @@
 			}
 
 			&::before {
-				background: rgba(0, 0, 0, 0.8);
-				backdrop-filter: blur(8px);
+				background: rgba(255, 255, 255, 0.75);
+				backdrop-filter: blur(10px);
 			}
 
 			&:not([data-current]) {
@@ -441,7 +467,7 @@
 		}
 
 		.slide-info--text {
-			font-family: var(--font-clash-display);
+			font-family: var(--font-primary);
 			color: #ffffff;
 			overflow: hidden;
 			/* Esconde el texto sobrante */
@@ -477,34 +503,12 @@
 			}
 
 			&[data-description] {
+				text-shadow: 0 2px 4px rgb(0, 0, 0);
 				font-size: min(2.2cqw, 1.4rem);
-				font-family: var(--font-archivo);
+				font-family: var(--font-primary);
 				font-weight: 400;
 				line-height: 1.5;
 				letter-spacing: 0.03em;
-			}
-		}
-
-		/* -------------------- LOADER --------------------- */
-
-		.loader {
-			position: fixed;
-			inset: 0;
-
-			display: grid;
-			place-items: center;
-
-			background: #000;
-			z-index: 1000;
-
-			opacity: 1;
-			transition: opacity 0.5s ease-out;
-
-			.loader__text {
-				font-family: var(--font-clash-display);
-				font-size: clamp(2rem, 2vw, 5rem);
-				font-weight: 800;
-				color: #fff;
 			}
 		}
 
@@ -515,7 +519,7 @@
 			/* Ajusta el tamaño sin afectar otros textos */
 			font-weight: 800;
 			text-align: center;
-			color: #fff;
+			color: #1a1a1a;
 			display: block;
 			max-width: 100%;
 			white-space: normal;
@@ -625,29 +629,22 @@
 	<div class="footer-links">
 		<p>
 			Para ver los registros de la Hemeroteca puede hacer clic
-			<a
-				href="https://mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AREVISTA&amp;sort_by=relevance">aquí</a>.
+			<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AREVISTA&amp;sort_by=relevance" target="_top" rel="noopener">aquí</a>.
 		</p>
 		<p>
 			Para ver los registros de la Documentación de Arte Peruano puede hacer clic
-			<a
-				href="https://mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AARCHIVO&amp;sort_by=relevance">aquí</a>.
+			<a href="https://biblioteca.mali.pe/cgi-bin/koha/opac-search.pl?advsearch=1&amp;idx=kw&amp;idx=kw&amp;idx=kw&amp;do=Buscar&amp;limit=mc-itype%2Cphr%3AARCHIVO&amp;sort_by=relevance" target="_top" rel="noopener">aquí</a>.
 		</p>
-	</div>
-	<div class="loader">
-		<span class="loader__text">0%</span>
 	</div>
 
 </body>
 
-<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 <script src="./carrusel-data.js"></script>
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 		console.log("El DOM está listo");
-		console.log(typeof imagesLoaded);
-		console.log("%c Powered with ❤️ by: Luis Gustavo O. P.", "color: #00bfff; font-weight: bold; font-size: 14px; font-family: 'Archivo', sans-serif; background-color: #000; padding: 5px; border-radius: 5px;");
+		console.log("%c Powered with ❤️ by: Luis Gustavo O. P.", "color: #00bfff; font-weight: bold; font-size: 14px; font-family: 'BentonSansFB', Arial, Helvetica, sans-serif; background-color: #000; padding: 5px; border-radius: 5px;");
 
 		const carouselData = Array.isArray(window.MALI_CAROUSEL_ITEMS) ? window.MALI_CAROUSEL_ITEMS : [];
 		buildCarouselFromData(carouselData);
@@ -711,6 +708,8 @@
 			if (item.link) {
 				const anchor = document.createElement("a");
 				anchor.href = item.link;
+				anchor.setAttribute("target", "_top");
+				anchor.setAttribute("rel", "noopener");
 				anchor.appendChild(img);
 				imageWrapper.appendChild(anchor);
 			} else {
@@ -950,14 +949,10 @@
 			}
 			totalSlides = allSlides.length;
 
-			const loader = document.querySelector(".loader");
 			const buttons = {
 				prev: document.querySelector(".slider--btn__prev"),
 				next: document.querySelector(".slider--btn__next")
 			};
-
-			loader.style.opacity = 0;
-			loader.style.pointerEvents = "none";
 
 			// Inicializamos tilt para cada slide e info
 			allSlides.forEach((slide, i) => {
@@ -1015,45 +1010,9 @@
 		}
 
 		function setup() {
-			const loaderText = document.querySelector(".loader__text");
-			const loaderOverlay = document.querySelector(".loader");
-			const images = [...document.querySelectorAll("img")];
-			const totalImages = images.length;
-			let loadedImages = 0;
-			let progress = { current: 0, target: 0 };
-
-			if (totalImages === 0) {
-				if (loaderText) {
-					loaderText.textContent = "100%";
-				}
-				if (loaderOverlay) {
-					loaderOverlay.style.opacity = 0;
-					loaderOverlay.style.pointerEvents = "none";
-				}
-				init();
-				return;
-			}
-
-			images.forEach((image) => {
-				imagesLoaded(image, (instance) => {
-					if (instance.isComplete) {
-						loadedImages++;
-						progress.target = loadedImages / totalImages;
-					}
-				});
-			});
-
-			raf.add(({ id }) => {
-				progress.current = lerp(progress.current, progress.target, 0.06);
-				const progressPercent = Math.round(progress.current * 100);
-				if (loaderText) {
-					loaderText.textContent = `${progressPercent}%`;
-				}
-				if (progressPercent === 100) {
-					init();
-					raf.remove(id);
-				}
-			});
+			// Inicialización asíncrona: el carrusel se muestra de inmediato;
+			// las imágenes cargan en segundo plano sin bloquear.
+			init();
 		}
 
 		function change(direction) {
@@ -1136,7 +1095,7 @@
 			};
 		}
 
-		// Iniciamos el setup para cargar las imágenes y luego inicializar el slider
+		// Inicializamos el carrusel (las imágenes cargan en segundo plano)
 		setup();
 	});
 </script>
