@@ -253,9 +253,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "Lerner, Sharon.",
     descriptionHtml: "Lerner, Sharon. <i>Johanna Hamann: Antológica 1977-2015.</i> 2023.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=17576",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1741",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1745",
     imageAlt: "Johanna Hamann: Antológica 1977-2015",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1741"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1745"
   }
 ];
 
