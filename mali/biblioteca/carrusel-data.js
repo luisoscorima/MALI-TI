@@ -17,9 +17,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "Wiesse, María.",
     descriptionHtml: "Wiesse, María, Fernando. <i>Rosario: historia de una niña.</i> 1929.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=17544",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1275",
     imageAlt: "Rosario: historia de una niña",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1643"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1275"
   },
   {
     title: "Latin American women artists 1915-1995 = Artistas latinoamericanas",
@@ -134,9 +134,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "López, Miguel [ed.].",
     descriptionHtml: "López, Miguel [ed.]. <i>Cecilia Vicuña. Veroír el fracaso iluminado.</i> 2021.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19986",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1015",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1650",
     imageAlt: "Cecilia Vicuña. Veroír el fracaso iluminado",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1015"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1650"
   },
   {
     title: "Cecilia Vicuña. Veroír el fracaso iluminado = Seehearing the Enlightened Failure",
@@ -188,9 +188,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "Aramburú Lecaros, Helena.",
     descriptionHtml: "Aramburú Lecaros, Helena. <i>Lo que piensan las mujeres.</i> 1949.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=18385",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1314",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1304",
     imageAlt: "Lo que piensan las mujeres",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1314"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1304"
   },
   {
     title: "Sandra Gamarra. Producción/Reproducción: Una donación del LIMAC al MALI",
