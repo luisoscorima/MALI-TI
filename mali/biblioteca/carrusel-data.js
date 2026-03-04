@@ -224,9 +224,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "Villacorta, Jorge.",
     descriptionHtml: "Villacorta, Jorge. <i>Cristina Gálvez.</i> 2009.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=11798",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1742",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1744",
     imageAlt: "Cristina Gálvez",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1742"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1744"
   },
   {
    
