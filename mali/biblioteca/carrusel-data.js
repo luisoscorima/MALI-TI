@@ -148,15 +148,7 @@ const MALI_CAROUSEL_ITEMS = [
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1651"
   },
   {
-    title: "Grito: Regina José Galindo",
-    subtitle: "Galindo, Regina José.",
-    descriptionHtml: "Galindo, Regina José. <i>Grito: Regina José Galindo.</i> 2022.",
-    link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=19990",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1654",
-    imageAlt: "Grito: Regina José Galindo",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1654"
-  },
-  {
+
     title: "Annemarie Heinrich: intenciones secretas",
     subtitle: "Cortés-Rocca, Paola.",
     descriptionHtml: "Cortés-Rocca, Paola. <i>Annemarie Heinrich: intenciones secretas.</i> 2015.",
