@@ -71,18 +71,18 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "Keller, Eva.",
     descriptionHtml: "Keller, Eva. <i>Louise Bourgeois: Emotions abstracted.</i> 2004.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=11270",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=458",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1750",
     imageAlt: "Louise Bourgeois: Emotions abstracted",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=458"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1750"
   },
   {
     title: "WACK!: art and the feminist revolution.",
     subtitle: "Butler, Cornelia.",
     descriptionHtml: "Butler, Cornelia. <i>WACK!: art and the feminist revolution.</i> 2007.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=11424",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1750",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1286",
     imageAlt: "WACK!: art and the feminist revolution.",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1750"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1286"
   },
   {
     title: "Virginia Pérez-Ratton. Centroamérica: deseo de lugar = Central America: Desiring a Place",
