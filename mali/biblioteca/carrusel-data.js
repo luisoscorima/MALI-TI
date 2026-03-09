@@ -6,7 +6,7 @@ const MALI_CAROUSEL_ITEMS = [
   {
     title: "Perfil de la mujer peruana 1980-1981",
     subtitle: "Burga, Teresa.",
-    descriptionHtml: "Burga, Teresa; Cathela, Marie-France <i>Perfil de la mujer peruana 1980-1981.</i> [1981-1982].",
+    descriptionHtml: "Burga, Teresa; Cathelat, Marie-France <i>Perfil de la mujer peruana 1980-1981.</i> [1981-1982].",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=14447",
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1303",
     imageAlt: "Perfil de la mujer peruana 1980-1981",
