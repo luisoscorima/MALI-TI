@@ -169,6 +169,7 @@
       id: 1,
       nombre: "Web MALI",
       responsable: "Virtuallab + TI",
+      impacto_usuaria: "muy_alto",
       observaciones: "",
       definicion_inicial_num: 70,
       presupuesto_plan: 10,
@@ -185,6 +186,7 @@
       id: 2,
       nombre: "Web Educación",
       responsable: "Virtuallab + TI",
+      impacto_usuaria: "alto",
       observaciones: "",
       definicion_inicial_num: 100,
       presupuesto_plan: 10,
@@ -201,6 +203,7 @@
       id: 3,
       nombre: "LMS Moodle",
       responsable: "Buendata",
+      impacto_usuaria: "alto",
       observaciones: "",
       definicion_inicial_num: 100,
       presupuesto_plan: 10,
@@ -217,6 +220,7 @@
       id: 4,
       nombre: "SIGE",
       responsable: "Experis",
+      impacto_usuaria: "muy_alto",
       observaciones: "",
       definicion_inicial_num: 100,
       presupuesto_plan: 10,
@@ -257,6 +261,24 @@
 
   function formatPctCalidad(value) {
     return String(parseFloat(round2(value).toFixed(2)));
+  }
+
+  /** Línea breve bajo el nombre en la tabla (no pondera). */
+  const IMPACTO_LINEA_TABLA = {
+    muy_alto: "MUY ALTO",
+    alto: "ALTO",
+    medio: "MEDIO",
+    bajo: "BAJO",
+    marginal: "MUY BAJO",
+  };
+
+  function htmlImpactoBajoNombre(p) {
+    const raw = p.impacto_usuaria;
+    if (raw === undefined || raw === null || raw === "") return "";
+    const k = String(raw);
+    const line = IMPACTO_LINEA_TABLA[k];
+    const text = line || k;
+    return `<span class="cell-project-impact">${escapeHtml(text)}</span>`;
   }
 
   function calculateProject(p) {
@@ -406,7 +428,7 @@
   }
 
   function updateProject(id, field, value) {
-    const strFields = ["nombre", "responsable", "observaciones"];
+    const strFields = ["nombre", "responsable", "observaciones", "impacto_usuaria"];
     projects = projects.map((item) => {
       if (item.id !== id) return item;
       const v = strFields.includes(field) ? value : value === "" ? 0 : Number(value);
@@ -423,6 +445,7 @@
         id: newId,
         nombre: "Nuevo proyecto",
         responsable: "",
+        impacto_usuaria: "",
         observaciones: "",
         definicion_inicial_num: 0,
         presupuesto_plan: 0,
@@ -448,6 +471,24 @@
     el.tabGerencia.setAttribute("aria-selected", isCarga ? "false" : "true");
     el.panelCarga.classList.toggle("is-active", isCarga);
     el.panelGerencia.classList.toggle("is-active", !isCarga);
+    if (isCarga) el.panelGerencia.dataset.hoverCol = "";
+  }
+
+  /** Resalta tarjeta de resumen + columna de tabla + ítem de leyenda al pasar el mouse (mismo indicador). */
+  function syncResumenHover(e) {
+    const card = e.target.closest("[data-resumen-key]");
+    const cell = e.target.closest("th[data-col], td[data-col]");
+    const leg = e.target.closest("[data-leyenda-key]");
+    let key = "";
+    if (card) key = card.getAttribute("data-resumen-key") || "";
+    else if (cell) key = cell.getAttribute("data-col") || "";
+    else if (leg) key = leg.getAttribute("data-leyenda-key") || "";
+    if (key === "proyecto") key = "";
+    el.panelGerencia.dataset.hoverCol = key;
+  }
+
+  function clearResumenHover() {
+    el.panelGerencia.dataset.hoverCol = "";
   }
 
   function renderProjectList() {
@@ -486,6 +527,7 @@
     const map = [
       ["f-nombre", "nombre"],
       ["f-responsable", "responsable"],
+      ["f-impacto-usuaria", "impacto_usuaria"],
       ["f-definicion", "definicion_inicial_num"],
       ["f-presupuesto-plan", "presupuesto_plan"],
       ["f-presupuesto-real", "presupuesto_real"],
@@ -578,12 +620,12 @@
     }
 
     const resumenItems = [
-      ["Cump. presupuesto", r.presupuesto],
-      ["Cump. plazo", r.plazo],
-      ["Cump. requisitos", r.requisitos],
-      ["Calidad", r.calidad],
-      ["Aceptación", r.aceptacion],
-      ["Global Gerencia", r.scoreGerencia],
+      ["Cump. presupuesto", r.presupuesto, "presupuesto"],
+      ["Cump. plazo", r.plazo, "plazo"],
+      ["Cump. requisitos", r.requisitos, "requisitos"],
+      ["Calidad", r.calidad, "calidad"],
+      ["Aceptación", r.aceptacion, "aceptacion"],
+      ["Global Gerencia", r.scoreGerencia, "global"],
     ];
 
     el.resumenArea.innerHTML = `
@@ -591,10 +633,10 @@
       ${lecturaEquivalenciasHtml()}
       <div class="grid-resumen">
         ${resumenItems
-          .map(([label, value]) => {
+          .map(([label, value, colKey]) => {
             const globalCls = label === "Global Gerencia" ? " resumen-card--global" : "";
             return `
-          <div class="card${globalCls}">
+          <div class="card resumen-card--sync${globalCls}" data-resumen-key="${colKey}">
             <div class="card-content">
               <div class="text-sm-muted">${escapeHtml(label)}</div>
               <div class="metric-pct resumen-value">${label === "Calidad" ? formatPctCalidad(value) : value}<span class="unit">%</span></div>
@@ -610,13 +652,18 @@
       .map(
         (p) => `
       <tr>
-        <td class="font-medium">${escapeHtml(p.nombre)}</td>
-        <td>${p.calculado.presupuesto}%</td>
-        <td>${p.calculado.plazo}%</td>
-        <td>${p.calculado.requisitos}%</td>
-        <td>${formatPctCalidad(p.calculado.calidad)}%</td>
-        <td>${p.calculado.aceptacion}%</td>
-        <td>
+        <td data-col="proyecto" class="td-project">
+          <div class="cell-project-stack">
+            <span class="cell-project-name">${escapeHtml(p.nombre)}</span>
+            ${htmlImpactoBajoNombre(p)}
+          </div>
+        </td>
+        <td data-col="presupuesto">${p.calculado.presupuesto}%</td>
+        <td data-col="plazo">${p.calculado.plazo}%</td>
+        <td data-col="requisitos">${p.calculado.requisitos}%</td>
+        <td data-col="calidad">${formatPctCalidad(p.calculado.calidad)}%</td>
+        <td data-col="aceptacion">${p.calculado.aceptacion}%</td>
+        <td data-col="global">
           <div class="cell-flex">
             <span>${p.calculado.scoreGerencia}%</span>
             ${badgeHtml(p.calculado.scoreGerencia)}
@@ -631,7 +678,7 @@
       .map((ind) => {
         const pesoG = pesoGerenciaTexto(ind.pesoGerencia);
         return `
-      <div class="leyenda-item">
+      <div class="leyenda-item" data-leyenda-key="${escapeHtml(ind.key)}">
         <div class="head">
           <span class="leyenda-name">${escapeHtml(ind.name)}</span>
           <span class="badge badge-secondary">${escapeHtml(ind.dimension)}</span>
@@ -673,6 +720,9 @@
   el.btnAddProject.addEventListener("click", addProject);
   el.tabCarga.addEventListener("click", () => setTab("carga"));
   el.tabGerencia.addEventListener("click", () => setTab("gerencia"));
+
+  el.panelGerencia.addEventListener("mouseover", syncResumenHover);
+  el.panelGerencia.addEventListener("mouseleave", clearResumenHover);
 
   function onFormFieldChange(e) {
     const t = e.target;

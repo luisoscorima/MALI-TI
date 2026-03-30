@@ -10,9 +10,19 @@
     <div class="page">
       <div class="mx-auto stack">
         <header class="hero">
-          <div class="hero-main">
-            <h1>Indicadores TI</h1>
-            <p class="hero-tag">Seguimiento de proyectos</p>
+          <div class="hero-brand">
+            <img
+              class="hero-logo"
+              src="https://mali-assets.s3.us-east-1.amazonaws.com/assets-web-mali/Logo_MALI_Blanco.png"
+              alt="Museo de Arte de Lima (MALI)"
+              width="120"
+              height="120"
+              decoding="async"
+            />
+            <div class="hero-main">
+              <h1>Indicadores TI - 2025</h1>
+              <p class="hero-tag">Seguimiento de proyectos</p>
+            </div>
           </div>
           <p class="hero-steps"><strong>1</strong> Presentación &nbsp;→&nbsp; <strong>2</strong> Carga de datos</p>
         </header>
@@ -41,18 +51,21 @@
                   <h2 class="card-title">Resumen por proyecto</h2>
                 </div>
                 <div class="card-content" style="padding-top: 0.5rem">
-                  <p class="leyenda-tabla-nota">Puntajes 0–100. <strong>Calidad</strong> combina funcionamiento (60%) e incidencias (40%). La última columna es el global Gerencia.</p>
+                  <p class="leyenda-tabla-nota">
+                    Puntajes 0–100. <strong>Calidad</strong> combina funcionamiento (60%) e incidencias (40%). Bajo cada proyecto se indica el impacto en área usuaria (no pondera). La última columna es el
+                    global Gerencia.
+                  </p>
                   <div class="table-wrap">
                     <table>
                       <thead>
                         <tr>
-                          <th>Proyecto</th>
-                          <th>C. presup.<span class="th-peso">15%</span></th>
-                          <th>C. plazo<span class="th-peso">25%</span></th>
-                          <th>C. req.<span class="th-peso">25%</span></th>
-                          <th>Calidad<span class="th-peso">20%</span></th>
-                          <th>Acept.<span class="th-peso">15%</span></th>
-                          <th>Global G.<span class="th-peso">Ponderado</span></th>
+                          <th data-col="proyecto">Proyecto</th>
+                          <th data-col="presupuesto">C. presup.<span class="th-peso">15%</span></th>
+                          <th data-col="plazo">C. plazo<span class="th-peso">25%</span></th>
+                          <th data-col="requisitos">C. req.<span class="th-peso">25%</span></th>
+                          <th data-col="calidad">Calidad<span class="th-peso">20%</span></th>
+                          <th data-col="aceptacion">Acept.<span class="th-peso">15%</span></th>
+                          <th data-col="global">Global G.<span class="th-peso">Ponderado</span></th>
                         </tr>
                       </thead>
                       <tbody id="table-body"></tbody>
@@ -96,6 +109,25 @@
                         <div class="field col-span-2">
                           <label for="f-responsable">Responsable</label>
                           <input class="input" id="f-responsable" data-field="responsable" type="text" autocomplete="off" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-impacto">
+                      <h3 id="form-h-impacto" class="form-section-title">Impacto · área usuaria</h3>
+                      <p class="form-section-dimension">No pondera</p>
+                      <div class="grid-2">
+                        <div class="field col-span-2">
+                          <label for="f-impacto-usuaria">Nivel</label>
+                          <span class="field-hint">Se muestra bajo el nombre en la tabla</span>
+                          <select class="select" id="f-impacto-usuaria" data-field="impacto_usuaria">
+                            <option value="">Sin definir</option>
+                            <option value="muy_alto">Muy alto</option>
+                            <option value="alto">Alto</option>
+                            <option value="medio">Medio</option>
+                            <option value="bajo">Bajo</option>
+                            <option value="marginal">Marginal</option>
+                          </select>
                         </div>
                       </div>
                     </section>
