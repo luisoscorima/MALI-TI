@@ -231,7 +231,7 @@
       requisitos_cumplidos: 5,
       incidencias_criticas: 4,
       funcionamiento_producto: 40,
-      aceptacion_usuario: 50,
+      aceptacion_usuario: 60,
     },
   ];
 
