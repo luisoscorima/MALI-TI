@@ -62,6 +62,55 @@ body.dashboard-indicadores {
   gap: 1.25rem;
 }
 
+/* Vista presentación: semáforo + guía + resumen + tabla + leyenda más compactos */
+.dashboard-indicadores #panel-gerencia.tab-panel.is-active {
+  gap: 0.5rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia {
+  gap: 0.45rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .semaforo-guia--panel {
+  margin-bottom: 0;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .lectura-guia {
+  margin-bottom: 0;
+  padding: 0.65rem 0.85rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .lectura-intro-principal {
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .lectura-bloque {
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .grid-resumen {
+  gap: 0.45rem;
+}
+
+.dashboard-indicadores .stack--resumen-gerencia .semaforo-guia {
+  padding: 0.65rem 0.85rem;
+}
+
+.dashboard-indicadores #panel-gerencia .grid-leyenda {
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.dashboard-indicadores #panel-gerencia .grid-leyenda .card .card-content {
+  padding-top: 0.65rem;
+  padding-bottom: 0.85rem;
+}
+
+.dashboard-indicadores #panel-gerencia .grid-leyenda .card .card-header {
+  padding-bottom: 0;
+}
+
 /* Cabecera compacta */
 .dashboard-indicadores .hero {
   display: flex;
@@ -220,6 +269,43 @@ body.dashboard-indicadores {
   .dashboard-indicadores .grid-2 {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.dashboard-indicadores .form-carga {
+  padding-top: 0.15rem;
+}
+
+.dashboard-indicadores .form-section {
+  margin-bottom: 1rem;
+  padding-bottom: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-indicadores .form-section--last {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.dashboard-indicadores .form-section--last .textarea {
+  margin-top: 0.35rem;
+}
+
+.dashboard-indicadores .form-section-title {
+  margin: 0 0 0.2rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.dashboard-indicadores .form-section-dimension {
+  margin: 0 0 0.65rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
 }
 
 .dashboard-indicadores .grid-carga {

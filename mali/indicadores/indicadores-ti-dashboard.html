@@ -14,117 +14,27 @@
             <h1>Indicadores TI</h1>
             <p class="hero-tag">Seguimiento de proyectos</p>
           </div>
-          <p class="hero-steps"><strong>1</strong> Carga &nbsp;→&nbsp; <strong>2</strong> Presentación</p>
+          <p class="hero-steps"><strong>1</strong> Presentación &nbsp;→&nbsp; <strong>2</strong> Carga de datos</p>
         </header>
 
         <div class="stack">
           <div class="tabs-list" role="tablist">
-            <button type="button" class="tab-trigger is-active" id="tab-carga" role="tab" aria-selected="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-              </svg>
-              Vista de carga
-            </button>
-            <button type="button" class="tab-trigger" id="tab-gerencia" role="tab" aria-selected="false">
+            <button type="button" class="tab-trigger is-active" id="tab-gerencia" role="tab" aria-selected="true" aria-controls="panel-gerencia">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M2 3h20v14H2zM8 21h8M12 17v4" />
               </svg>
               Vista de presentación
             </button>
+            <button type="button" class="tab-trigger" id="tab-carga" role="tab" aria-selected="false" aria-controls="panel-carga">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+              Vista de carga
+            </button>
           </div>
 
-          <div id="panel-carga" class="tab-panel is-active stack" role="tabpanel">
-            <div class="grid-carga">
-              <div class="card">
-                <div class="card-header flex-between">
-                  <h2 class="card-title">Proyectos</h2>
-                  <button type="button" class="btn" id="btn-add-project">+ Nuevo</button>
-                </div>
-                <div class="card-content space-y-3" id="project-list"></div>
-              </div>
-
-              <div class="stack">
-                <div id="form-area" class="card hidden">
-                  <div class="card-header">
-                    <h2 class="card-title">Datos del proyecto</h2>
-                  </div>
-                  <div class="card-content grid-2">
-                    <div class="field col-span-2">
-                      <label for="f-nombre">Nombre del proyecto</label>
-                      <input class="input" id="f-nombre" data-field="nombre" type="text" autocomplete="off" />
-                    </div>
-                    <div class="field col-span-2">
-                      <label for="f-responsable">Responsable</label>
-                      <input class="input" id="f-responsable" data-field="responsable" type="text" autocomplete="off" />
-                    </div>
-                    <div class="field">
-                      <label for="f-definicion">Definición inicial (%)</label>
-                      <span class="field-hint">0–100</span>
-                      <input class="input" id="f-definicion" data-field="definicion_inicial_num" type="number" step="any" min="0" max="100" />
-                    </div>
-                    <div class="field">
-                      <label for="f-presupuesto-plan">Presupuesto planificado</label>
-                      <input class="input" id="f-presupuesto-plan" data-field="presupuesto_plan" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-presupuesto-real">Presupuesto real</label>
-                      <input class="input" id="f-presupuesto-real" data-field="presupuesto_real" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-plazo-plan">Plazo planificado</label>
-                      <span class="field-hint">misma unidad que plazo real</span>
-                      <input class="input" id="f-plazo-plan" data-field="plazo_plan" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-plazo-real">Plazo real</label>
-                      <input class="input" id="f-plazo-real" data-field="plazo_real" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-req-comp">Requisitos comprometidos</label>
-                      <input class="input" id="f-req-comp" data-field="requisitos_comprometidos" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-req-cum">Requisitos cumplidos</label>
-                      <input class="input" id="f-req-cum" data-field="requisitos_cumplidos" type="number" step="any" />
-                    </div>
-                    <div class="field">
-                      <label for="f-incidencias">Incidencias críticas</label>
-                      <span class="field-hint">período (Calidad)</span>
-                      <input class="input" id="f-incidencias" data-field="incidencias_criticas" type="number" step="any" min="0" />
-                    </div>
-                    <div class="field col-span-2">
-                      <label for="f-funcionamiento">Funcionamiento del producto</label>
-                      <span class="field-hint">evaluación en producción (Calidad)</span>
-                      <select class="select" id="f-funcionamiento" data-field="funcionamiento_producto">
-                        <option value="100">Funciona bien y cumple el objetivo</option>
-                        <option value="80">Funciona con observaciones importantes</option>
-                        <option value="60">Entregado, pero con fallas relevantes en producción</option>
-                        <option value="40">Funcionamiento insuficiente</option>
-                        <option value="20">No cumple el objetivo principal</option>
-                      </select>
-                    </div>
-                    <div class="field col-span-2">
-                      <label for="f-aceptacion">Aceptación del usuario</label>
-                      <select class="select" id="f-aceptacion" data-field="aceptacion_usuario">
-                        <option value="100">Conforme</option>
-                        <option value="75">Conforme con observaciones</option>
-                        <option value="50">No conforme</option>
-                      </select>
-                    </div>
-                    <div class="field col-span-2">
-                      <label for="f-observaciones">Observaciones</label>
-                      <textarea class="textarea" id="f-observaciones" data-field="observaciones" placeholder="Opcional"></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <div id="results-area"></div>
-              </div>
-            </div>
-          </div>
-
-          <div id="panel-gerencia" class="tab-panel stack" role="tabpanel">
-            <div id="resumen-area" class="stack space-y-6"></div>
+          <div id="panel-gerencia" class="tab-panel is-active stack" role="tabpanel" aria-labelledby="tab-gerencia">
+            <div id="resumen-area" class="stack stack--resumen-gerencia"></div>
             <div class="grid-leyenda">
               <div class="card">
                 <div class="card-header">
@@ -155,6 +65,146 @@
                   <h2 class="card-title">Leyenda de indicadores</h2>
                 </div>
                 <div class="card-content space-y-4" id="legend-area"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="panel-carga" class="tab-panel stack" role="tabpanel" aria-labelledby="tab-carga">
+            <div class="grid-carga">
+              <div class="card">
+                <div class="card-header flex-between">
+                  <h2 class="card-title">Proyectos</h2>
+                  <button type="button" class="btn" id="btn-add-project">+ Nuevo</button>
+                </div>
+                <div class="card-content space-y-3" id="project-list"></div>
+              </div>
+
+              <div class="stack">
+                <div id="form-area" class="card hidden">
+                  <div class="card-header">
+                    <h2 class="card-title">Carga por indicador</h2>
+                  </div>
+                  <div class="card-content form-carga">
+                    <section class="form-section" aria-labelledby="form-h-ident">
+                      <h3 id="form-h-ident" class="form-section-title">Identificación del proyecto</h3>
+                      <p class="form-section-dimension">Datos generales</p>
+                      <div class="grid-2">
+                        <div class="field col-span-2">
+                          <label for="f-nombre">Nombre del proyecto</label>
+                          <input class="input" id="f-nombre" data-field="nombre" type="text" autocomplete="off" />
+                        </div>
+                        <div class="field col-span-2">
+                          <label for="f-responsable">Responsable</label>
+                          <input class="input" id="f-responsable" data-field="responsable" type="text" autocomplete="off" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-def">
+                      <h3 id="form-h-def" class="form-section-title">Definición inicial del proyecto</h3>
+                      <p class="form-section-dimension">Planificación</p>
+                      <div class="grid-2">
+                        <div class="field col-span-2">
+                          <label for="f-definicion">Definición inicial (%)</label>
+                          <span class="field-hint">0–100</span>
+                          <input class="input" id="f-definicion" data-field="definicion_inicial_num" type="number" step="any" min="0" max="100" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-pre">
+                      <h3 id="form-h-pre" class="form-section-title">Cumplimiento de presupuesto</h3>
+                      <p class="form-section-dimension">Planificación</p>
+                      <div class="grid-2">
+                        <div class="field">
+                          <label for="f-presupuesto-plan">Presupuesto planificado</label>
+                          <input class="input" id="f-presupuesto-plan" data-field="presupuesto_plan" type="number" step="any" />
+                        </div>
+                        <div class="field">
+                          <label for="f-presupuesto-real">Presupuesto real</label>
+                          <input class="input" id="f-presupuesto-real" data-field="presupuesto_real" type="number" step="any" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-plazo">
+                      <h3 id="form-h-plazo" class="form-section-title">Cumplimiento de plazo</h3>
+                      <p class="form-section-dimension">Ejecución</p>
+                      <div class="grid-2">
+                        <div class="field">
+                          <label for="f-plazo-plan">Plazo planificado</label>
+                          <span class="field-hint">misma unidad que plazo real</span>
+                          <input class="input" id="f-plazo-plan" data-field="plazo_plan" type="number" step="any" />
+                        </div>
+                        <div class="field">
+                          <label for="f-plazo-real">Plazo real</label>
+                          <input class="input" id="f-plazo-real" data-field="plazo_real" type="number" step="any" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-req">
+                      <h3 id="form-h-req" class="form-section-title">Cumplimiento de requisitos</h3>
+                      <p class="form-section-dimension">Producto</p>
+                      <div class="grid-2">
+                        <div class="field">
+                          <label for="f-req-comp">Requisitos comprometidos</label>
+                          <input class="input" id="f-req-comp" data-field="requisitos_comprometidos" type="number" step="any" />
+                        </div>
+                        <div class="field">
+                          <label for="f-req-cum">Requisitos cumplidos</label>
+                          <input class="input" id="f-req-cum" data-field="requisitos_cumplidos" type="number" step="any" />
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-cal">
+                      <h3 id="form-h-cal" class="form-section-title">Calidad</h3>
+                      <p class="form-section-dimension">Producto · incidencias y funcionamiento</p>
+                      <div class="grid-2">
+                        <div class="field">
+                          <label for="f-incidencias">Incidencias críticas</label>
+                          <span class="field-hint">período</span>
+                          <input class="input" id="f-incidencias" data-field="incidencias_criticas" type="number" step="any" min="0" />
+                        </div>
+                        <div class="field col-span-2">
+                          <label for="f-funcionamiento">Funcionamiento del producto</label>
+                          <span class="field-hint">evaluación en producción</span>
+                          <select class="select" id="f-funcionamiento" data-field="funcionamiento_producto">
+                            <option value="100">Funciona bien y cumple el objetivo</option>
+                            <option value="80">Funciona con observaciones importantes</option>
+                            <option value="60">Entregado, pero con fallas relevantes en producción</option>
+                            <option value="40">Funcionamiento insuficiente</option>
+                            <option value="20">No cumple el objetivo principal</option>
+                          </select>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section" aria-labelledby="form-h-acep">
+                      <h3 id="form-h-acep" class="form-section-title">Aceptación del usuario</h3>
+                      <p class="form-section-dimension">Usuario</p>
+                      <div class="grid-2">
+                        <div class="field col-span-2">
+                          <label for="f-aceptacion">Aceptación del usuario</label>
+                          <select class="select" id="f-aceptacion" data-field="aceptacion_usuario">
+                            <option value="100">Conforme</option>
+                            <option value="75">Conforme con observaciones</option>
+                            <option value="50">No conforme</option>
+                          </select>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="form-section form-section--last" aria-labelledby="form-h-obs">
+                      <h3 id="form-h-obs" class="form-section-title">Observaciones</h3>
+                      <p class="form-section-dimension">Comentarios libres (no ponderan)</p>
+                      <textarea class="textarea" id="f-observaciones" data-field="observaciones" placeholder="Opcional" aria-labelledby="form-h-obs"></textarea>
+                    </section>
+                  </div>
+                </div>
+
+                <div id="results-area"></div>
               </div>
             </div>
           </div>

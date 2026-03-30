@@ -685,6 +685,6 @@
   el.formArea.addEventListener("input", onFormFieldChange);
   el.formArea.addEventListener("change", onFormFieldChange);
 
-  setTab("carga");
+  setTab("gerencia");
   render();
 })();
