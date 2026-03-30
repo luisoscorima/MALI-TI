@@ -702,8 +702,10 @@
 
 			const img = document.createElement("img");
 			img.className = "slide--image";
-			img.src = item.imageSrc;
+			/* Carga diferida: no asignar src aquí; init/change activan solo prev|current|next */
+			img.dataset.src = item.imageSrc;
 			img.alt = item.imageAlt || item.title || "Nueva adquisición MALI";
+			img.decoding = "async";
 
 			if (item.link) {
 				const anchor = document.createElement("a");
@@ -766,10 +768,38 @@
 			bg.className = "slide__bg";
 			const bgUrl = item.backgroundSrc || item.imageSrc;
 			if (bgUrl) {
-				bg.style.setProperty("--bg", `url(${bgUrl})`);
+				bg.dataset.bgUrl = bgUrl;
 			}
 			bg.style.setProperty("--dir", "0");
 			return bg;
+		}
+
+		/** Solo pide imagen + fondo para los slides en uso (prev | current | next). Evita abrumar opac-image.pl. */
+		function loadSlideMedia(index) {
+			if (typeof totalSlides !== "number" || index < 0 || index >= totalSlides) return;
+			const slide = allSlides[index];
+			const bg = allSlideBgs[index];
+			if (!slide || !bg) return;
+			const img = slide.querySelector(".slide--image");
+			if (!img) return;
+
+			const pendingSrc = img.dataset.src;
+			if (pendingSrc) {
+				img.src = pendingSrc;
+				delete img.dataset.src;
+			}
+
+			const bgUrl = bg.dataset.bgUrl;
+			if (bgUrl && !bg.dataset.bgApplied) {
+				bg.style.setProperty("--bg", `url(${bgUrl})`);
+				bg.dataset.bgApplied = "1";
+			}
+		}
+
+		function loadSlideMediaForIndices(a, b, c) {
+			loadSlideMedia(a);
+			loadSlideMedia(b);
+			loadSlideMedia(c);
 		}
 
 		// -------------------------------------------------
@@ -998,6 +1028,8 @@
 			allSlidesInfo[nextIndex].setAttribute("data-next", "");
 			allSlideBgs[nextIndex].setAttribute("data-next", "");
 
+			loadSlideMediaForIndices(prevIndex, currentIndex, nextIndex);
+
 			// Asignamos los eventos a los botones
 			buttons.prev.addEventListener("click", change(-1));
 			buttons.next.addEventListener("click", change(1));
@@ -1010,8 +1042,7 @@
 		}
 
 		function setup() {
-			// Inicialización asíncrona: el carrusel se muestra de inmediato;
-			// las imágenes cargan en segundo plano sin bloquear.
+			// Las imágenes se piden solo para prev | current | next (ver loadSlideMedia).
 			init();
 		}
 
@@ -1088,6 +1119,8 @@
 
 				currentIndex = newCurr;
 
+				loadSlideMediaForIndices(newPrev, newCurr, newNext);
+
 				// Desbloquear tras finalizar la transición
 				setTimeout(() => {
 					isTransitioning = false;
@@ -1095,7 +1128,6 @@
 			};
 		}
 
-		// Inicializamos el carrusel (las imágenes cargan en segundo plano)
 		setup();
 	});
 </script>
