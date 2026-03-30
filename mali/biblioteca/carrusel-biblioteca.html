@@ -763,12 +763,24 @@
 			return block;
 		}
 
+		/** Fondo difuminado: miniatura Koha (menos peso que la imagen completa). */
+		function opacImageThumbnailUrl(imageUrl) {
+			try {
+				const u = new URL(imageUrl, window.location.href);
+				if (!u.pathname.includes("opac-image.pl")) return imageUrl;
+				u.searchParams.set("thumbnail", "1");
+				return u.toString();
+			} catch {
+				return imageUrl;
+			}
+		}
+
 		function createBackground(item) {
 			const bg = document.createElement("div");
 			bg.className = "slide__bg";
 			const bgUrl = item.backgroundSrc || item.imageSrc;
 			if (bgUrl) {
-				bg.dataset.bgUrl = bgUrl;
+				bg.dataset.bgUrl = opacImageThumbnailUrl(bgUrl);
 			}
 			bg.style.setProperty("--dir", "0");
 			return bg;
