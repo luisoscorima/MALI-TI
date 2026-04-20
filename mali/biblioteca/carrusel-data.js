@@ -89,9 +89,9 @@ const MALI_CAROUSEL_ITEMS = [
     subtitle: "",
     descriptionHtml: " <i>El último viaje de la fragata Nuestra Señora de las Mercedes: un tesoro cultural recuperado.</i> 2023.",
     link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=20029",
-    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1387",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1787",
     imageAlt: "El último viaje de la fragata Nuestra Señora de las Mercedes: un tesoro cultural recuperado",
-    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1387"
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1787"
   },
   {
     title: "Palabras clave de la sociedad y la cultura incas",
