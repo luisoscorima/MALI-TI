@@ -39,7 +39,6 @@ const MALI_CAROUSEL_ITEMS = [
     imageAlt: "Mariano Fortuny: modernity foreseen",
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1797"
   },
-  },
   {
     title: "Turungo: diálogo y archivo",
     subtitle: "Díaz, Gonzalo.",
@@ -194,10 +193,6 @@ const MALI_CAROUSEL_ITEMS = [
     imageAlt: "Contemplativas: Monasterios en el virreinato del Perú",
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1727"
   },
-  {
-    
-
-  }
 ];
 
 window.MALI_CAROUSEL_ITEMS = MALI_CAROUSEL_ITEMS;
