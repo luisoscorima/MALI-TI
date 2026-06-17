@@ -1,0 +1,11 @@
+.env
+*.sql
+*.sql.gz
+*.tar.gz
+*.zip
+*.dump
+backups/
+tmp/
+logs/
+.DS_Store
+Thumbs.db
