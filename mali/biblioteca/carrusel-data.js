@@ -22,6 +22,15 @@ const MALI_CAROUSEL_ITEMS = [
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1800"
   },
   {
+    title: "Iván Tovar: Masterpieces",
+    subtitle: "Belcove, Julie.",
+    descriptionHtml: "Belcove, Julie. <i>Iván Tovar: Masterpieces.</i> 2025.",
+    link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=20045",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1823",
+    imageAlt: "Iván Tovar: Masterpieces",
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1823"
+  },
+  {
     title: "Mariano Fortuny: modernity foreseen",
     subtitle: "Quílez Corella, Francese.",
     descriptionHtml: "Quílez Corella, Francese. <i>Mariano Fortuny: modernity foreseen.</i> 2026.",
@@ -29,6 +38,7 @@ const MALI_CAROUSEL_ITEMS = [
     imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1797",
     imageAlt: "Mariano Fortuny: modernity foreseen",
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1797"
+  },
   },
   {
     title: "Turungo: diálogo y archivo",
