@@ -1420,6 +1420,40 @@
       display: block;
     }
 
+    .pam-field--checkbox {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.75em;
+    }
+
+    .pam-field--checkbox input[type="checkbox"] {
+      width: auto;
+      margin-top: 0.3em;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+    }
+
+    .pam-field--checkbox label {
+      font-weight: 400;
+      font-size: 1.2rem;
+      line-height: 1.45;
+    }
+
+    .pam-field--checkbox label a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .pam-field--checkbox label a:hover {
+      text-decoration: none;
+    }
+
+    .pam-field--checkbox .pam-field__error {
+      flex-basis: 100%;
+      margin-left: 1.75em;
+    }
+
     .pam-modal__footer {
       display: flex;
       flex-wrap: wrap;
@@ -1608,16 +1642,14 @@
             <li>Acceso gratuito a exposiciones</li>
             <li>Invitación a inauguraciones de exposiciones</li>
             <li>Acceso gratuito a Noche MALI</li>
-            <li>Invitación para visita guiada</li>
-            <li>Posibilidad de realizar visitas curatoriales*</li>
-            <li>Invitación doble para visita guiada al Taller MALI</li>
-            <li>10% de descuento en alquiler Salón Prado**</li>
-            <li>15% de descuento en cursos y talleres, y 20% en extensión profesional***</li>
-            <li>15% de descuento en publicaciones MALI</li>
-            <li>Delivery gratuito por compras superiores a S/100 en tienda MALI</li>
+            <li>Invitación para visitas guiadas especiales</li>
+            <li>Visita guiada por el mes de tu cumpleaños*</li>
+            <li>Descuento en actividades especiales</li>
+            <li>Acceso al carnet de biblioteca**</li>
+            <li>15% de descuento en cursos y talleres, y 20% en e. profesional***</li>
+            <li>Descuento en productos y publicaciones MALI</li>
+            <li>Beneficios por participación en actividades de fin de semana***</li>
             <li>10% de descuento en consumos en el restaurante del MALI</li>
-            <li>Precios especiales en funciones y festivales de cine</li>
-            <li>Invitación a temporadas de teatro</li>
           </ul>
           </div>
           <footer class="benefits-card__footer" aria-hidden="true"></footer>
@@ -1641,17 +1673,15 @@
                   <ul class="pricing-features">
                     <li><em>Titular</em></li>
                     <li><em>Titular</em></li>
+                    <li><em>+2</em></li>
                     <li><em>Titular</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>×</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
+                    <li><em>+5</em></li>
+                    <li><em>10%</em></li>
                     <li><em>×</em></li>
                     <li><em>✓</em></li>
+                    <li><em>5%</em></li>
                     <li><em>✓</em></li>
-                    <li><em>Titular</em></li>
+                    <li><em>✓</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
@@ -1671,17 +1701,15 @@
                   <ul class="pricing-features">
                     <li><em>Titular</em></li>
                     <li><em>Titular</em></li>
+                    <li><em>+2</em></li>
                     <li><em>Titular</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>×</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
+                    <li><em>+5</em></li>
+                    <li><em>10%</em></li>
                     <li><em>×</em></li>
                     <li><em>✓</em></li>
+                    <li><em>5%</em></li>
                     <li><em>✓</em></li>
-                    <li><em>Titular</em></li>
+                    <li><em>✓</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
@@ -1705,19 +1733,17 @@
                 </header>
                 <div class="pricing-body pam-rows-scroll">
                   <ul class="pricing-features">
-                    <li><em>+1</em></li>
+                    <li><em>1</em></li>
                     <li><em>Doble</em></li>
-                    <li><em>+1</em></li>
-                    <li><em>+1</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>×</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
+                    <li><em>+3</em></li>
+                    <li><em>+2</em></li>
+                    <li><em>+7</em></li>
+                    <li><em>15%</em></li>
                     <li><em>×</em></li>
                     <li><em>✓</em></li>
+                    <li><em>10%</em></li>
                     <li><em>✓</em></li>
-                    <li><em>+1</em></li>
+                    <li><em>✓</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
@@ -1735,19 +1761,17 @@
                 </header>
                 <div class="pricing-body pam-rows-scroll">
                   <ul class="pricing-features">
-                    <li><em>+1</em></li>
+                    <li><em>1</em></li>
                     <li><em>Doble</em></li>
-                    <li><em>+1</em></li>
-                    <li><em>+1</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>×</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
+                    <li><em>+3</em></li>
+                    <li><em>+2</em></li>
+                    <li><em>+7</em></li>
+                    <li><em>15%</em></li>
                     <li><em>×</em></li>
                     <li><em>✓</em></li>
+                    <li><em>10%</em></li>
                     <li><em>✓</em></li>
-                    <li><em>+1</em></li>
+                    <li><em>✓</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
@@ -1771,19 +1795,17 @@
                 </header>
                 <div class="pricing-body pam-rows-scroll">
                   <ul class="pricing-features">
-                    <li><em>+3</em></li>
+                    <li><em>3</em></li>
                     <li><em>Doble</em></li>
-                    <li><em>+2</em></li>
+                    <li><em>+5</em></li>
                     <li><em>+3</em></li>
+                    <li><em>+10</em></li>
+                    <li><em>20%</em></li>
                     <li><em>✓</em></li>
                     <li><em>✓</em></li>
+                    <li><em>15%</em></li>
                     <li><em>✓</em></li>
                     <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>+1</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
@@ -1801,23 +1823,21 @@
                 </header>
                 <div class="pricing-body pam-rows-scroll">
                   <ul class="pricing-features">
-                    <li><em>+3</em></li>
+                    <li><em>3</em></li>
                     <li><em>Doble</em></li>
-                    <li><em>+2</em></li>
+                    <li><em>+5</em></li>
                     <li><em>+3</em></li>
+                    <li><em>+10</em></li>
+                    <li><em>20%</em></li>
                     <li><em>✓</em></li>
                     <li><em>✓</em></li>
+                    <li><em>15%</em></li>
                     <li><em>✓</em></li>
                     <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>+1</em></li>
                   </ul>
                 </div>
                 <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61d301905bd5666e00c9" role="button">Unirme ahora</a>
+                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61e001905bda518d00bd" role="button">Unirme ahora</a>
                 </footer>
               </li>
             </ul>
@@ -1829,9 +1849,9 @@
       </div>
 
       <div class="pricing-notes">
-        <p>* Sujeto a previa coordinación.</p>
-        <p>** Sujeto a disponibilidad.</p>
-        <p>*** Desde el tercer mes siendo amigo.</p>
+        <p>* Acceso a salón prado previa coordinación.</p>
+        <p>** Incluye integración en el Club de lectura MALI.</p>
+        <p>*** +1 Noche MALI, por completar Tarjeta de Actividades PAM con los 4 sellos.</p>
         <p>El tiempo mínimo de permanencia es de un (1) año.</p>
       </div>
     </div>
@@ -1936,6 +1956,16 @@
             <input type="text" id="reg-origen-otro" name="como_te_enteraste_otro">
           </div>
 
+          <div class="pam-field pam-field--checkbox pam-form__full">
+            <input type="checkbox" id="reg-privacidad" name="acepta_privacidad" value="1" required>
+            <label for="reg-privacidad">
+              Acepto el tratamiento de mis datos personales de acuerdo con la
+              <a href="https://mali.pe/es/extension/politicas-de-privacidad/" target="_blank" rel="noopener noreferrer">política de privacidad del MALI</a>.
+              <span>*</span>
+            </label>
+            <span class="pam-field__error">Debes aceptar la política de privacidad.</span>
+          </div>
+
           <p class="pam-form__notice pam-form__full">Los campos marcados con <span>*</span> son obligatorios. Serás redirigido a Mercado Pago para completar tu suscripción.</p>
         </form>
       </div>
@@ -1964,7 +1994,8 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       function initRegistroModal() {
-        var PAM_REGISTRO_API = '';
+        // URL del Web App de Google Apps Script (ver mali/pam/google-apps-script/Code.gs)
+        var PAM_REGISTRO_API = 'https://script.google.com/macros/s/AKfycbzgsd2b4PXBSdrJdftErR2rTjfEAZe2faRL_R5n--rWZXmGg63mn4RLRRmC-oZq6TN4/exec';
         var modal = document.getElementById('pam-registro-modal');
         var form = document.getElementById('pam-registro-form');
         var subtitle = document.getElementById('pam-modal-subtitle');
@@ -2019,15 +2050,10 @@
           saveRegistro(payload)
             .then(function () {
               sessionStorage.setItem('pam-ultimo-registro', JSON.stringify(payload));
-              window.open(pendingCheckout.url, '_blank', 'noopener,noreferrer');
-              closeModal();
-              form.reset();
-              origenOtroWrap.hidden = true;
+              window.location.href = pendingCheckout.url;
             })
             .catch(function () {
               alert('No pudimos guardar tus datos. Por favor, intenta nuevamente.');
-            })
-            .finally(function () {
               submitBtn.disabled = false;
               submitBtn.textContent = 'Continuar al pago';
             });
@@ -2074,23 +2100,26 @@
             plan: pendingCheckout.plan,
             frecuencia: pendingCheckout.billing,
             checkout_url: pendingCheckout.url,
+            acepta_privacidad: true,
             registrado_en: new Date().toISOString()
           };
         }
 
         function saveRegistro(payload) {
           if (!PAM_REGISTRO_API) {
-            return Promise.resolve();
+            return Promise.reject(new Error('PAM_REGISTRO_API no configurada'));
           }
 
           return fetch(PAM_REGISTRO_API, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload)
           }).then(function (response) {
-            if (!response.ok) {
-              throw new Error('No se pudo guardar el registro');
-            }
+            return response.json().then(function (data) {
+              if (!response.ok || !data.success) {
+                throw new Error(data.error || 'No se pudo guardar el registro');
+              }
+            });
           });
         }
 
@@ -2129,6 +2158,11 @@
             valid = false;
           }
 
+          if (!form.acepta_privacidad.checked) {
+            setFieldError(form.acepta_privacidad, 'Debes aceptar la política de privacidad.');
+            valid = false;
+          }
+
           return valid;
         }
 
@@ -2159,11 +2193,13 @@
         }
 
         form.querySelectorAll('input, select, textarea').forEach(function (input) {
-          input.addEventListener('input', function () {
+          var clearInputError = function () {
             var field = input.closest('.pam-field');
             if (field) field.classList.remove('has-error');
             input.classList.remove('is-invalid');
-          });
+          };
+          input.addEventListener('input', clearInputError);
+          input.addEventListener('change', clearInputError);
         });
       }
 
