@@ -487,6 +487,8 @@
 
       .pam-pricing-viewport {
         overflow: visible;
+        position: relative;
+        z-index: 1;
         display: flex;
         justify-content: center;
         max-height: none;
@@ -501,6 +503,7 @@
       .pam-pricing-scale__inner {
         width: 880px;
         flex-shrink: 0;
+        transform-origin: top center;
       }
 
       .pam-pricing-layout {
@@ -508,26 +511,42 @@
         gap: 0.5rem;
         height: auto;
         max-height: none;
+        align-items: stretch;
       }
 
       .pricing-list {
         grid-template-columns: repeat(3, 1fr);
         gap: 0.5rem;
-        height: auto;
+        height: 100%;
         max-height: none;
         min-width: 0;
+        align-items: stretch;
       }
 
       .pricing-list > li,
       .benefits-card,
       .pricing-wrapper,
-      .pricing-wrapper > li,
       .pricing-wrapper > li.is-visible {
-        height: auto;
+        height: 100%;
         max-height: none;
         min-height: 0;
         flex: none;
         overflow: visible;
+      }
+
+      .pricing-wrapper > li.is-hidden {
+        height: auto;
+      }
+
+      .pricing-list > li {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pricing-wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
       }
 
       .benefits-list {
@@ -544,27 +563,37 @@
 
       .benefits-list li,
       .pricing-features li {
-        min-height: 42px;
-        padding: 0.55em 0.8em;
-        font-size: 1.38rem;
-        line-height: 1.36;
+        min-height: 44px;
+        padding: 0.58em 0.82em;
+        font-size: 1.48rem;
+        line-height: 1.34;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      .benefits-list li {
+        align-items: center;
       }
 
       .benefits-card__header,
       .pricing-header {
-        padding: 0.9em 0.65em 0.7em;
+        padding: 0.75em 0.6em 0.55em;
       }
 
       .benefits-card__header h2,
       .pricing-header h2 {
-        font-size: 1.35rem;
-        margin-bottom: 0.35em;
-        letter-spacing: 0.06em;
-        line-height: 1.2;
+        font-size: 1.18rem;
+        margin-bottom: 0.25em;
+        letter-spacing: 0.05em;
+        line-height: 1.15;
       }
 
       .benefits-card__spacer {
-        min-height: 2.8rem;
+        display: block;
+        min-height: 0;
+        height: 1.75rem;
+        margin: 0;
+        visibility: hidden;
       }
 
       .price {
@@ -573,25 +602,25 @@
       }
 
       .value {
-        font-size: 1.9rem;
+        font-size: 1.62rem;
         flex: none;
       }
 
       .currency {
-        font-size: 1.05rem;
-        margin-top: 0.2em;
+        font-size: 0.92rem;
+        margin-top: 0.15em;
       }
 
       .duration {
-        font-size: 0.88rem;
+        font-size: 0.82rem;
         align-self: flex-end;
-        margin-bottom: 0.1em;
+        margin-bottom: 0.08em;
       }
 
       .pricing-features em {
-        min-width: 2.75em;
-        padding: 0.18em 0.42em;
-        font-size: 1.14rem;
+        min-width: 2.8em;
+        padding: 0.2em 0.44em;
+        font-size: 1.22rem;
       }
 
       .benefits-card__footer,
@@ -624,29 +653,37 @@
       }
 
       .pricing-notes {
-        margin-top: 2.5em;
+        position: relative;
+        z-index: 5;
+        margin-top: 1.75em;
       }
 
       .pricing-switcher .fieldset {
-        padding: 3px;
+        padding: 2px;
+        border-width: 1.5px;
       }
 
       .pricing-switcher label {
-        width: 72px;
-        height: 30px;
-        line-height: 30px;
-        font-size: 1.1rem;
+        width: 62px;
+        height: 26px;
+        line-height: 26px;
+        font-size: 1rem;
       }
 
       .pricing-switcher .switch {
-        top: 3px;
-        left: 3px;
-        width: 72px;
-        height: 30px;
+        top: 2px;
+        left: 2px;
+        width: 62px;
+        height: 26px;
       }
 
       .pricing-switcher input#yearly-1:checked ~ .switch {
-        transform: translateX(72px);
+        transform: translateX(62px);
+      }
+
+      .benefits-card {
+        animation: none;
+        opacity: 1;
       }
     }
 
@@ -1097,19 +1134,19 @@
       }
 
       .pricing-switcher label {
-        width: 66px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 1.05rem;
+        width: 56px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 0.95rem;
       }
 
       .pricing-switcher .switch {
-        width: 66px;
-        height: 28px;
+        width: 56px;
+        height: 24px;
       }
 
       .pricing-switcher input#yearly-1:checked ~ .switch {
-        transform: translateX(66px);
+        transform: translateX(56px);
       }
     }
 
@@ -2092,7 +2129,7 @@
         var layout = document.querySelector('.pam-pricing-layout');
         if (!layout) return;
 
-        var isDesktopScroll = window.innerWidth >= 1024;
+        var isDesktopScroll = window.matchMedia('(min-width: 1024px)').matches;
         var shouldSync = window.innerWidth >= 480;
         var syncTargets = layout.querySelectorAll(
           '.benefits-card__header, .pricing-header, .benefits-card__footer, .pricing-footer, .pam-benefit-row'
@@ -2127,49 +2164,73 @@
           );
         }
 
-        function readElementHeight(el) {
-          return isDesktopScroll ? el.getBoundingClientRect().height : el.offsetHeight;
+        function measureBlock(el) {
+          if (isDesktopScroll) {
+            return el.getBoundingClientRect().height;
+          }
+          return Math.max(el.offsetHeight, el.scrollHeight);
         }
 
-        function equalizeMinHeight(elements) {
+        function equalizeBlockHeights(elements) {
           if (!elements.length) return;
+          elements.forEach(function (el) {
+            el.style.height = 'auto';
+            el.style.minHeight = '0';
+          });
           var max = 0;
           elements.forEach(function (el) {
-            max = Math.max(max, readElementHeight(el));
+            max = Math.max(max, measureBlock(el));
           });
+          var heightPx = Math.ceil(max) + 'px';
           elements.forEach(function (el) {
-            el.style.minHeight = Math.ceil(max) + 'px';
+            el.style.minHeight = heightPx;
+            if (!isDesktopScroll) {
+              el.style.height = heightPx;
+            }
           });
         }
 
         function equalizeRowHeights(index) {
           var rows = getVisibleRows(index);
           if (!rows.length) return;
+
           rows.forEach(function (row) {
             row.style.height = 'auto';
+            row.style.minHeight = '0';
           });
+
           var max = 0;
           rows.forEach(function (row) {
-            max = Math.max(max, readElementHeight(row));
+            max = Math.max(max, measureBlock(row));
           });
+
+          var heightPx = Math.ceil(max) + 'px';
           rows.forEach(function (row) {
-            row.style.minHeight = Math.ceil(max) + 'px';
-            if (!isDesktopScroll) {
-              row.style.height = Math.ceil(max) + 'px';
-            }
+            row.style.minHeight = heightPx;
+            row.style.height = isDesktopScroll ? 'auto' : heightPx;
           });
         }
 
-        var benefitHeader = layout.querySelector('.benefits-card__header');
-        equalizeMinHeight([benefitHeader].concat(getVisiblePlanHeaders()));
+        function runLayoutSync() {
+          var benefitHeader = layout.querySelector('.benefits-card__header');
+          equalizeBlockHeights([benefitHeader].concat(getVisiblePlanHeaders()));
 
-        var benefitFooter = layout.querySelector('.benefits-card__footer');
-        equalizeMinHeight([benefitFooter].concat(getVisiblePlanFooters()));
+          var benefitFooter = layout.querySelector('.benefits-card__footer');
+          equalizeBlockHeights([benefitFooter].concat(getVisiblePlanFooters()));
 
-        var rowCount = layout.querySelectorAll('.benefits-list li').length;
-        for (var i = 0; i < rowCount; i++) {
-          equalizeRowHeights(i);
+          var rowCount = layout.querySelectorAll('.benefits-list li').length;
+          var pass;
+          var i;
+          var passCount = isDesktopScroll ? 1 : 2;
+
+          for (pass = 0; pass < passCount; pass++) {
+            for (i = 0; i < rowCount; i++) {
+              equalizeRowHeights(i);
+            }
+          }
         }
+
+        runLayoutSync();
       }
 
       window.syncPamLayout = syncPamLayout;
@@ -2203,18 +2264,28 @@
         if (window.matchMedia('(min-width: 1024px)').matches) {
           inner.style.transform = '';
           inner.style.width = '';
+          inner.style.marginBottom = '';
+          wrap.style.height = '';
+          wrap.style.overflow = '';
           applyPamViewportSize();
           return;
         }
 
         var refWidth = 880;
         inner.style.width = refWidth + 'px';
+        inner.style.marginBottom = '0';
+        wrap.style.height = 'auto';
+        wrap.style.overflow = 'visible';
+        syncPamLayout();
         syncPamLayout();
 
         var available = wrap.clientWidth;
         var scale = Math.min(1, Math.max(0.36, available / refWidth));
+        var unscaledH = inner.offsetHeight;
+
         inner.style.transform = 'scale(' + scale + ')';
-        wrap.style.height = Math.ceil(inner.offsetHeight * scale) + 'px';
+        inner.style.transformOrigin = 'top center';
+        inner.style.marginBottom = Math.ceil(unscaledH * scale - unscaledH) + 'px';
       }
 
       window.updatePamScale = updatePamScale;
