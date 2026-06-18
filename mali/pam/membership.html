@@ -342,6 +342,11 @@
       border-radius: 4px;
     }
 
+    .pam-pricing-scale__inner {
+      width: 100%;
+      transform-origin: top center;
+    }
+
     @media (min-width: 1024px) {
       .pam-pricing-viewport {
         max-height: calc(100vh - 10.5rem);
@@ -421,70 +426,114 @@
     }
 
     @media (max-width: 1023px) {
+      .pricing-container {
+        width: 92%;
+        padding: 0;
+      }
+
       .pam-pricing-viewport {
-        max-height: calc(100vh - 9rem);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        max-height: none;
+        min-height: 0;
+        margin-top: 1em;
+      }
+
+      .pam-pricing-scale__inner {
+        width: 880px;
+        flex-shrink: 0;
       }
 
       .pam-pricing-layout {
-        grid-template-columns: minmax(108px, 1.1fr) minmax(0, 3fr);
-        gap: 0.4rem;
+        grid-template-columns: minmax(200px, 1.15fr) minmax(0, 3fr);
+        gap: 0.5rem;
+        height: auto;
+        max-height: none;
       }
 
       .pricing-list {
-        gap: 0.4rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        height: auto;
+        max-height: none;
+        min-width: 0;
+      }
+
+      .pricing-list > li,
+      .benefits-card,
+      .pricing-wrapper,
+      .pricing-wrapper > li.is-visible {
+        height: auto;
+        max-height: none;
+      }
+
+      .pam-rows-scroll {
+        overflow: visible;
+        flex: none;
+        min-height: 0;
       }
 
       .benefits-list li,
       .pricing-features li {
-        min-height: 40px;
-        padding: 0.5em 0.6em;
-        font-size: 1.12rem;
-        line-height: 1.3;
+        min-height: 38px;
+        padding: 0.5em 0.75em;
+        font-size: 1.2rem;
+        line-height: 1.32;
       }
 
       .benefits-card__header,
       .pricing-header {
-        padding: 0.85em 0.5em 0.65em;
+        padding: 0.9em 0.65em 0.7em;
       }
 
       .benefits-card__header h2,
       .pricing-header h2 {
-        font-size: 1.15rem;
+        font-size: 1.35rem;
         margin-bottom: 0.35em;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
+        line-height: 1.2;
       }
 
       .benefits-card__spacer {
         min-height: 2.8rem;
       }
 
+      .price {
+        flex-wrap: nowrap;
+        justify-content: center;
+      }
+
       .value {
-        font-size: 2rem;
+        font-size: 1.9rem;
+        flex: none;
       }
 
       .currency {
-        font-size: 1.1rem;
-        margin-top: 0.25em;
+        font-size: 1.05rem;
+        margin-top: 0.2em;
       }
 
       .duration {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
+        align-self: flex-end;
+        margin-bottom: 0.1em;
       }
 
       .pricing-features em {
         min-width: 2.6em;
-        padding: 0.15em 0.35em;
+        padding: 0.15em 0.4em;
         font-size: 1rem;
       }
 
       .benefits-card__footer,
       .pricing-footer {
-        padding: 0.65em 0.4em;
+        padding: 0.75em 0.5em;
       }
 
       .select {
         max-width: 100%;
-        padding: 0.65em 0.45em;
+        padding: 0.75em 0.5em;
         font-size: 0.95rem;
         letter-spacing: 0.05em;
       }
@@ -493,12 +542,17 @@
         top: 5px;
         right: 5px;
         padding: 0.2em 0.45em;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
       }
 
       .pricing-list > li {
         animation: none;
         opacity: 1;
+      }
+
+      .pricing-list > li:hover .pricing-wrapper > li.is-visible {
+        transform: none;
+        box-shadow: var(--card-shadow);
       }
     }
 
@@ -903,12 +957,6 @@
       100% { transform: perspective(2000px) rotateY(0); }
     }
 
-    @media (max-width: 1023px) {
-      .benefits-card__spacer {
-        min-height: 2.6rem;
-      }
-    }
-
     @media (min-width: 1024px) {
       .pam-title {
         margin-top: 2rem;
@@ -1224,6 +1272,7 @@
       </div>
 
       <div class="pam-pricing-viewport">
+        <div class="pam-pricing-scale__inner">
       <div class="pam-pricing-layout">
 
         <aside class="benefits-card" aria-label="Lista de beneficios">
@@ -1453,6 +1502,7 @@
 
         </ul>
       </div>
+        </div>
       </div>
 
       <div class="pricing-notes">
@@ -1850,6 +1900,9 @@
                 if (typeof window.resetPamScroll === 'function') {
                   window.resetPamScroll();
                 }
+                if (typeof window.updatePamScale === 'function') {
+                  window.updatePamScale();
+                }
               }, 650);
             });
           });
@@ -1995,6 +2048,36 @@
 
       window.syncPamLayout = syncPamLayout;
 
+      function updatePamScale() {
+        var wrap = document.querySelector('.pam-pricing-viewport');
+        var inner = document.querySelector('.pam-pricing-scale__inner');
+        if (!wrap || !inner) return;
+
+        if (window.innerWidth >= 1024) {
+          inner.style.transform = '';
+          inner.style.width = '';
+          wrap.style.height = '';
+          return;
+        }
+
+        var refWidth = 880;
+        inner.style.width = refWidth + 'px';
+        inner.style.transform = '';
+
+        requestAnimationFrame(function () {
+          syncPamLayout();
+          requestAnimationFrame(function () {
+            var available = wrap.clientWidth;
+            var scale = Math.min(1, available / refWidth);
+            scale = Math.max(0.36, scale);
+            inner.style.transform = 'scale(' + scale + ')';
+            wrap.style.height = Math.ceil(inner.offsetHeight * scale) + 'px';
+          });
+        });
+      }
+
+      window.updatePamScale = updatePamScale;
+
       function initSyncedScroll() {
         var areas = document.querySelectorAll('.pam-rows-scroll');
         var syncing = false;
@@ -2034,11 +2117,15 @@
         clearTimeout(syncResizeTimer);
         syncResizeTimer = setTimeout(function () {
           syncPamLayout();
+          updatePamScale();
         }, 120);
       });
 
       if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(syncPamLayout);
+        document.fonts.ready.then(function () {
+          syncPamLayout();
+          updatePamScale();
+        });
       }
 
       bouncyFilter(document.querySelectorAll('.pricing-container'));
@@ -2046,7 +2133,10 @@
       initSyncedRowHover();
       initSyncedScroll();
       requestAnimationFrame(function () {
-        requestAnimationFrame(syncPamLayout);
+        requestAnimationFrame(function () {
+          syncPamLayout();
+          updatePamScale();
+        });
       });
     });
   </script>
