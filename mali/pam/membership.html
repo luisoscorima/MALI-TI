@@ -710,7 +710,6 @@
 
       .exclusive .pricing-wrapper > li.is-visible .pricing-header {
         position: relative;
-        padding-top: 1.5em;
       }
 
       .exclusive .pricing-wrapper > li.is-visible .pricing-header::before {
@@ -1482,6 +1481,7 @@
     @media (max-width: 1023px) {
       .pam-pricing-layout {
         --pam-mobile-price-row: 1.75rem;
+        --pam-mobile-badge-row: 1.15em;
       }
 
       .pam-pricing-layout .benefits-card__header,
@@ -1491,11 +1491,18 @@
         justify-content: flex-end;
         align-items: center;
         box-sizing: border-box;
-        padding: 0.75em 0.6em 0.5em;
-        overflow: visible;
-        height: auto;
+        padding: calc(0.75em + var(--pam-mobile-badge-row)) 0.6em 0.5em;
         min-height: 0;
+        height: auto;
         max-height: none;
+      }
+
+      .pam-pricing-layout .benefits-card__header {
+        overflow: hidden;
+      }
+
+      .pam-pricing-layout .pricing-header {
+        overflow: visible;
       }
 
       .pam-pricing-layout .pricing-header {
@@ -1506,10 +1513,6 @@
       .pam-pricing-layout .benefits-card__header {
         padding-left: 0.55em;
         padding-right: 0.55em;
-      }
-
-      .pam-pricing-layout .exclusive .pricing-wrapper > li.is-visible .pricing-header {
-        padding-top: 1.5em;
       }
 
       .pam-pricing-layout .benefits-card__header h2,
@@ -1526,6 +1529,7 @@
 
       .pam-pricing-layout .benefits-card__spacer {
         display: block;
+        min-height: 0;
         height: var(--pam-mobile-price-row);
         width: 100%;
         margin: 0;
@@ -2396,8 +2400,31 @@
           });
         }
 
-        function runLayoutSync() {
+        function equalizeHeaderHeights() {
           var benefitHeader = layout.querySelector('.benefits-card__header');
+          var planHeaders = getVisiblePlanHeaders();
+          if (!benefitHeader || !planHeaders.length) return;
+
+          [benefitHeader].concat(planHeaders).forEach(function (el) {
+            el.style.height = 'auto';
+            el.style.minHeight = '0';
+          });
+
+          var max = 0;
+          planHeaders.forEach(function (el) {
+            max = Math.max(max, measureBlock(el));
+          });
+
+          var heightPx = Math.ceil(max) + 'px';
+          [benefitHeader].concat(planHeaders).forEach(function (el) {
+            el.style.minHeight = heightPx;
+            if (!isDesktopScroll) {
+              el.style.height = heightPx;
+            }
+          });
+        }
+
+        function runLayoutSync() {
           var benefitsSpacerEl = layout.querySelector('.benefits-card__spacer');
           var referencePrice = layout.querySelector('.pricing-wrapper > li.is-visible .price');
 
@@ -2409,7 +2436,7 @@
             benefitsSpacerEl.style.minHeight = priceRowHeight;
           }
 
-          equalizeBlockHeights([benefitHeader].concat(getVisiblePlanHeaders()));
+          equalizeHeaderHeights();
 
           var benefitFooter = layout.querySelector('.benefits-card__footer');
           equalizeBlockHeights([benefitFooter].concat(getVisiblePlanFooters()));
