@@ -198,6 +198,8 @@
     }
 
     .pricing-container {
+      display: flex;
+      flex-direction: column;
       width: 90%;
       max-width: 1140px;
       margin: 1.2em auto 0;
@@ -263,10 +265,11 @@
       color: var(--switch-active-text);
     }
 
-    /* Pricing layout: viewport scroll + 4 columnas */
+    /* Pricing layout: 4 columnas, listas con scroll independiente */
     .pam-pricing-viewport {
       width: 100%;
       margin-top: 1.4em;
+      flex-shrink: 0;
     }
 
     .pam-pricing-layout {
@@ -319,35 +322,58 @@
     }
 
     .pam-rows-scroll::-webkit-scrollbar-thumb {
-      background: var(--accent-glow);
+      background: var(--accent);
       border-radius: 4px;
+    }
+
+    .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-hover);
     }
 
     .pam-pricing-scale__inner {
       width: 100%;
+      height: 100%;
       transform-origin: top center;
     }
 
     @media (min-width: 1024px) {
       .pam-pricing-viewport {
-        max-height: calc(100vh - 10.5rem);
+        --pam-viewport-ratio: 16 / 9;
+        width: min(100%, calc((100vh - 11rem) * 16 / 9));
+        aspect-ratio: var(--pam-viewport-ratio);
+        max-height: calc(100vh - 11rem);
         min-height: 280px;
+        margin-inline: auto;
+        overflow: hidden;
+      }
+
+      .pam-pricing-viewport.is-wheel-active {
+        cursor: default;
       }
 
       .pam-pricing-layout {
         height: 100%;
-        max-height: inherit;
+        max-height: 100%;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .pam-pricing-layout > * {
+        min-height: 0;
+        min-width: 0;
       }
 
       .pricing-list {
         height: 100%;
-        max-height: inherit;
+        max-height: 100%;
+        min-height: 0;
       }
 
       .pricing-list > li {
         height: 100%;
-        max-height: inherit;
+        max-height: 100%;
         min-height: 0;
+        overflow: hidden;
       }
 
       .benefits-card,
@@ -355,22 +381,29 @@
       .pricing-wrapper > li.is-visible {
         min-height: 0;
         height: 100%;
-        max-height: inherit;
+        max-height: 100%;
+        overflow: hidden;
+      }
+
+      .pricing-wrapper {
+        flex: 1 1 0%;
       }
 
       .pam-rows-scroll {
-        flex: 1 1 auto;
+        flex: 1 1 0%;
         min-height: 0;
-        overflow-y: auto;
+        max-height: 100%;
+        overflow-y: scroll;
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        scrollbar-color: var(--accent) transparent;
+        scrollbar-color: var(--accent) rgba(108, 221, 199, 0.12);
+        scrollbar-gutter: stable;
       }
 
-      .benefits-list {
-        flex: 1;
-        min-height: 0;
+      .benefits-list,
+      .pricing-features {
+        flex: none;
       }
 
       .pam-pricing-layout {
@@ -459,7 +492,10 @@
         max-height: none;
         min-height: 0;
         margin-top: 1em;
+        margin-bottom: 0;
         height: auto;
+        aspect-ratio: auto;
+        width: 100%;
       }
 
       .pam-pricing-scale__inner {
@@ -586,6 +622,10 @@
         transform: none;
         box-shadow: var(--card-shadow);
       }
+
+      .pricing-notes {
+        margin-top: 2.5em;
+      }
     }
 
     .benefits-card {
@@ -703,10 +743,11 @@
 
     @media (min-width: 1024px) {
       .pricing-wrapper {
-        flex: 1 1 auto;
+        flex: 1 1 0%;
         min-height: 0;
         height: 100%;
-        max-height: inherit;
+        max-height: 100%;
+        overflow: hidden;
       }
     }
 
@@ -723,8 +764,9 @@
     }
 
     @media (min-width: 1024px) {
-      .pricing-wrapper > li {
+      .pricing-wrapper > li.is-visible {
         height: 100%;
+        min-height: 0;
       }
     }
 
@@ -872,7 +914,7 @@
       margin-right: 2px;
     }
 
-    /* Features list — scroll sincronizado */
+    /* Features list — scroll sincronizado entre las 4 columnas (web) */
     .pricing-body {
       padding: 0;
       overflow: visible;
@@ -880,12 +922,13 @@
 
     @media (min-width: 1024px) {
       .pricing-body {
-        flex: 1 1 auto;
+        flex: 1 1 0%;
         min-height: 0;
+        max-height: 100%;
       }
 
       .pricing-body.pam-rows-scroll {
-        overflow-y: auto;
+        overflow-y: scroll;
         overflow-x: hidden;
       }
     }
@@ -950,9 +993,10 @@
       color: var(--text-on-accent);
     }
 
-    /* Notes */
+    /* Notes — siempre al final del bloque de precios */
     .pricing-notes {
-      max-width: 1140px;
+      flex-shrink: 0;
+      width: 100%;
       margin: 3em auto 0;
       padding: 1.6em 2em;
       font-size: 1.35rem;
@@ -1940,6 +1984,9 @@
 
               setTimeout(function () {
                 finishAnimation();
+                if (typeof window.applyPamViewportSize === 'function') {
+                  window.applyPamViewportSize();
+                }
                 if (typeof window.syncPamLayout === 'function') {
                   window.syncPamLayout();
                 }
@@ -2020,6 +2067,7 @@
         var layout = document.querySelector('.pam-pricing-layout');
         if (!layout) return;
 
+        var isDesktopScroll = window.innerWidth >= 1024;
         var shouldSync = window.innerWidth >= 480;
         var syncTargets = layout.querySelectorAll(
           '.benefits-card__header, .pricing-header, .benefits-card__footer, .pricing-footer, .pam-benefit-row'
@@ -2076,7 +2124,10 @@
             max = Math.max(max, row.getBoundingClientRect().height);
           });
           rows.forEach(function (row) {
-            row.style.height = Math.ceil(max) + 'px';
+            row.style.minHeight = Math.ceil(max) + 'px';
+            if (!isDesktopScroll) {
+              row.style.height = Math.ceil(max) + 'px';
+            }
           });
         }
 
@@ -2094,6 +2145,29 @@
 
       window.syncPamLayout = syncPamLayout;
 
+      function applyPamViewportSize() {
+        var wrap = document.querySelector('.pam-pricing-viewport');
+        var container = document.querySelector('.pricing-container');
+        if (!wrap || !container) return;
+
+        if (window.innerWidth < 1024) {
+          wrap.style.height = '';
+          wrap.style.width = '';
+          return;
+        }
+
+        var rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 10;
+        var maxH = window.innerHeight - 11 * rem;
+        var availW = container.clientWidth;
+        var h = Math.min(availW * 9 / 16, maxH);
+        var w = h * 16 / 9;
+
+        wrap.style.width = Math.round(w) + 'px';
+        wrap.style.height = Math.round(h) + 'px';
+      }
+
+      window.applyPamViewportSize = applyPamViewportSize;
+
       function updatePamScale() {
         var wrap = document.querySelector('.pam-pricing-viewport');
         var inner = document.querySelector('.pam-pricing-scale__inner');
@@ -2102,12 +2176,13 @@
         if (window.innerWidth >= 1024) {
           inner.style.transform = '';
           inner.style.width = '';
-          wrap.style.height = '';
+          applyPamViewportSize();
           return;
         }
 
-        var refWidth = 880;
         wrap.style.height = 'auto';
+        wrap.style.width = '';
+        var refWidth = 880;
         inner.style.width = refWidth + 'px';
         inner.style.transform = '';
 
@@ -2125,8 +2200,11 @@
 
       window.updatePamScale = updatePamScale;
 
-      function initSyncedScroll() {
+      function initPamScrollAreas() {
         var areas = document.querySelectorAll('.pam-rows-scroll');
+        var viewport = document.querySelector('.pam-pricing-viewport');
+        var layout = document.querySelector('.pam-pricing-layout');
+        var activeScrollArea = null;
         var syncing = false;
 
         function getVisibleScrollAreas() {
@@ -2136,33 +2214,112 @@
           });
         }
 
-        function resetScroll() {
+        function isScrollableArea(area) {
+          return area && area.scrollHeight > area.clientHeight + 1;
+        }
+
+        function syncAllScrollAreas(source, top) {
+          syncing = true;
+          getVisibleScrollAreas().forEach(function (other) {
+            if (other !== source) other.scrollTop = top;
+          });
+          syncing = false;
+        }
+
+        function resolveScrollArea(target, x, y) {
+          var fromTarget = target && target.closest ? target.closest('.pam-rows-scroll') : null;
+          if (fromTarget) {
+            var card = fromTarget.closest('li[data-type]');
+            if (!card || !card.classList.contains('is-hidden')) return fromTarget;
+          }
+
+          if (activeScrollArea) return activeScrollArea;
+
+          var visible = getVisibleScrollAreas();
+          var i;
+          for (i = 0; i < visible.length; i++) {
+            var rect = visible[i].getBoundingClientRect();
+            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+              return visible[i];
+            }
+          }
+
+          for (i = 0; i < visible.length; i++) {
+            var column = visible[i].closest('.benefits-card') || visible[i].closest('.pricing-list > li');
+            if (!column) continue;
+            var colRect = column.getBoundingClientRect();
+            if (x >= colRect.left && x <= colRect.right) {
+              return visible[i];
+            }
+          }
+
+          return null;
+        }
+
+        window.resetPamScroll = function () {
           getVisibleScrollAreas().forEach(function (area) {
             area.scrollTop = 0;
           });
-        }
+        };
 
         areas.forEach(function (area) {
           area.addEventListener('scroll', function () {
+            if (window.innerWidth < 1024) return;
             var card = area.closest('li[data-type]');
             if (card && card.classList.contains('is-hidden')) return;
             if (syncing) return;
-            syncing = true;
-            var top = area.scrollTop;
-            getVisibleScrollAreas().forEach(function (other) {
-              if (other !== area) other.scrollTop = top;
-            });
-            syncing = false;
+            syncAllScrollAreas(area, area.scrollTop);
           }, { passive: true });
         });
 
-        window.resetPamScroll = resetScroll;
+        if (!viewport || !layout) return;
+
+        layout.addEventListener('mouseenter', function () {
+          viewport.classList.add('is-wheel-active');
+        });
+
+        layout.addEventListener('mouseleave', function () {
+          viewport.classList.remove('is-wheel-active');
+          activeScrollArea = null;
+        });
+
+        layout.addEventListener('mousemove', function (event) {
+          if (window.innerWidth < 1024) return;
+          activeScrollArea = resolveScrollArea(event.target, event.clientX, event.clientY);
+        });
+
+        viewport.addEventListener('wheel', function (event) {
+          if (window.innerWidth < 1024) return;
+          if (!viewport.classList.contains('is-wheel-active')) return;
+
+          var area = resolveScrollArea(event.target, event.clientX, event.clientY);
+          if (!area || !isScrollableArea(area)) return;
+
+          var maxTop = area.scrollHeight - area.clientHeight;
+          var nextTop = Math.max(0, Math.min(area.scrollTop + event.deltaY, maxTop));
+          var atTop = area.scrollTop <= 0;
+          var atBottom = area.scrollTop >= maxTop - 1;
+          var scrollingUp = event.deltaY < 0;
+          var scrollingDown = event.deltaY > 0;
+
+          if ((scrollingUp && atTop) || (scrollingDown && atBottom)) {
+            return;
+          }
+
+          event.preventDefault();
+          syncing = true;
+          getVisibleScrollAreas().forEach(function (other) {
+            other.scrollTop = nextTop;
+          });
+          syncing = false;
+        }, { passive: false });
       }
 
       var syncResizeTimer;
       window.addEventListener('resize', function () {
         clearTimeout(syncResizeTimer);
         syncResizeTimer = setTimeout(function () {
+          applyPamViewportSize();
           syncPamLayout();
           updatePamScale();
         }, 120);
@@ -2170,6 +2327,7 @@
 
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function () {
+          applyPamViewportSize();
           syncPamLayout();
           updatePamScale();
         });
@@ -2178,9 +2336,10 @@
       bouncyFilter(document.querySelectorAll('.pricing-container'));
       initRegistroModal();
       initSyncedRowHover();
-      initSyncedScroll();
+      initPamScrollAreas();
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
+          applyPamViewportSize();
           syncPamLayout();
           updatePamScale();
         });
