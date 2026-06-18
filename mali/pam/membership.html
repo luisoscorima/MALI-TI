@@ -267,8 +267,6 @@
     .pam-pricing-viewport {
       width: 100%;
       margin-top: 1.4em;
-      max-height: calc(100vh - 11rem);
-      min-height: 280px;
     }
 
     .pam-pricing-layout {
@@ -277,8 +275,6 @@
       gap: 0.45rem;
       margin: 0;
       align-items: stretch;
-      height: 100%;
-      max-height: inherit;
     }
 
     .pricing-list {
@@ -289,8 +285,6 @@
       padding: 0;
       list-style: none;
       min-width: 0;
-      height: 100%;
-      max-height: inherit;
     }
 
     .pricing-list > li {
@@ -298,9 +292,6 @@
       animation: cardEnter 0.7s ease forwards;
       opacity: 0;
       min-width: 0;
-      height: 100%;
-      max-height: inherit;
-      min-height: 0;
       display: flex;
       flex-direction: column;
     }
@@ -310,9 +301,6 @@
     .pricing-wrapper > li.is-visible {
       display: flex;
       flex-direction: column;
-      min-height: 0;
-      height: 100%;
-      max-height: inherit;
     }
 
     .benefits-card__header,
@@ -323,14 +311,7 @@
     }
 
     .pam-rows-scroll {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow-y: auto;
       overflow-x: hidden;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent) transparent;
     }
 
     .pam-rows-scroll::-webkit-scrollbar {
@@ -350,6 +331,46 @@
     @media (min-width: 1024px) {
       .pam-pricing-viewport {
         max-height: calc(100vh - 10.5rem);
+        min-height: 280px;
+      }
+
+      .pam-pricing-layout {
+        height: 100%;
+        max-height: inherit;
+      }
+
+      .pricing-list {
+        height: 100%;
+        max-height: inherit;
+      }
+
+      .pricing-list > li {
+        height: 100%;
+        max-height: inherit;
+        min-height: 0;
+      }
+
+      .benefits-card,
+      .pricing-wrapper,
+      .pricing-wrapper > li.is-visible {
+        min-height: 0;
+        height: 100%;
+        max-height: inherit;
+      }
+
+      .pam-rows-scroll {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent) transparent;
+      }
+
+      .benefits-list {
+        flex: 1;
+        min-height: 0;
       }
 
       .pam-pricing-layout {
@@ -432,12 +453,13 @@
       }
 
       .pam-pricing-viewport {
-        overflow: hidden;
+        overflow: visible;
         display: flex;
         justify-content: center;
         max-height: none;
         min-height: 0;
         margin-top: 1em;
+        height: auto;
       }
 
       .pam-pricing-scale__inner {
@@ -463,11 +485,21 @@
       .pricing-list > li,
       .benefits-card,
       .pricing-wrapper,
+      .pricing-wrapper > li,
       .pricing-wrapper > li.is-visible {
         height: auto;
         max-height: none;
+        min-height: 0;
+        flex: none;
+        overflow: visible;
       }
 
+      .benefits-list {
+        flex: none;
+      }
+
+      .pricing-body,
+      .pricing-body.pam-rows-scroll,
       .pam-rows-scroll {
         overflow: visible;
         flex: none;
@@ -586,7 +618,6 @@
     }
 
     .benefits-list {
-      flex: 1;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -668,10 +699,15 @@
       margin: 0;
       list-style: none;
       perspective: 2000px;
-      flex: 1 1 auto;
-      min-height: 0;
-      height: 100%;
-      max-height: inherit;
+    }
+
+    @media (min-width: 1024px) {
+      .pricing-wrapper {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+        max-height: inherit;
+      }
     }
 
     .pricing-wrapper > li {
@@ -684,7 +720,12 @@
       overflow: hidden;
       backface-visibility: hidden;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-      height: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .pricing-wrapper > li {
+        height: 100%;
+      }
     }
 
     .pricing-wrapper > li::after {
@@ -833,15 +874,20 @@
 
     /* Features list — scroll sincronizado */
     .pricing-body {
-      flex: 1 1 auto;
-      min-height: 0;
       padding: 0;
       overflow: visible;
     }
 
-    .pricing-body.pam-rows-scroll {
-      overflow-y: auto;
-      overflow-x: hidden;
+    @media (min-width: 1024px) {
+      .pricing-body {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+
+      .pricing-body.pam-rows-scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
     }
 
     .pricing-features {
@@ -2061,6 +2107,7 @@
         }
 
         var refWidth = 880;
+        wrap.style.height = 'auto';
         inner.style.width = refWidth + 'px';
         inner.style.transform = '';
 
@@ -2071,7 +2118,7 @@
             var scale = Math.min(1, available / refWidth);
             scale = Math.max(0.36, scale);
             inner.style.transform = 'scale(' + scale + ')';
-            wrap.style.height = Math.ceil(inner.offsetHeight * scale) + 'px';
+            wrap.style.height = Math.ceil(inner.getBoundingClientRect().height) + 'px';
           });
         });
       }
