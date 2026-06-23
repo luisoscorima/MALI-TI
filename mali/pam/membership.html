@@ -43,8 +43,8 @@
       --accent-hover: #5bc4b0;
       --accent-soft: rgba(108, 221, 199, 0.15);
       --accent-glow: rgba(108, 221, 199, 0.35);
-      --radius: 16px; /* más bonito 16px */
-      --radius-sm: 10px; /* más bonito 10px */
+      --radius: 0;
+      --radius-sm: 0;
       --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       --pam-lime: #cefa5b;
       --pam-lime-chip: #b5d944;
@@ -127,6 +127,35 @@
 
     [data-theme="dark"] .pam-rows-scroll {
       background: #ffffff;
+    }
+
+    [data-theme="dark"] .pam-layout-mobile .pricing-body,
+    [data-theme="dark"] .pam-mobile-benefits-card__inner {
+      background: #ffffff;
+    }
+
+    @media (max-width: 1023px) {
+      .pam-layout-desktop {
+        display: none !important;
+      }
+
+      .pam-layout-mobile {
+        display: block;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .pam-layout-desktop {
+        display: grid;
+      }
+
+      .pam-layout-mobile {
+        display: none;
+      }
+
+      .pam-page-header__shapes {
+        display: none;
+      }
     }
 
     *,
@@ -222,10 +251,33 @@
       min-height: 0;
     }
 
-    .pam-page-header .pricing-switcher {
+    .pam-page-header__controls {
       grid-column: 4;
       justify-self: end;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .pam-page-header__shapes {
+      width: 100%;
+      line-height: 0;
+    }
+
+    .pam-page-header__shapes svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 72px;
+    }
+
+    .pam-page-header .pricing-switcher {
+      justify-self: auto;
       text-align: right;
+      width: 100%;
     }
 
     .pam-page-header h1 {
@@ -253,9 +305,12 @@
       text-align: left;
     }
 
+    .pam-page-header__copy .pam-page-header__lead {
+      margin-bottom: 0.35rem;
+    }
+
     .pam-page-header__copy strong {
       display: block;
-      margin-bottom: 0.35rem;
       font-size: 1.6rem;
       font-weight: 700;
       line-height: 1.25;
@@ -636,286 +691,346 @@
         padding: 0;
       }
 
-      .pam-pricing-viewport {
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        max-height: none;
-        min-height: 0;
-        margin-top: 1em;
-        margin-bottom: 0.75rem;
-        height: auto;
-        aspect-ratio: auto;
+      .pam-pricing-viewport,
+      .pam-pricing-scale__inner {
         width: 100%;
+        overflow: visible;
+        transform: none !important;
+        margin-bottom: 0 !important;
       }
 
-      .pam-pricing-scale__inner {
-        width: 880px;
-        height: auto;
-        flex-shrink: 0;
-        transform-origin: top center;
-        will-change: transform;
+      .pam-pricing-viewport {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 0.75rem;
       }
 
       .pam-page-header {
-        margin-bottom: 3.5rem;
-        grid-template-columns: var(--pam-grid-cols);
-        gap: var(--pam-col-gap);
-      }
-
-      .pam-pricing-layout {
-        flex: none;
-        height: auto;
-        min-height: 0;
-        max-height: none;
+        display: flex;
+        flex-direction: column;
         align-items: stretch;
-        grid-template-columns: var(--pam-grid-cols);
-        gap: var(--pam-col-gap);
-        margin-top: 1.5rem;
+        gap: 1.2rem;
+        margin-bottom: 2rem;
       }
 
-      .benefits-card {
-        grid-column: 1;
-        align-self: stretch;
+      .pam-page-header__controls {
+        width: 100%;
+        align-items: center;
+        max-width: none;
+        gap: 1.25rem;
       }
 
-      .pricing-list {
-        grid-column: 2 / -1;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--pam-col-gap);
-        align-self: stretch;
-      }
-
-      .pricing-list > li,
-      .benefits-card,
-      .pricing-wrapper,
-      .pricing-wrapper > li.is-visible {
-        height: auto;
-        max-height: none;
-        min-height: 0;
-        flex: none;
-        overflow: visible;
-      }
-
-      .pricing-wrapper > li.is-hidden {
-        height: auto;
-      }
-
-      .pricing-list > li {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .pricing-wrapper {
-        flex: none;
-        height: auto;
+      .pam-page-header__shapes {
         display: block;
-      }
-
-      .pricing-wrapper > li.is-visible {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        flex: none;
-      }
-
-      .benefits-list {
-        flex: none;
-      }
-
-      .pricing-body,
-      .pricing-body.pam-rows-scroll,
-      .pam-rows-scroll {
-        overflow: visible;
-        flex: none;
-        min-height: 0;
-      }
-
-      .benefits-list li,
-      .pricing-features li {
-        --pam-mobile-row-h: calc(1.48rem * 1.34 * 2 + 1.16em);
-        min-height: var(--pam-mobile-row-h);
-        height: var(--pam-mobile-row-h);
-        max-height: var(--pam-mobile-row-h);
-        padding: 0.58em 0.55em;
-        line-height: 1.34;
-        align-items: center;
-        box-sizing: border-box;
-        overflow: hidden;
-      }
-
-      .benefits-list li {
-        font-size: 1.58rem;
-      }
-
-      .pricing-features li {
-        font-size: calc(1.58rem + 0.25rem);
-      }
-
-      .benefits-list li {
-        justify-content: flex-start;
-        text-align: left;
-      }
-
-      .benefits-list__text {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
         width: 100%;
-        overflow-wrap: anywhere;
-        word-break: break-word;
+        max-width: 280px;
+        margin-inline: auto;
       }
 
-      .benefits-list__text.has-tooltip {
-        cursor: help;
-      }
-
-      .pricing-features li {
+      .pam-page-header .pricing-switcher {
+        grid-column: unset;
+        justify-self: auto;
+        text-align: center;
+        width: 100%;
+        display: flex;
         justify-content: center;
-        padding-left: 0.35em;
-        padding-right: 0.35em;
       }
 
-      .benefits-card__header {
+      .pam-page-header h1 {
+        grid-column: unset;
+        max-width: none;
+        font-size: 2.4rem;
+      }
+
+      .pam-page-header__copy {
+        grid-column: unset;
+      }
+
+      .pam-page-header__spacer {
+        display: none;
+      }
+
+      .pam-pricing-mount {
+        width: 100%;
+      }
+
+      .pam-layout-desktop {
+        display: none !important;
+      }
+
+      .pam-mobile-carousel__track {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scroll-padding-inline: 6vw;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 0.5rem 0 0.75rem;
+        margin: 0 -4%;
+        width: calc(100% + 8%);
+      }
+
+      .pam-mobile-carousel__track::-webkit-scrollbar {
+        display: none;
+      }
+
+      .pam-mobile-plans {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        padding: 0 6vw;
+        margin: 0;
+        list-style: none;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .pam-mobile-plan-item,
+      .pam-mobile-benefits-card {
+        flex: 0 0 88vw;
+        max-width: 400px;
+        scroll-snap-align: center;
+        list-style: none;
+        transition: transform 0.35s ease, opacity 0.35s ease;
+        opacity: 0.72;
+        transform: scale(0.96);
+      }
+
+      .pam-mobile-plan-item.is-carousel-active,
+      .pam-mobile-benefits-card.is-carousel-active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .pam-mobile-benefits-card__inner {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        box-sizing: border-box;
-        padding: 0.75em 0.6em 0.5em;
-        text-align: left;
-        overflow: visible;
-        height: auto;
-        min-height: 0;
-        max-height: none;
-        padding-left: 0.55em;
-        padding-right: 0.55em;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        border-radius: 0;
       }
 
-      .pricing-header {
+      .pam-mobile-benefits-card.is-carousel-active .pam-mobile-benefits-card__inner {
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .pam-mobile-benefits-card .benefits-card__header {
+        padding: 1.1rem 1.25rem 0.85rem;
+        background: var(--pam-lime);
+        color: #1D1D1B;
+        text-align: center;
+      }
+
+      .pam-mobile-benefits-card .benefits-card__header h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .pam-mobile-benefits-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pam-mobile-benefits-list li {
+        padding: 0.85rem 1.1rem;
+        font-size: 1.35rem;
+        line-height: 1.35;
+        color: #1D1D1B;
+        text-align: left;
+        background: var(--pam-lime-row);
+        border-bottom: 1px solid #ffffff;
+      }
+
+      .pam-mobile-benefits-list li:last-child {
+        border-bottom: none;
+      }
+
+      .pam-mobile-plan-item .pricing-wrapper > li.is-visible {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        box-sizing: border-box;
-        padding: 0.75em 0.75em 0.5em;
-        text-align: left;
-        overflow: visible;
-        height: auto;
-        min-height: 0;
-        max-height: none;
-      }
-
-      .benefits-card__header h2 {
-        font-size: 1.65rem;
-        text-align: left;
-        width: 100%;
-        margin-top: auto;
-        margin-bottom: 0;
-        letter-spacing: 0;
-        line-height: 1.15;
-        font-weight: 600;
-        text-transform: none;
-        flex-shrink: 0;
-      }
-
-      .pricing-header h2 {
-        font-size: 1.18rem;
-        margin: 0 0 0.25em;
-        letter-spacing: 0;
-        line-height: 1.15;
-        font-weight: 600;
-        text-transform: none;
-        flex-shrink: 0;
-      }
-
-      .benefits-card__header h2 {
-        text-align: left;
-        width: 100%;
-      }
-
-      .pricing-header h2 {
-        text-align: left;
-        width: 100%;
-      }
-
-      .benefits-card__spacer {
-        display: none;
-      }
-
-      .price {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-        min-height: var(--pam-mobile-price-row, 1.75rem);
-        height: var(--pam-mobile-price-row, 1.75rem);
-        flex-shrink: 0;
-        width: 100%;
-      }
-
-      .value {
-        font-size: 1.62rem;
-        flex: none;
-      }
-
-      .currency {
-        font-size: 0.92rem;
-        margin-top: 0.15em;
-      }
-
-      .duration {
-        font-size: 0.82rem;
-        align-self: flex-end;
-        margin-bottom: 0.08em;
-      }
-
-      .pricing-features em {
-        min-width: 2.8em;
-        padding: 0.2em 0.44em;
-        font-size: calc(1.22rem + 0.25rem);
-      }
-
-      .benefits-card__footer,
-      .pricing-footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75em 0.5em;
-        height: auto;
-        min-height: 0;
-        max-height: none;
-      }
-
-      .select {
-        max-width: 100%;
-        padding: 0.75em 0.5em;
-        font-size: 0.95rem;
-        letter-spacing: 0.05em;
-      }
-
-      .exclusive .pricing-wrapper > li.is-visible::before {
-        display: none;
-      }
-
-      .exclusive .pricing-wrapper > li.is-visible .pricing-header::before {
-        display: none;
-      }
-
-      .pricing-list > li:hover .pricing-wrapper > li.is-visible {
-        transform: none;
+        border-radius: 0;
+        overflow: hidden;
         box-shadow: var(--card-shadow);
       }
 
+      .pam-mobile-plan-item.is-carousel-active .pricing-wrapper > li.is-visible {
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .pam-mobile-carousel__dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.25rem 0 0.5rem;
+      }
+
+      .pam-mobile-carousel__dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        opacity: 0.35;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .pam-mobile-carousel__dot.is-active {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      .pam-mobile-carousel__dot--green { background: var(--pam-green); }
+      .pam-mobile-carousel__dot--pink { background: var(--pam-pink); }
+      .pam-mobile-carousel__dot--blue { background: var(--pam-blue); }
+
+      .pam-mobile-carousel__dot--lime { background: var(--pam-lime-chip); }
+
+      .pam-mobile-plan-item--green .pricing-header {
+        background: var(--pam-green);
+        color: #ffffff;
+      }
+
+      .pam-mobile-plan-item--green .pricing-header h2,
+      .pam-mobile-plan-item--green .pricing-header .value,
+      .pam-mobile-plan-item--green .pricing-header .currency,
+      .pam-mobile-plan-item--green .pricing-header .duration {
+        color: #ffffff;
+      }
+
+      .pam-mobile-plan-item--pink .pricing-header {
+        background: var(--pam-pink);
+        color: #1D1D1B;
+      }
+
+      .pam-mobile-plan-item--pink .pricing-header h2,
+      .pam-mobile-plan-item--pink .pricing-header .value,
+      .pam-mobile-plan-item--pink .pricing-header .currency,
+      .pam-mobile-plan-item--pink .pricing-header .duration {
+        color: #1D1D1B;
+      }
+
+      .pam-mobile-plan-item--blue .pricing-header {
+        background: var(--pam-blue);
+        color: #ffffff;
+      }
+
+      .pam-mobile-plan-item--blue .pricing-header h2,
+      .pam-mobile-plan-item--blue .pricing-header .value,
+      .pam-mobile-plan-item--blue .pricing-header .currency,
+      .pam-mobile-plan-item--blue .pricing-header .duration {
+        color: #ffffff;
+      }
+
+      .pam-mobile-plan-item .pricing-header {
+        padding: 1.1rem 1.25rem 0.85rem;
+      }
+
+      .pam-mobile-plan-item .pricing-header h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 0.35rem;
+      }
+
+      .pam-mobile-plan-item .value {
+        font-size: 2.4rem;
+        font-weight: 700;
+      }
+
+      .pam-mobile-plan-item .currency {
+        font-size: 1.1rem;
+        margin-top: 0.35em;
+      }
+
+      .pam-mobile-plan-item .duration {
+        font-size: 1rem;
+        align-self: flex-end;
+      }
+
+      .pam-plan-benefits {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pam-plan-benefit-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.85rem 1.1rem;
+        font-size: 1.35rem;
+        line-height: 1.35;
+        color: #1D1D1B;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      .pam-mobile-plan-item--green .pam-plan-benefit-row {
+        background: var(--pam-green-row);
+      }
+
+      .pam-mobile-plan-item--pink .pam-plan-benefit-row {
+        background: var(--pam-pink-row);
+      }
+
+      .pam-mobile-plan-item--blue .pam-plan-benefit-row {
+        background: var(--pam-blue-row);
+      }
+
+      .pam-plan-benefit-row:last-child {
+        border-bottom: none;
+      }
+
+      .pam-plan-benefit-row__label {
+        flex: 1 1 auto;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .pam-plan-benefit-row__value {
+        flex: 0 0 auto;
+        text-align: right;
+      }
+
+      .pam-plan-benefit-row__value em {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.2rem;
+        min-width: 2.5em;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .pam-mobile-plan-item .pricing-footer {
+        padding: 1rem 1.1rem;
+      }
+
+      .pam-mobile-plan-item .select {
+        width: 100%;
+        padding: 0.95rem 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .pam-mobile-plan-item--green .select {
+        background: var(--pam-green);
+        color: #ffffff;
+      }
+
+      .pam-mobile-plan-item--pink .select {
+        background: var(--pam-pink);
+        color: #1D1D1B;
+      }
+
+      .pam-mobile-plan-item--blue .select {
+        background: var(--pam-blue);
+        color: #ffffff;
+      }
+
       .pricing-notes {
-        position: static;
-        z-index: auto;
         margin-top: 1.25rem;
-        clear: both;
       }
 
       .pricing-switcher .fieldset {
@@ -939,11 +1054,6 @@
 
       .pricing-switcher input#yearly-1:checked ~ .switch {
         transform: translateX(62px);
-      }
-
-      .benefits-card {
-        animation: none;
-        opacity: 1;
       }
     }
 
@@ -1907,98 +2017,6 @@
       line-height: 1.45;
       color: var(--text-muted);
     }
-
-    /* Móvil: títulos/precios — cascada sobre estilos base de cards */
-    @media (max-width: 1023px) {
-      .pam-pricing-layout {
-        --pam-mobile-price-row: 1.75rem;
-        --pam-mobile-badge-row: 0;
-      }
-
-      .pam-pricing-layout .benefits-card__header {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        box-sizing: border-box;
-        padding: calc(0.75em + var(--pam-mobile-badge-row)) 0.6em 0.5em;
-        min-height: 0;
-        height: auto;
-        max-height: none;
-        overflow: hidden;
-      }
-
-      .pam-pricing-layout .pricing-header {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        box-sizing: border-box;
-        padding: calc(0.75em + var(--pam-mobile-badge-row)) 0.6em 0.5em;
-        min-height: 0;
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        padding-left: 0.75em;
-        padding-right: 0.75em;
-      }
-
-      .pam-pricing-layout .benefits-card__header {
-        padding-left: 0.55em;
-        padding-right: 0.55em;
-      }
-
-      .pam-pricing-layout .benefits-card__header h2,
-      .pam-pricing-layout .pricing-header h2 {
-        font-weight: 600;
-        margin: 0 0 0.25em;
-        letter-spacing: 0;
-        line-height: 1.15;
-        text-transform: none;
-        flex-shrink: 0;
-      }
-
-      .pam-pricing-layout .benefits-card__header h2 {
-        font-size: 1.65rem;
-        text-align: left;
-        width: 100%;
-        margin-top: auto;
-        margin-bottom: 0;
-      }
-
-      .pam-pricing-layout .pricing-header h2 {
-        font-size: 1.18rem;
-        text-align: left;
-        width: 100%;
-      }
-
-      .pam-pricing-layout .benefits-card__spacer {
-        display: none;
-      }
-
-      .pam-pricing-layout .price {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-        min-height: var(--pam-mobile-price-row);
-        height: var(--pam-mobile-price-row);
-        flex-shrink: 0;
-        width: 100%;
-      }
-
-      .pam-pricing-layout .value {
-        font-size: 1.62rem;
-      }
-
-      .pam-pricing-layout .currency {
-        font-size: 0.92rem;
-      }
-
-      .pam-pricing-layout .duration {
-        font-size: 0.82rem;
-      }
-    }
   </style>
 </head>
 
@@ -2020,9 +2038,12 @@
       <header class="pam-page-header">
         <h1>Programa Amigos del Museo</h1>
         <div class="pam-page-header__copy">
-          <p><strong>¿Te animas a ser parte del arte?</strong> Inicia tu suscripción y forma parte de la comunidad que apoya al Museo de Arte de Lima.</p>
+          <p class="pam-page-header__lead"><strong>¿Te animas a ser parte del arte?</strong></p>
+          <p class="pam-page-header__sub">Inicia tu suscripción y forma parte de la comunidad que apoya al Museo de Arte de Lima.</p>
         </div>
         <div class="pam-page-header__spacer" aria-hidden="true"></div>
+        <div class="pam-page-header__controls">
+          <div class="pam-page-header__shapes" id="pam-header-shapes" aria-hidden="true"></div>
         <div class="pricing-switcher">
           <p class="fieldset">
             <input type="radio" name="duration-1" value="monthly" id="monthly-1" checked>
@@ -2034,374 +2055,14 @@
             <span class="switch"></span>
           </p>
         </div>
+        </div>
       </header>
 
-      <div class="pam-pricing-layout">
-
-        <aside class="benefits-card" aria-label="Lista de beneficios">
-          <header class="benefits-card__header">
-            <h2>Beneficios</h2>
-            <div class="benefits-card__spacer" aria-hidden="true"></div>
-          </header>
-          <div class="pam-rows-scroll">
-          <ul class="benefits-list">
-            <li>Acceso gratuito a exposiciones</li>
-            <li>Invitación a inauguraciones de exposiciones</li>
-            <li>Acceso gratuito a Noche MALI</li>
-            <li>Invitación para visitas guiadas especiales</li>
-            <li>Visita guiada por el mes de tu cumpleaños*</li>
-            <li>Descuento en actividades especiales</li>
-            <li>Acceso al carnet de biblioteca**</li>
-            <li>15% de descuento en cursos y talleres, y 20% en e. profesional***</li>
-            <li>Descuento en productos y publicaciones MALI</li>
-            <li>Beneficios por participación en actividades de fin de semana***</li>
-            <li>10% de descuento en consumos en el restaurante del MALI</li>
-          </ul>
-          </div>
-          <footer class="benefits-card__footer" aria-hidden="true">
-            <svg viewBox="0 0 280 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <filter id="pam-shapes-glow" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur stdDeviation="1.2" result="blur"/>
-                  <feMerge>
-                    <feMergeNode in="blur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <!-- TRIÁNGULO -->
-              <polygon
-                points="35,16 56,56 14,56"
-                fill="none"
-                stroke="#cefa5b"
-                stroke-width="5"
-                stroke-linejoin="round"
-              />
-              <polygon
-                points="35,16 56,56 14,56"
-                fill="none"
-                stroke="white"
-                stroke-width="4"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                pathLength="100"
-                stroke-dasharray="16 84"
-                filter="url(#pam-shapes-glow)"
-                opacity="0"
-              >
-                <animate attributeName="stroke-dashoffset"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="100;100;0;0;0"
-                  keyTimes="0;0.01;0.20;0.23;1"/>
-                <animate attributeName="opacity"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="0;1;1;0;0"
-                  keyTimes="0;0.01;0.20;0.23;1"/>
-              </polygon>
-
-              <!-- PARALELOGRAMO -->
-              <polygon
-                points="98,14 116,24 98,58 80,48"
-                fill="none"
-                stroke="#1bc469"
-                stroke-width="5"
-                stroke-linejoin="round"
-              />
-              <polygon
-                points="98,14 116,24 98,58 80,48"
-                fill="none"
-                stroke="white"
-                stroke-width="4"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                pathLength="100"
-                stroke-dasharray="16 84"
-                filter="url(#pam-shapes-glow)"
-                opacity="0"
-              >
-                <animate attributeName="stroke-dashoffset"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="100;100;100;0;0;0"
-                  keyTimes="0;0.25;0.26;0.45;0.48;1"/>
-                <animate attributeName="opacity"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="0;0;1;1;0;0"
-                  keyTimes="0;0.25;0.26;0.45;0.48;1"/>
-              </polygon>
-
-              <!-- HEXÁGONO -->
-              <polygon
-                points="161,18 181,18 193,36 181,54 161,54 149,36"
-                fill="none"
-                stroke="#f7b5b0"
-                stroke-width="5"
-                stroke-linejoin="round"
-              />
-              <polygon
-                points="161,18 181,18 193,36 181,54 161,54 149,36"
-                fill="none"
-                stroke="white"
-                stroke-width="4"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                pathLength="100"
-                stroke-dasharray="16 84"
-                filter="url(#pam-shapes-glow)"
-                opacity="0"
-              >
-                <animate attributeName="stroke-dashoffset"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="100;100;100;0;0;0"
-                  keyTimes="0;0.50;0.51;0.70;0.73;1"/>
-                <animate attributeName="opacity"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="0;0;1;1;0;0"
-                  keyTimes="0;0.50;0.51;0.70;0.73;1"/>
-              </polygon>
-
-              <!-- CÍRCULO -->
-              <circle
-                cx="245"
-                cy="36"
-                r="18"
-                fill="none"
-                stroke="#3a5ad0"
-                stroke-width="5"
-              />
-              <circle
-                cx="245"
-                cy="36"
-                r="18"
-                fill="none"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                pathLength="100"
-                stroke-dasharray="16 84"
-                filter="url(#pam-shapes-glow)"
-                opacity="0"
-              >
-                <animate attributeName="stroke-dashoffset"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="100;100;100;0;0;0"
-                  keyTimes="0;0.75;0.76;0.95;0.98;1"/>
-                <animate attributeName="opacity"
-                  dur="4.8s"
-                  repeatCount="indefinite"
-                  values="0;0;1;1;0;0"
-                  keyTimes="0;0.75;0.76;0.95;0.98;1"/>
-              </circle>
-            </svg>
-          </footer>
-        </aside>
-
-        <ul class="pricing-list bounce-invert">
-
-          <!-- AMIGO -->
-          <li>
-            <ul class="pricing-wrapper">
-              <li data-type="monthly" class="is-visible">
-                <header class="pricing-header">
-                  <h2>Amigo</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">19.90</span>
-                    <span class="duration">mes</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>Titular</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>+2</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>+5</em></li>
-                    <li><em>10%</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>5%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a624901905bc2b30d00b9" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-              <li data-type="yearly" class="is-hidden">
-                <header class="pricing-header">
-                  <h2>Amigo</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">220</span>
-                    <span class="duration">año</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>Titular</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>+2</em></li>
-                    <li><em>Titular</em></li>
-                    <li><em>+5</em></li>
-                    <li><em>10%</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>5%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61d301905bcc15a100c0" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-            </ul>
-          </li>
-
-          <!-- COMUNIDAD -->
-          <li class="exclusive">
-            <ul class="pricing-wrapper">
-              <li data-type="monthly" class="is-visible">
-                <header class="pricing-header">
-                  <h2>Comunidad</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">39.90</span>
-                    <span class="duration">mes</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>1</em></li>
-                    <li><em>Doble</em></li>
-                    <li><em>+3</em></li>
-                    <li><em>+2</em></li>
-                    <li><em>+7</em></li>
-                    <li><em>15%</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>10%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61d301905bc47b7600b3" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-              <li data-type="yearly" class="is-hidden">
-                <header class="pricing-header">
-                  <h2>Comunidad</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">440</span>
-                    <span class="duration">año</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>1</em></li>
-                    <li><em>Doble</em></li>
-                    <li><em>+3</em></li>
-                    <li><em>+2</em></li>
-                    <li><em>+7</em></li>
-                    <li><em>15%</em></li>
-                    <li><em>×</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>10%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61d301905bd5666e00c9" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-            </ul>
-          </li>
-
-          <!-- CÍRCULO -->
-          <li>
-            <ul class="pricing-wrapper">
-              <li data-type="monthly" class="is-visible">
-                <header class="pricing-header">
-                  <h2>Círculo</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">99.90</span>
-                    <span class="duration">mes</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>3</em></li>
-                    <li><em>Doble</em></li>
-                    <li><em>+5</em></li>
-                    <li><em>+3</em></li>
-                    <li><em>+10</em></li>
-                    <li><em>20%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>15%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61d301905bc8d8c000bb" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-              <li data-type="yearly" class="is-hidden">
-                <header class="pricing-header">
-                  <h2>Círculo</h2>
-                  <div class="price">
-                    <span class="currency">S/</span>
-                    <span class="value">1,100</span>
-                    <span class="duration">año</span>
-                  </div>
-                </header>
-                <div class="pricing-body pam-rows-scroll">
-                  <ul class="pricing-features">
-                    <li><em>3</em></li>
-                    <li><em>Doble</em></li>
-                    <li><em>+5</em></li>
-                    <li><em>+3</em></li>
-                    <li><em>+10</em></li>
-                    <li><em>20%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>15%</em></li>
-                    <li><em>✓</em></li>
-                    <li><em>✓</em></li>
-                  </ul>
-                </div>
-                <footer class="pricing-footer">
-                  <a class="select js-open-registro" href="https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c938084905a61e001905bda518d00bd" role="button">Unirme ahora</a>
-                </footer>
-              </li>
-            </ul>
-          </li>
-
-        </ul>
-      </div>
+      <div id="pam-pricing-mount" class="pam-pricing-mount"></div>
         </div>
       </div>
 
-      <div class="pricing-notes">
-        <p>* Acceso a salón prado previa coordinación.</p>
-        <p>** Incluye integración en el Club de lectura MALI.</p>
-        <p>*** +1 Noche MALI, por completar Tarjeta de Actividades PAM con los 4 sellos.</p>
-        <p>El tiempo mínimo de permanencia es de un (1) año.</p>
-      </div>
+      <div class="pricing-notes" id="pam-pricing-notes"></div>
     </div>
   </main>
 
@@ -2525,6 +2186,9 @@
     </div>
   </div>
 
+  <script src="pam-shapes.js"></script>
+  <script src="pam-data.js"></script>
+  <script src="pam-render.js"></script>
   <script>
     (function initTheme() {
       var saved = localStorage.getItem('pam-theme');
@@ -2541,6 +2205,14 @@
     })();
 
     document.addEventListener('DOMContentLoaded', function () {
+      var headerShapes = document.getElementById('pam-header-shapes');
+      if (headerShapes && typeof getPamShapesSvg === 'function') {
+        headerShapes.innerHTML = getPamShapesSvg('pam-shapes-glow-header');
+      }
+
+      PamRender.mount(document.getElementById('pam-pricing-mount'), window.PAM_DATA);
+      PamRender.renderNotes(window.PAM_DATA, document.getElementById('pam-pricing-notes'));
+
       function initRegistroModal() {
         // URL del Web App de Google Apps Script (ver mali/pam/google-apps-script/Code.gs)
         var PAM_REGISTRO_API = 'https://script.google.com/macros/s/AKfycbzgsd2b4PXBSdrJdftErR2rTjfEAZe2faRL_R5n--rWZXmGg63mn4RLRRmC-oZq6TN4/exec';
@@ -2833,6 +2505,9 @@
                 if (typeof window.updatePamScale === 'function') {
                   window.updatePamScale();
                 }
+                if (typeof window.updatePamCarousel === 'function') {
+                  window.updatePamCarousel();
+                }
                 if (typeof window.refreshMobileBenefitTooltips === 'function') {
                   window.refreshMobileBenefitTooltips();
                 }
@@ -2863,7 +2538,7 @@
       }
 
       function initSyncedRowHover() {
-        var layout = document.querySelector('.pam-pricing-layout');
+        var layout = document.querySelector('.pam-layout-desktop');
         if (!layout) return;
 
         var benefitItems = layout.querySelectorAll('.benefits-list li');
@@ -2904,7 +2579,7 @@
       }
 
       function syncPamLayout() {
-        var layout = document.querySelector('.pam-pricing-layout');
+        var layout = document.querySelector('.pam-layout-desktop');
         if (!layout) return;
 
         var isDesktopScroll = window.matchMedia('(min-width: 1024px)').matches;
@@ -2929,7 +2604,7 @@
           benefitsSpacer.style.minHeight = '';
         }
 
-        if (!shouldSync) return;
+        if (!isDesktopScroll || !shouldSync) return;
 
         function getVisiblePlanHeaders() {
           return Array.prototype.slice.call(
@@ -3057,7 +2732,9 @@
       }
 
       function initMobileBenefitLabels() {
-        document.querySelectorAll('.benefits-list li').forEach(function (item) {
+        if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
+        document.querySelectorAll('.pam-layout-desktop .benefits-list li').forEach(function (item) {
           if (item.querySelector('.benefits-list__text')) return;
 
           var text = item.textContent.trim();
@@ -3070,18 +2747,7 @@
       }
 
       function refreshMobileBenefitTooltips() {
-        if (window.matchMedia('(min-width: 1024px)').matches) return;
-
-        document.querySelectorAll('.benefits-list__text').forEach(function (span) {
-          var fullText = span.textContent.trim();
-          span.classList.remove('has-tooltip');
-          span.removeAttribute('title');
-
-          if (span.scrollHeight > span.clientHeight + 1) {
-            span.classList.add('has-tooltip');
-            span.setAttribute('title', fullText);
-          }
-        });
+        /* Beneficios en móvil van dentro de cada card; sin tooltips de truncado. */
       }
 
       window.refreshMobileBenefitTooltips = refreshMobileBenefitTooltips;
@@ -3115,40 +2781,26 @@
           return;
         }
 
-        var refWidth = 880;
-
         inner.style.transform = 'none';
-        inner.style.width = refWidth + 'px';
+        inner.style.width = '100%';
         inner.style.marginBottom = '0';
         wrap.style.height = 'auto';
         wrap.style.minHeight = '0';
-        wrap.style.overflow = 'hidden';
+        wrap.style.overflow = 'visible';
 
-        syncPamLayout();
-
-        window.requestAnimationFrame(function () {
-          window.requestAnimationFrame(function () {
-            var available = wrap.clientWidth;
-            var scale = Math.min(1, Math.max(0.36, available / refWidth));
-            var unscaledH = inner.offsetHeight;
-            var scaledH = Math.ceil(unscaledH * scale);
-
-            inner.style.transform = 'scale(' + scale + ')';
-            inner.style.transformOrigin = 'top center';
-            inner.style.marginBottom = (scaledH - unscaledH) + 'px';
-            wrap.style.height = scaledH + 'px';
-            wrap.style.minHeight = scaledH + 'px';
-            refreshMobileBenefitTooltips();
-          });
-        });
+        if (typeof window.updatePamCarousel === 'function') {
+          window.updatePamCarousel();
+        }
       }
 
       window.updatePamScale = updatePamScale;
 
       function initPamScrollAreas() {
-        var areas = document.querySelectorAll('.pam-rows-scroll');
+        var layout = document.querySelector('.pam-layout-desktop');
+        if (!layout) return;
+
+        var areas = layout.querySelectorAll('.pam-rows-scroll');
         var viewport = document.querySelector('.pam-pricing-viewport');
-        var layout = document.querySelector('.pam-pricing-layout');
         var activeScrollArea = null;
         var syncing = false;
 
@@ -3277,6 +2929,9 @@
           applyPamViewportSize();
           syncPamLayout();
           updatePamScale();
+          if (typeof window.updatePamCarousel === 'function') {
+            window.updatePamCarousel();
+          }
           refreshMobileBenefitTooltips();
         }, 120);
       }
@@ -3297,6 +2952,7 @@
       initMobileBenefitLabels();
       initSyncedRowHover();
       initPamScrollAreas();
+      PamRender.initMobileCarousel();
       requestAnimationFrame(function () {
         applyPamViewportSize();
         syncPamLayout();
