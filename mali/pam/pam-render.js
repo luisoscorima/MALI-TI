@@ -253,7 +253,7 @@
     var activeIndex = 0;
     var autoTimer = null;
     var resumeTimer = null;
-    var AUTO_INTERVAL_MS = 4000;
+    var AUTO_INTERVAL_MS = 5000;
     var RESUME_DELAY_MS = 8000;
 
     function isMobileCarousel() {
