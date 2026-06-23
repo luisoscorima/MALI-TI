@@ -84,19 +84,19 @@
       --card-bg: #ffffff;
       --card-shadow: 0 4px 24px rgba(26, 43, 60, 0.08);
       --card-shadow-hover: 0 12px 40px rgba(26, 43, 60, 0.14);
-      --text: #1a2b3c;
-      --text-muted: #5a6d7e;
-      --text-on-accent: #0f2a26;
-      --border: rgba(26, 43, 60, 0.1);
+      --text: #1D1D1B;
+      --text-muted: rgba(29, 29, 27, 0.72);
+      --text-on-accent: #1D1D1B;
+      --border: rgba(29, 29, 27, 0.1);
       --switch-bg: #ffffff;
-      --switch-border: #1a2b3c;
-      --switch-label: #1a2b3c;
+      --switch-border: #1D1D1B;
+      --switch-label: #1D1D1B;
       --switch-active-text: #ffffff;
       --feature-badge-bg: var(--accent-soft);
-      --feature-badge-text: #0d5c52;
-      --notes-text: #3d5568;
+      --feature-badge-text: #1D1D1B;
+      --notes-text: rgba(29, 29, 27, 0.85);
       --toggle-bg: #ffffff;
-      --toggle-icon: #1a2b3c;
+      --toggle-icon: #1D1D1B;
       --row-border: rgba(26, 43, 60, 0.09);
       --row-hover-bg: rgba(108, 221, 199, 0.2);
     }
@@ -122,6 +122,10 @@
       --toggle-icon: var(--accent);
       --row-border: rgba(255, 255, 255, 0.07);
       --row-hover-bg: rgba(108, 221, 199, 0.12);
+    }
+
+    [data-theme="dark"] .pam-rows-scroll {
+      background: #ffffff;
     }
 
     *,
@@ -322,7 +326,7 @@
 
     .pricing-switcher input#monthly-1:checked ~ label[for="monthly-1"],
     .pricing-switcher input#yearly-1:checked ~ label[for="yearly-1"] {
-      color: #1a2b3c;
+      color: #1D1D1B;
     }
 
     /* Pricing layout: 4 columnas, listas con scroll independiente */
@@ -945,7 +949,7 @@
       text-align: center;
       border-bottom: none;
       background: var(--pam-lime);
-      color: #1a2b3c;
+      color: #1D1D1B;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -963,7 +967,7 @@
     }
 
     .benefits-card__header h2 {
-      color: #1a2b3c;
+      color: #1D1D1B;
       text-align: center;
       font-weight: 700;
       font-size: var(--pam-benefits-title);
@@ -996,7 +1000,7 @@
       padding: 0.65rem 1.25rem;
       font-size: var(--pam-row-font);
       line-height: 1.35;
-      color: #1a2b3c;
+      color: #1D1D1B;
       border-bottom: none;
       transition: background 0.22s ease;
     }
@@ -1145,7 +1149,7 @@
 
     .pricing-list > li:nth-child(2) .pricing-header {
       background: var(--pam-pink);
-      color: #1a2b3c;
+      color: #1D1D1B;
     }
 
     .pricing-list > li:nth-child(3) .pricing-header {
@@ -1222,7 +1226,7 @@
     .pricing-list > li:nth-child(2) .pricing-header .value,
     .pricing-list > li:nth-child(2) .pricing-header .currency,
     .pricing-list > li:nth-child(2) .pricing-header .duration {
-      color: #1a2b3c;
+      color: #1D1D1B;
     }
 
     .pricing-list > li:nth-child(3) .pricing-header h2,
@@ -1312,19 +1316,19 @@
 
     .pricing-list > li:nth-child(1) .pricing-features li {
       background: var(--pam-green-row);
-      color: #1a2b3c;
+      color: #1D1D1B;
       border-bottom: 1px solid #ffffff;
     }
 
     .pricing-list > li:nth-child(2) .pricing-features li {
       background: var(--pam-pink-row);
-      color: #1a2b3c;
+      color: #1D1D1B;
       border-bottom: 1px solid #ffffff;
     }
 
     .pricing-list > li:nth-child(3) .pricing-features li {
       background: var(--pam-blue-row);
-      color: #1a2b3c;
+      color: #1D1D1B;
       border-bottom: 1px solid #ffffff;
     }
 
@@ -1368,7 +1372,7 @@
     }
 
     .pricing-list > li:nth-child(1) .select {
-      color: #1a2b3c;
+      color: #1D1D1B;
       background: var(--pam-green);
       border-color: var(--pam-green);
     }
@@ -1379,7 +1383,7 @@
     }
 
     .pricing-list > li:nth-child(2) .select {
-      color: #1a2b3c;
+      color: #1D1D1B;
       background: var(--pam-pink);
       border-color: var(--pam-pink);
     }
@@ -1770,8 +1774,8 @@
       --pam-modal-accent: var(--pam-pink);
       --pam-modal-accent-hover: var(--pam-pink-chip);
       --pam-modal-accent-soft: var(--pam-pink-row);
-      --pam-modal-on-accent: #1a2b3c;
-      --pam-modal-header-text: #1a2b3c;
+      --pam-modal-on-accent: #1D1D1B;
+      --pam-modal-header-text: #1D1D1B;
       --pam-modal-close-border: rgba(26, 43, 60, 0.25);
     }
 
@@ -1821,8 +1825,8 @@
     }
 
     .pam-modal--plan-pink .pam-modal__close:hover {
-      color: #1a2b3c;
-      border-color: #1a2b3c;
+      color: #1D1D1B;
+      border-color: #1D1D1B;
       background: rgba(26, 43, 60, 0.08);
     }
 
