@@ -13,6 +13,24 @@ const MALI_CAROUSEL_ITEMS = [
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1805"
   },
   {
+    title: "Codesido",
+    subtitle: "Wuffarden, Luis Eduardo [et al].",
+    descriptionHtml: "Wuffarden, Luis Eduardo [et al]. <i>Codesido.</i> 2026.",
+    link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=20046",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1826",
+    imageAlt: "Codesido",
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1826"
+  },
+  {
+    title: "El pensamiento es un jardín híbrido: el archivo Mariotti - Luy (1964-2024)",
+    subtitle: "Mariátegui Ezeta, José-Carlos [et al].",
+    descriptionHtml: "Mariátegui Ezeta, José-Carlos [et al]. <i>El pensamiento es un jardín híbrido: el archivo Mariotti - Luy (1964-2024).</i> 2026.",
+    link: "https://biblioteca.mali.pe/cgi-bin/koha/opac-detail.pl?biblionumber=20047",
+    imageSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1825",
+    imageAlt: "El pensamiento es un jardín híbrido: el archivo Mariotti - Luy (1964-2024)",
+    backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1825"
+  },
+  {
     title: "Tinyas y huywas de Rapaz: quechua y arte verbal en las alturas de Lima",
     subtitle: "Andrade Ciudad, Luis.",
     descriptionHtml: "Andrade Ciudad, Luis. <i>Tinyas y huywas de Rapaz: quechua y arte verbal en las alturas de Lima.</i> 2023.",
@@ -39,7 +57,7 @@ const MALI_CAROUSEL_ITEMS = [
     imageAlt: "Mariano Fortuny: modernity foreseen",
     backgroundSrc: "https://biblioteca.mali.pe/cgi-bin/koha/opac-image.pl?imagenumber=1797"
   },
-  },
+
   {
     title: "Turungo: diálogo y archivo",
     subtitle: "Díaz, Gonzalo.",
