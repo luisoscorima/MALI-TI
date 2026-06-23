@@ -1004,14 +1004,8 @@
     .benefits-list li {
       justify-content: flex-start;
       text-align: left;
-    }
-
-    .benefits-list li:nth-child(odd) {
       background: var(--pam-lime-row);
-    }
-
-    .benefits-list li:nth-child(even) {
-      background: rgba(206, 250, 91, 0.1);
+      border-bottom: 1px solid #ffffff;
     }
 
     .pricing-features li {
@@ -1024,7 +1018,7 @@
 
     .benefits-list li:last-child,
     .pricing-features li:last-child {
-      border-bottom: 1px solid var(--row-border);
+      border-bottom: none;
     }
 
     .pam-benefit-row.is-row-hover {
@@ -1316,40 +1310,22 @@
       border-radius: 0;
     }
 
-    .pricing-list > li:nth-child(1) .pricing-features li:nth-child(odd) {
-      background: var(--pam-green-row);
-    }
-
-    .pricing-list > li:nth-child(1) .pricing-features li:nth-child(even) {
-      background: #ffffff;
-    }
-
-    .pricing-list > li:nth-child(2) .pricing-features li:nth-child(odd) {
-      background: var(--pam-pink-row);
-    }
-
-    .pricing-list > li:nth-child(2) .pricing-features li:nth-child(even) {
-      background: #ffffff;
-    }
-
-    .pricing-list > li:nth-child(3) .pricing-features li:nth-child(odd) {
-      background: var(--pam-blue-row);
-    }
-
-    .pricing-list > li:nth-child(3) .pricing-features li:nth-child(even) {
-      background: #ffffff;
-    }
-
     .pricing-list > li:nth-child(1) .pricing-features li {
+      background: var(--pam-green-row);
       color: #1a2b3c;
+      border-bottom: 1px solid #ffffff;
     }
 
     .pricing-list > li:nth-child(2) .pricing-features li {
+      background: var(--pam-pink-row);
       color: #1a2b3c;
+      border-bottom: 1px solid #ffffff;
     }
 
     .pricing-list > li:nth-child(3) .pricing-features li {
+      background: var(--pam-blue-row);
       color: #1a2b3c;
+      border-bottom: 1px solid #ffffff;
     }
 
     .pricing-list > li:nth-child(1) .pricing-features li.pam-benefit-row.is-row-hover {
@@ -1778,6 +1754,131 @@
     .pam-btn--ghost:hover {
       color: var(--text);
       border-color: var(--text-muted);
+    }
+
+    /* Modal — tema por plan (Amigo / Comunidad / Círculo) */
+    .pam-modal--plan-green {
+      --pam-modal-accent: var(--pam-green);
+      --pam-modal-accent-hover: var(--pam-green-chip);
+      --pam-modal-accent-soft: var(--pam-green-row);
+      --pam-modal-on-accent: #ffffff;
+      --pam-modal-header-text: #ffffff;
+      --pam-modal-close-border: rgba(255, 255, 255, 0.45);
+    }
+
+    .pam-modal--plan-pink {
+      --pam-modal-accent: var(--pam-pink);
+      --pam-modal-accent-hover: var(--pam-pink-chip);
+      --pam-modal-accent-soft: var(--pam-pink-row);
+      --pam-modal-on-accent: #1a2b3c;
+      --pam-modal-header-text: #1a2b3c;
+      --pam-modal-close-border: rgba(26, 43, 60, 0.25);
+    }
+
+    .pam-modal--plan-blue {
+      --pam-modal-accent: var(--pam-blue);
+      --pam-modal-accent-hover: var(--pam-blue-chip);
+      --pam-modal-accent-soft: var(--pam-blue-row);
+      --pam-modal-on-accent: #ffffff;
+      --pam-modal-header-text: #ffffff;
+      --pam-modal-close-border: rgba(255, 255, 255, 0.45);
+    }
+
+    .pam-modal--plan-green .pam-modal__dialog,
+    .pam-modal--plan-pink .pam-modal__dialog,
+    .pam-modal--plan-blue .pam-modal__dialog {
+      border-color: var(--pam-modal-accent);
+    }
+
+    .pam-modal--plan-green .pam-modal__header,
+    .pam-modal--plan-pink .pam-modal__header,
+    .pam-modal--plan-blue .pam-modal__header {
+      background: var(--pam-modal-accent);
+      border-bottom-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .pam-modal--plan-green .pam-modal__header h2,
+    .pam-modal--plan-pink .pam-modal__header h2,
+    .pam-modal--plan-blue .pam-modal__header h2,
+    .pam-modal--plan-green .pam-modal__header p,
+    .pam-modal--plan-pink .pam-modal__header p,
+    .pam-modal--plan-blue .pam-modal__header p {
+      color: var(--pam-modal-header-text);
+    }
+
+    .pam-modal--plan-green .pam-modal__close,
+    .pam-modal--plan-pink .pam-modal__close,
+    .pam-modal--plan-blue .pam-modal__close {
+      border-color: var(--pam-modal-close-border);
+      color: var(--pam-modal-header-text);
+    }
+
+    .pam-modal--plan-green .pam-modal__close:hover,
+    .pam-modal--plan-blue .pam-modal__close:hover {
+      color: #ffffff;
+      border-color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .pam-modal--plan-pink .pam-modal__close:hover {
+      color: #1a2b3c;
+      border-color: #1a2b3c;
+      background: rgba(26, 43, 60, 0.08);
+    }
+
+    .pam-modal--plan-green .pam-modal__body,
+    .pam-modal--plan-pink .pam-modal__body,
+    .pam-modal--plan-blue .pam-modal__body,
+    .pam-modal--plan-green .pam-modal__footer,
+    .pam-modal--plan-pink .pam-modal__footer,
+    .pam-modal--plan-blue .pam-modal__footer {
+      background: var(--pam-modal-accent-soft);
+    }
+
+    .pam-modal--plan-green .pam-modal__footer,
+    .pam-modal--plan-pink .pam-modal__footer,
+    .pam-modal--plan-blue .pam-modal__footer {
+      border-top-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .pam-modal--plan-green .pam-field input:focus,
+    .pam-modal--plan-green .pam-field select:focus,
+    .pam-modal--plan-green .pam-field textarea:focus,
+    .pam-modal--plan-pink .pam-field input:focus,
+    .pam-modal--plan-pink .pam-field select:focus,
+    .pam-modal--plan-pink .pam-field textarea:focus,
+    .pam-modal--plan-blue .pam-field input:focus,
+    .pam-modal--plan-blue .pam-field select:focus,
+    .pam-modal--plan-blue .pam-field textarea:focus {
+      border-color: var(--pam-modal-accent);
+      box-shadow: 0 0 0 3px var(--pam-modal-accent-soft);
+    }
+
+    .pam-modal--plan-green .pam-field--checkbox input[type="checkbox"],
+    .pam-modal--plan-pink .pam-field--checkbox input[type="checkbox"],
+    .pam-modal--plan-blue .pam-field--checkbox input[type="checkbox"] {
+      accent-color: var(--pam-modal-accent);
+    }
+
+    .pam-modal--plan-green .pam-field--checkbox label a,
+    .pam-modal--plan-pink .pam-field--checkbox label a,
+    .pam-modal--plan-blue .pam-field--checkbox label a {
+      color: var(--pam-modal-accent);
+    }
+
+    .pam-modal--plan-green .pam-btn--primary,
+    .pam-modal--plan-pink .pam-btn--primary,
+    .pam-modal--plan-blue .pam-btn--primary {
+      color: var(--pam-modal-on-accent);
+      background: var(--pam-modal-accent);
+      border-color: var(--pam-modal-accent);
+    }
+
+    .pam-modal--plan-green .pam-btn--primary:hover:not(:disabled),
+    .pam-modal--plan-pink .pam-btn--primary:hover:not(:disabled),
+    .pam-modal--plan-blue .pam-btn--primary:hover:not(:disabled) {
+      background: var(--pam-modal-accent-hover);
+      border-color: var(--pam-modal-accent-hover);
     }
 
     .pam-form__notice {
@@ -2429,6 +2530,25 @@
         var origenSelect = document.getElementById('reg-origen');
         var origenOtroWrap = document.getElementById('reg-origen-otro-wrap');
         var pendingCheckout = { url: '', plan: '', billing: '' };
+        var modalPlanThemes = ['pam-modal--plan-green', 'pam-modal--plan-pink', 'pam-modal--plan-blue'];
+
+        function setModalPlanTheme(btn) {
+          var planColumn = btn.closest('.pricing-wrapper');
+          planColumn = planColumn ? planColumn.parentElement : null;
+          var themeClass = modalPlanThemes[0];
+
+          if (planColumn && planColumn.parentElement) {
+            var index = Array.prototype.indexOf.call(planColumn.parentElement.children, planColumn);
+            if (index >= 0 && index < modalPlanThemes.length) {
+              themeClass = modalPlanThemes[index];
+            }
+          }
+
+          modalPlanThemes.forEach(function (className) {
+            modal.classList.remove(className);
+          });
+          modal.classList.add(themeClass);
+        }
 
         document.querySelectorAll('.js-open-registro').forEach(function (btn) {
           btn.addEventListener('click', function (event) {
@@ -2442,6 +2562,7 @@
             pendingCheckout.plan = plan;
             pendingCheckout.billing = billing;
 
+            setModalPlanTheme(btn);
             subtitle.textContent = 'Plan ' + plan + ' (' + billing + ') — completa tus datos para continuar al pago.';
             openModal();
           });
