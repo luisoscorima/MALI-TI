@@ -69,7 +69,8 @@
       --pam-header-pad-y: 1.35rem;
       --pam-header-pad-x: 1.5rem;
       --pam-row-min-h: 4.4rem;
-      --pam-row-font: 1.25rem;
+      --pam-row-font: 1.4rem;
+      --pam-plan-row-font: calc(var(--pam-row-font) + 0.25rem);
       --pam-card-title: 2.2rem;
       --pam-benefits-title: 3rem;
       --pam-price-value: 3.6rem;
@@ -368,8 +369,7 @@
 
     .pricing-list > li {
       list-style: none;
-      animation: cardEnter 0.7s ease forwards;
-      opacity: 1;
+      animation: cardEnter 0.7s ease both;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -485,8 +485,6 @@
         max-height: 100%;
         min-height: 0;
         overflow: hidden;
-        animation: none;
-        opacity: 1;
       }
 
       .benefits-card,
@@ -550,8 +548,15 @@
       .pricing-features li {
         min-height: var(--pam-row-min-h);
         padding: 0.65rem 1.25rem;
-        font-size: var(--pam-row-font);
         line-height: 1.35;
+      }
+
+      .benefits-list li {
+        font-size: var(--pam-row-font);
+      }
+
+      .pricing-features li {
+        font-size: var(--pam-plan-row-font);
       }
 
       .benefits-card__header,
@@ -588,8 +593,12 @@
         margin-bottom: 0.2rem;
       }
 
+      .pricing-features li {
+        font-size: var(--pam-plan-row-font);
+      }
+
       .pricing-features em {
-        font-size: var(--pam-row-font);
+        font-size: var(--pam-plan-row-font);
       }
 
       .benefits-card__footer,
@@ -732,11 +741,18 @@
         height: var(--pam-mobile-row-h);
         max-height: var(--pam-mobile-row-h);
         padding: 0.58em 0.55em;
-        font-size: 1.48rem;
         line-height: 1.34;
         align-items: center;
         box-sizing: border-box;
         overflow: hidden;
+      }
+
+      .benefits-list li {
+        font-size: 1.58rem;
+      }
+
+      .pricing-features li {
+        font-size: calc(1.58rem + 0.25rem);
       }
 
       .benefits-list li {
@@ -768,10 +784,10 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        align-items: center;
+        align-items: flex-start;
         box-sizing: border-box;
         padding: 0.75em 0.6em 0.5em;
-        text-align: center;
+        text-align: left;
         overflow: visible;
         height: auto;
         min-height: 0;
@@ -796,6 +812,8 @@
 
       .benefits-card__header h2 {
         font-size: 1.65rem;
+        text-align: left;
+        width: 100%;
         margin-top: auto;
         margin-bottom: 0;
         letter-spacing: 0;
@@ -816,7 +834,8 @@
       }
 
       .benefits-card__header h2 {
-        text-align: center;
+        text-align: left;
+        width: 100%;
       }
 
       .pricing-header h2 {
@@ -858,7 +877,7 @@
       .pricing-features em {
         min-width: 2.8em;
         padding: 0.2em 0.44em;
-        font-size: 1.22rem;
+        font-size: calc(1.22rem + 0.25rem);
       }
 
       .benefits-card__footer,
@@ -885,11 +904,6 @@
 
       .exclusive .pricing-wrapper > li.is-visible .pricing-header::before {
         display: none;
-      }
-
-      .pricing-list > li {
-        animation: none;
-        opacity: 1;
       }
 
       .pricing-list > li:hover .pricing-wrapper > li.is-visible {
@@ -941,19 +955,19 @@
       border: none;
       box-shadow: none;
       overflow: hidden;
-      animation: cardEnter 0.7s ease forwards;
+      animation: cardEnter 0.7s ease both;
     }
 
     .benefits-card__header {
       padding: var(--pam-header-pad-y) var(--pam-header-pad-x);
-      text-align: center;
+      text-align: left;
       border-bottom: none;
       background: var(--pam-lime);
       color: #1D1D1B;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-items: center;
+      align-items: flex-start;
     }
 
     .benefits-card__header h2,
@@ -968,7 +982,8 @@
 
     .benefits-card__header h2 {
       color: #1D1D1B;
-      text-align: center;
+      text-align: left;
+      width: 100%;
       font-weight: 700;
       font-size: var(--pam-benefits-title);
       margin-top: auto;
@@ -1018,6 +1033,7 @@
       padding-right: 1.6em;
       white-space: normal;
       word-wrap: break-word;
+      font-size: var(--pam-plan-row-font);
     }
 
     .benefits-list li:last-child,
@@ -1056,7 +1072,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        align-items: center;
+        align-items: flex-start;
       }
 
       .pricing-header {
@@ -1305,7 +1321,7 @@
       justify-content: center;
       min-width: auto;
       padding: 0;
-      font-size: 1.2rem;
+      font-size: var(--pam-plan-row-font);
       font-weight: 700;
       font-style: normal;
       text-align: center;
@@ -1903,7 +1919,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        align-items: center;
+        align-items: flex-start;
         box-sizing: border-box;
         padding: calc(0.75em + var(--pam-mobile-badge-row)) 0.6em 0.5em;
         min-height: 0;
@@ -1944,7 +1960,8 @@
 
       .pam-pricing-layout .benefits-card__header h2 {
         font-size: 1.65rem;
-        text-align: center;
+        text-align: left;
+        width: 100%;
         margin-top: auto;
         margin-bottom: 0;
       }
