@@ -43,14 +43,44 @@
       --accent-hover: #5bc4b0;
       --accent-soft: rgba(108, 221, 199, 0.15);
       --accent-glow: rgba(108, 221, 199, 0.35);
-      --radius: 0px; /* más bonito 16px */
-      --radius-sm: 0px; /* más bonito 10px */
+      --radius: 16px; /* más bonito 16px */
+      --radius-sm: 10px; /* más bonito 10px */
       --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --pam-lime: #cefa5b;
+      --pam-lime-chip: #b5d944;
+      --pam-lime-row: rgba(206, 250, 91, 0.2);
+      --pam-lime-row-hover: rgba(206, 250, 91, 0.34);
+      --pam-green: #1bc469;
+      --pam-green-chip: #17ad5b;
+      --pam-green-row: rgba(27, 196, 105, 0.14);
+      --pam-green-row-hover: rgba(27, 196, 105, 0.26);
+      --pam-pink: #f7b5b0;
+      --pam-pink-chip: #e5a09a;
+      --pam-pink-row: rgba(247, 181, 176, 0.24);
+      --pam-pink-row-hover: rgba(247, 181, 176, 0.38);
+      --pam-blue: #3a5ad0;
+      --pam-blue-chip: #2f4eba;
+      --pam-blue-row: rgba(58, 90, 208, 0.14);
+      --pam-blue-row-hover: rgba(58, 90, 208, 0.26);
+      --pam-col-benefits: 1.18fr;
+      --pam-col-plan: 1fr;
+      --pam-col-gap: 0.9rem;
+      --pam-grid-cols: minmax(0, var(--pam-col-benefits)) repeat(3, minmax(0, var(--pam-col-plan)));
+      --pam-header-pad-y: 1.35rem;
+      --pam-header-pad-x: 1.5rem;
+      --pam-row-min-h: 4.4rem;
+      --pam-row-font: 1.25rem;
+      --pam-card-title: 2.2rem;
+      --pam-benefits-title: 3rem;
+      --pam-price-value: 3.6rem;
+      --pam-price-currency: 1.35rem;
+      --pam-price-duration: 1.3rem;
+      --pam-btn-font: 1.25rem;
     }
 
     [data-theme="light"] {
-      --bg: #eef8f6;
-      --bg-gradient: linear-gradient(160deg, #e4f5f2 0%, #f8fcfb 45%, #eef8f6 100%);
+      --bg: #ffffff;
+      --bg-gradient: none;
       --card-bg: #ffffff;
       --card-shadow: 0 4px 24px rgba(26, 43, 60, 0.08);
       --card-shadow-hover: 0 12px 40px rgba(26, 43, 60, 0.14);
@@ -173,37 +203,67 @@
       padding: 1px 0 3em;
     }
 
-    .pam-title {
-      width: 90%;
-      max-width: 850px;
-      margin: 2.5rem auto 0;
-      text-align: center;
+    .pam-page-header {
+      display: grid;
+      grid-template-columns: var(--pam-grid-cols);
+      gap: var(--pam-col-gap);
+      align-items: end;
+      margin-bottom: 2rem;
+      flex-shrink: 0;
     }
 
-    .pam-title h1 {
+    .pam-page-header__spacer {
+      grid-column: 3;
+      min-height: 0;
+    }
+
+    .pam-page-header .pricing-switcher {
+      grid-column: 4;
+      justify-self: end;
+      text-align: right;
+    }
+
+    .pam-page-header h1 {
+      grid-column: 1;
       margin: 0;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.15;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: 2.8rem;
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: 0;
       color: var(--text);
+      text-align: left;
+      max-width: 11ch;
     }
 
-    .pam-title p {
-      margin: 1.2em auto 0;
-      font-size: clamp(1.2rem, 4vw, 1.5rem);
-      line-height: 1.3;
+    .pam-page-header__copy {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    .pam-page-header__copy p {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.35;
       color: var(--text-muted);
+      text-align: left;
+    }
+
+    .pam-page-header__copy strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
     }
 
     .pricing-container {
       display: flex;
       flex-direction: column;
-      width: 90%;
-      max-width: 1140px;
-      margin: 1.2em auto 0;
-      padding: 0 0.5rem;
+      width: 94%;
+      max-width: 1280px;
+      margin: 2rem auto 0;
+      padding: 0;
     }
 
     /* Billing switcher */
@@ -214,12 +274,12 @@
     .pricing-switcher .fieldset {
       display: inline-flex;
       position: relative;
-      padding: 4px;
+      padding: 3px;
       border-radius: 50em;
       border: 2px solid var(--switch-border);
       margin: 0;
       background: var(--switch-bg);
-      box-shadow: var(--card-shadow);
+      box-shadow: none;
     }
 
     .pricing-switcher input[type="radio"] {
@@ -232,58 +292,70 @@
       position: relative;
       z-index: 1;
       display: inline-block;
-      width: 100px;
-      height: 40px;
-      line-height: 40px;
+      width: 88px;
+      height: 36px;
+      line-height: 36px;
       cursor: pointer;
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--switch-label);
       text-align: center;
-      letter-spacing: 0.04em;
+      letter-spacing: 0;
       transition: color var(--transition);
     }
 
     .pricing-switcher .switch {
       position: absolute;
-      top: 4px;
-      left: 4px;
-      height: 40px;
-      width: 100px;
-      background-color: var(--accent);
+      top: 3px;
+      left: 3px;
+      height: 36px;
+      width: 88px;
+      background-color: var(--pam-lime);
       border-radius: 50em;
       transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 12px var(--accent-glow);
+      box-shadow: none;
     }
 
     .pricing-switcher input#yearly-1:checked ~ .switch {
-      transform: translateX(100px);
+      transform: translateX(88px);
     }
 
     .pricing-switcher input#monthly-1:checked ~ label[for="monthly-1"],
     .pricing-switcher input#yearly-1:checked ~ label[for="yearly-1"] {
-      color: var(--switch-active-text);
+      color: #1a2b3c;
     }
 
     /* Pricing layout: 4 columnas, listas con scroll independiente */
     .pam-pricing-viewport {
       width: 100%;
-      margin-top: 1.4em;
+      margin-top: 0;
       flex-shrink: 0;
     }
 
+    .pam-pricing-scale__inner {
+      width: 100%;
+      height: 100%;
+      transform-origin: top center;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
     .pam-pricing-layout {
+      flex: 1 1 0;
+      min-height: 0;
       display: grid;
-      grid-template-columns: minmax(118px, 1.15fr) minmax(0, 3fr);
-      gap: 0.45rem;
+      grid-template-columns: var(--pam-grid-cols);
+      gap: var(--pam-col-gap);
       margin: 0;
       align-items: stretch;
     }
 
     .pricing-list {
+      grid-column: 2 / -1;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.45rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--pam-col-gap);
       margin: 0;
       padding: 0;
       list-style: none;
@@ -293,7 +365,7 @@
     .pricing-list > li {
       list-style: none;
       animation: cardEnter 0.7s ease forwards;
-      opacity: 0;
+      opacity: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -321,41 +393,73 @@
       width: 5px;
     }
 
-    .pam-rows-scroll::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 4px;
+    .benefits-card .pam-rows-scroll::-webkit-scrollbar-thumb {
+      background: var(--pam-lime-chip);
+      border-radius: 0;
     }
 
-    .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-hover);
+    .benefits-card .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--pam-lime);
     }
 
-    .pam-pricing-scale__inner {
-      width: 100%;
-      height: 100%;
-      transform-origin: top center;
+    .pricing-list > li:nth-child(1) .pam-rows-scroll::-webkit-scrollbar-thumb {
+      background: var(--pam-green-chip);
+      border-radius: 0;
+    }
+
+    .pricing-list > li:nth-child(1) .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--pam-green);
+    }
+
+    .pricing-list > li:nth-child(2) .pam-rows-scroll::-webkit-scrollbar-thumb {
+      background: var(--pam-pink-chip);
+      border-radius: 0;
+    }
+
+    .pricing-list > li:nth-child(2) .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--pam-pink);
+    }
+
+    .pricing-list > li:nth-child(3) .pam-rows-scroll::-webkit-scrollbar-thumb {
+      background: var(--pam-blue-chip);
+      border-radius: 0;
+    }
+
+    .pricing-list > li:nth-child(3) .pam-rows-scroll::-webkit-scrollbar-thumb:hover {
+      background: var(--pam-blue);
     }
 
     @media (min-width: 1024px) {
       .pam-pricing-viewport {
-        --pam-viewport-ratio: 16 / 9;
-        width: min(100%, calc((100vh - 11rem) * 16 / 9));
-        aspect-ratio: var(--pam-viewport-ratio);
-        max-height: calc(100vh - 11rem);
-        min-height: 280px;
-        margin-inline: auto;
-        overflow: hidden;
+        width: 100%;
+        aspect-ratio: auto;
+        max-height: none;
+        min-height: 0;
+        margin-inline: 0;
+        overflow: visible;
       }
 
       .pam-pricing-viewport.is-wheel-active {
         cursor: default;
       }
 
+      .pam-pricing-scale__inner {
+        height: auto;
+      }
+
       .pam-pricing-layout {
-        height: 100%;
-        max-height: 100%;
-        min-height: 0;
+        flex: 0 0 auto;
+        height: min(72vh, 780px);
+        min-height: 520px;
+        max-height: min(72vh, 780px);
         overflow: hidden;
+      }
+
+      .benefits-card {
+        height: 100%;
+        min-height: 0;
+        animation: none;
+        opacity: 1;
       }
 
       .pam-pricing-layout > * {
@@ -367,13 +471,18 @@
         height: 100%;
         max-height: 100%;
         min-height: 0;
+        align-self: stretch;
       }
 
       .pricing-list > li {
+        display: flex;
+        flex-direction: column;
         height: 100%;
         max-height: 100%;
         min-height: 0;
         overflow: hidden;
+        animation: none;
+        opacity: 1;
       }
 
       .benefits-card,
@@ -386,7 +495,15 @@
       }
 
       .pricing-wrapper {
-        flex: 1 1 0%;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pricing-wrapper > li.is-visible {
+        flex: 1 1 auto;
+        min-height: 0;
       }
 
       .pam-rows-scroll {
@@ -397,8 +514,23 @@
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        scrollbar-color: var(--accent) rgba(108, 221, 199, 0.12);
         scrollbar-gutter: stable;
+      }
+
+      .benefits-card .pam-rows-scroll {
+        scrollbar-color: var(--pam-lime-chip) rgba(206, 250, 91, 0.15);
+      }
+
+      .pricing-list > li:nth-child(1) .pam-rows-scroll {
+        scrollbar-color: var(--pam-green-chip) rgba(27, 196, 105, 0.15);
+      }
+
+      .pricing-list > li:nth-child(2) .pam-rows-scroll {
+        scrollbar-color: var(--pam-pink-chip) rgba(247, 181, 176, 0.2);
+      }
+
+      .pricing-list > li:nth-child(3) .pam-rows-scroll {
+        scrollbar-color: var(--pam-blue-chip) rgba(58, 90, 208, 0.15);
       }
 
       .benefits-list,
@@ -406,86 +538,82 @@
         flex: none;
       }
 
-      .pam-pricing-layout {
-        grid-template-columns: minmax(210px, 1fr) minmax(0, 3fr);
-        gap: 0.85rem;
-      }
-
-      .pricing-list {
-        gap: 0.85rem;
+      .pam-page-header {
+        margin-bottom: 2rem;
       }
 
       .benefits-list li,
       .pricing-features li {
-        min-height: 40px;
-        padding: 0.55em 0.85em;
-        font-size: 1.28rem;
+        min-height: var(--pam-row-min-h);
+        padding: 0.65rem 1.25rem;
+        font-size: var(--pam-row-font);
         line-height: 1.35;
       }
 
       .benefits-card__header,
       .pricing-header {
-        padding: 1em 0.75em 0.75em;
+        padding: var(--pam-header-pad-y) var(--pam-header-pad-x);
       }
 
-      .benefits-card__header h2,
+      .benefits-card__header h2 {
+        font-size: var(--pam-benefits-title);
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
       .pricing-header h2 {
-        font-size: 1.55rem;
-        margin-bottom: 0.35em;
-        letter-spacing: 0.08em;
+        font-size: var(--pam-card-title);
+        margin-bottom: 0.45rem;
       }
 
       .benefits-card__spacer {
-        min-height: 3.2rem;
+        display: none;
       }
 
       .value {
-        font-size: clamp(2.4rem, 2.8vw, 3rem);
+        font-size: var(--pam-price-value);
       }
 
       .currency {
-        font-size: 1.25rem;
-        margin-top: 0.25em;
+        font-size: var(--pam-price-currency);
+        margin-top: 0.55rem;
       }
 
       .duration {
-        font-size: 1rem;
-        margin-bottom: 0.1em;
+        font-size: var(--pam-price-duration);
+        margin-bottom: 0.2rem;
       }
 
       .pricing-features em {
-        min-width: 3em;
-        padding: 0.15em 0.4em;
-        font-size: 1.05rem;
+        font-size: var(--pam-row-font);
       }
 
       .benefits-card__footer,
       .pricing-footer {
-        padding: 0.75em 0.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1rem 1rem;
       }
 
       .select {
-        max-width: 100%;
-        padding: 0.75em 0.6em;
-        font-size: 1.05rem;
-        letter-spacing: 0.06em;
+        max-width: none;
+        padding: 0.95rem 1rem;
+        font-size: var(--pam-btn-font);
       }
 
       .exclusive .pricing-wrapper > li.is-visible::before {
-        top: 8px;
-        right: 8px;
-        padding: 0.25em 0.55em;
-        font-size: 0.9rem;
+        display: none;
       }
 
       .exclusive .pricing-wrapper > li.is-visible {
-        border: 2px solid var(--accent);
-        box-shadow: var(--card-shadow), 0 0 0 1px var(--accent-glow);
+        border: none;
+        box-shadow: none;
       }
 
       .pricing-list > li.exclusive:hover .pricing-wrapper > li.is-visible {
-        border-color: var(--accent);
-        box-shadow: var(--card-shadow-hover), 0 0 0 1px var(--accent-glow);
+        border: none;
+        box-shadow: none;
       }
     }
 
@@ -496,7 +624,7 @@
       }
 
       .pam-pricing-viewport {
-        overflow: visible;
+        overflow: hidden;
         position: relative;
         z-index: 1;
         display: flex;
@@ -504,7 +632,7 @@
         max-height: none;
         min-height: 0;
         margin-top: 1em;
-        margin-bottom: 0;
+        margin-bottom: 0.75rem;
         height: auto;
         aspect-ratio: auto;
         width: 100%;
@@ -512,25 +640,40 @@
 
       .pam-pricing-scale__inner {
         width: 880px;
+        height: auto;
         flex-shrink: 0;
         transform-origin: top center;
+        will-change: transform;
+      }
+
+      .pam-page-header {
+        margin-bottom: 3.5rem;
+        grid-template-columns: var(--pam-grid-cols);
+        gap: var(--pam-col-gap);
       }
 
       .pam-pricing-layout {
-        grid-template-columns: minmax(310px, 1.65fr) minmax(0, 2.35fr);
-        gap: 0.35rem;
+        flex: none;
         height: auto;
+        min-height: 0;
         max-height: none;
         align-items: stretch;
+        grid-template-columns: var(--pam-grid-cols);
+        gap: var(--pam-col-gap);
+        margin-top: 1.5rem;
+      }
+
+      .benefits-card {
+        grid-column: 1;
+        align-self: stretch;
       }
 
       .pricing-list {
+        grid-column: 2 / -1;
+        display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.35rem;
-        height: auto;
-        max-height: none;
-        min-width: 0;
-        align-items: stretch;
+        gap: var(--pam-col-gap);
+        align-self: stretch;
       }
 
       .pricing-list > li,
@@ -554,9 +697,16 @@
       }
 
       .pricing-wrapper {
-        flex: 1 1 auto;
+        flex: none;
+        height: auto;
+        display: block;
+      }
+
+      .pricing-wrapper > li.is-visible {
         display: flex;
         flex-direction: column;
+        height: auto;
+        flex: none;
       }
 
       .benefits-list {
@@ -610,8 +760,7 @@
         padding-right: 0.35em;
       }
 
-      .benefits-card__header,
-      .pricing-header {
+      .benefits-card__header {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -623,48 +772,67 @@
         height: auto;
         min-height: 0;
         max-height: none;
-      }
-
-      .pricing-header {
-        padding-left: 0.35em;
-        padding-right: 0.35em;
-      }
-
-      .benefits-card__header {
         padding-left: 0.55em;
         padding-right: 0.55em;
       }
 
-      .benefits-card__header h2,
-      .pricing-header h2 {
-        font-size: 1.18rem;
-        margin: 0 0 0.25em;
-        letter-spacing: 0.05em;
+      .pricing-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        box-sizing: border-box;
+        padding: 0.75em 0.75em 0.5em;
+        text-align: left;
+        overflow: visible;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+      }
+
+      .benefits-card__header h2 {
+        font-size: 1.65rem;
+        margin-top: auto;
+        margin-bottom: 0;
+        letter-spacing: 0;
         line-height: 1.15;
         font-weight: 600;
-        text-transform: uppercase;
-        text-align: center;
+        text-transform: none;
         flex-shrink: 0;
       }
 
-      .benefits-card__spacer {
-        display: block;
-        min-height: 0;
-        height: var(--pam-mobile-price-row, 1.75rem);
-        margin: 0;
-        padding: 0;
-        visibility: hidden;
+      .pricing-header h2 {
+        font-size: 1.18rem;
+        margin: 0 0 0.25em;
+        letter-spacing: 0;
+        line-height: 1.15;
+        font-weight: 600;
+        text-transform: none;
         flex-shrink: 0;
+      }
+
+      .benefits-card__header h2 {
+        text-align: center;
+      }
+
+      .pricing-header h2 {
+        text-align: left;
+        width: 100%;
+      }
+
+      .benefits-card__spacer {
+        display: none;
       }
 
       .price {
         display: flex;
         flex-wrap: nowrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: flex-start;
         min-height: var(--pam-mobile-price-row, 1.75rem);
         height: var(--pam-mobile-price-row, 1.75rem);
         flex-shrink: 0;
+        width: 100%;
       }
 
       .value {
@@ -691,6 +859,9 @@
 
       .benefits-card__footer,
       .pricing-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 0.75em 0.5em;
         height: auto;
         min-height: 0;
@@ -708,27 +879,8 @@
         display: none;
       }
 
-      .exclusive .pricing-wrapper > li.is-visible .pricing-header {
-        position: relative;
-      }
-
       .exclusive .pricing-wrapper > li.is-visible .pricing-header::before {
-        content: 'Popular';
-        position: absolute;
-        top: 0.35em;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        z-index: 2;
-        padding: 0.14em 0.38em;
-        font-size: 0.58rem;
-        font-weight: 700;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-        color: var(--text-on-accent);
-        background: var(--accent);
-        border-radius: 50em;
-        animation: pulseBadge 3s ease-in-out infinite;
+        display: none;
       }
 
       .pricing-list > li {
@@ -742,9 +894,10 @@
       }
 
       .pricing-notes {
-        position: relative;
-        z-index: 5;
-        margin-top: 1.75em;
+        position: static;
+        z-index: auto;
+        margin-top: 1.25rem;
+        clear: both;
       }
 
       .pricing-switcher .fieldset {
@@ -777,34 +930,55 @@
     }
 
     .benefits-card {
+      grid-column: 1;
       display: flex;
       flex-direction: column;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      box-shadow: var(--card-shadow);
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
       overflow: hidden;
       animation: cardEnter 0.7s ease forwards;
     }
 
     .benefits-card__header {
-      padding: 2.4em 1.6em 1.6em;
+      padding: var(--pam-header-pad-y) var(--pam-header-pad-x);
       text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--accent-soft) 0%, transparent 100%);
+      border-bottom: none;
+      background: var(--pam-lime);
+      color: #1a2b3c;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
     }
 
     .benefits-card__header h2,
     .pricing-header h2 {
-      margin: 0 0 0.6em;
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      margin: 0 0 0.45rem;
+      font-size: var(--pam-card-title);
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
       flex-shrink: 0;
     }
 
+    .benefits-card__header h2 {
+      color: #1a2b3c;
+      text-align: center;
+      font-weight: 700;
+      font-size: var(--pam-benefits-title);
+      margin-top: auto;
+      margin-bottom: 0;
+    }
+
+    .pricing-header h2 {
+      text-align: left;
+      width: 100%;
+      font-weight: 700;
+    }
+
     .benefits-card__spacer {
-      min-height: 4.4rem;
+      display: none;
     }
 
     .benefits-list {
@@ -818,13 +992,26 @@
       display: flex;
       align-items: center;
       box-sizing: border-box;
-      min-height: 52px;
-      padding: 0.85em 1.4em;
-      font-size: 1.4rem;
-      line-height: 1.45;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--row-border);
-      transition: background 0.22s ease, box-shadow 0.22s ease;
+      min-height: var(--pam-row-min-h);
+      padding: 0.65rem 1.25rem;
+      font-size: var(--pam-row-font);
+      line-height: 1.35;
+      color: #1a2b3c;
+      border-bottom: none;
+      transition: background 0.22s ease;
+    }
+
+    .benefits-list li {
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .benefits-list li:nth-child(odd) {
+      background: var(--pam-lime-row);
+    }
+
+    .benefits-list li:nth-child(even) {
+      background: rgba(206, 250, 91, 0.1);
     }
 
     .pricing-features li {
@@ -841,19 +1028,32 @@
     }
 
     .pam-benefit-row.is-row-hover {
-      background: var(--row-hover-bg);
-      box-shadow: inset 0 1px 0 var(--accent-glow), inset 0 -1px 0 var(--accent-glow);
+      box-shadow: none;
+    }
+
+    .benefits-card .pam-benefit-row.is-row-hover {
+      background: var(--pam-lime-row-hover);
     }
 
     .benefits-card__footer {
-      padding: 1.6em;
-      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.85rem 1rem 1rem;
+      border-top: none;
       box-sizing: border-box;
+      background: transparent;
+    }
+
+    .benefits-card__footer svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 72px;
     }
 
     @media (min-width: 1024px) {
-      .benefits-card__header,
-      .pricing-header {
+      .benefits-card__header {
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -861,11 +1061,16 @@
         align-items: center;
       }
 
-      .benefits-card__spacer {
+      .pricing-header {
+        box-sizing: border-box;
         display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        width: 100%;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+      }
+
+      .benefits-card__spacer {
+        display: none;
       }
     }
 
@@ -897,7 +1102,7 @@
 
     @media (min-width: 1024px) {
       .pricing-wrapper {
-        flex: 1 1 0%;
+        flex: 1 1 auto;
         min-height: 0;
         height: 100%;
         max-height: 100%;
@@ -908,10 +1113,10 @@
     .pricing-wrapper > li {
       display: flex;
       flex-direction: column;
-      background-color: var(--card-bg);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--card-shadow);
+      background-color: transparent;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
       overflow: hidden;
       backface-visibility: hidden;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
@@ -929,35 +1134,38 @@
     }
 
     .pricing-list > li:hover .pricing-wrapper > li.is-visible {
-      transform: translateY(-6px);
-      box-shadow: var(--card-shadow-hover);
+      transform: none;
+    }
+
+    /* Card header */
+    .pricing-header {
+      padding: var(--pam-header-pad-y) var(--pam-header-pad-x);
+      text-align: left;
+      border-bottom: none;
+    }
+
+    .pricing-list > li:nth-child(1) .pricing-header {
+      background: var(--pam-green);
+      color: #ffffff;
+    }
+
+    .pricing-list > li:nth-child(2) .pricing-header {
+      background: var(--pam-pink);
+      color: #1a2b3c;
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-header {
+      background: var(--pam-blue);
+      color: #ffffff;
     }
 
     .exclusive .pricing-wrapper > li.is-visible {
-      border-color: var(--accent);
-      box-shadow: var(--card-shadow), 0 0 0 1px var(--accent-glow);
+      border: none;
+      box-shadow: none;
     }
 
     .exclusive .pricing-wrapper > li.is-visible::before {
-      content: 'Popular';
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 2;
-      padding: 0.35em 0.9em;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-on-accent);
-      background: var(--accent);
-      border-radius: 50em;
-      animation: pulseBadge 3s ease-in-out infinite;
-    }
-
-    @keyframes pulseBadge {
-      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-      50% { box-shadow: 0 0 0 6px transparent; }
+      display: none;
     }
 
     .pricing-wrapper.is-switched .is-visible {
@@ -1009,50 +1217,56 @@
       z-index: 3 !important;
     }
 
-    /* Card header */
-    .pricing-header {
-      padding: 2.4em 1.6em 1.6em;
-      text-align: center;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--accent-soft) 0%, transparent 100%);
+    .pricing-list > li:nth-child(1) .pricing-header h2,
+    .pricing-list > li:nth-child(1) .pricing-header .value,
+    .pricing-list > li:nth-child(1) .pricing-header .currency,
+    .pricing-list > li:nth-child(1) .pricing-header .duration {
+      color: #ffffff;
     }
 
-    .exclusive .pricing-header {
-      background: linear-gradient(180deg, rgba(108, 221, 199, 0.22) 0%, transparent 100%);
+    .pricing-list > li:nth-child(2) .pricing-header h2,
+    .pricing-list > li:nth-child(2) .pricing-header .value,
+    .pricing-list > li:nth-child(2) .pricing-header .currency,
+    .pricing-list > li:nth-child(2) .pricing-header .duration {
+      color: #1a2b3c;
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-header h2,
+    .pricing-list > li:nth-child(3) .pricing-header .value,
+    .pricing-list > li:nth-child(3) .pricing-header .currency,
+    .pricing-list > li:nth-child(3) .pricing-header .duration {
+      color: #ffffff;
     }
 
     .price {
       display: flex;
       align-items: flex-start;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 0.15em;
       line-height: 1;
+      width: 100%;
     }
 
     .currency {
-      margin-top: 0.35em;
-      font-size: 1.5rem;
+      margin-top: 0.55rem;
+      font-size: var(--pam-price-currency);
       font-weight: 700;
-      color: var(--accent);
     }
 
     .value {
-      font-size: clamp(3rem, 3.8vw, 4rem);
+      font-size: var(--pam-price-value);
       font-weight: 700;
-      color: var(--text);
       letter-spacing: -0.02em;
       line-height: 1;
     }
 
     .duration {
       align-self: flex-end;
-      margin-bottom: 0.15em;
-      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+      font-size: var(--pam-price-duration);
       font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      text-transform: capitalize;
+      letter-spacing: 0;
     }
 
     .duration::before {
@@ -1091,66 +1305,137 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 3.6em;
-      padding: 0.2em 0.5em;
+      min-width: auto;
+      padding: 0;
       font-size: 1.2rem;
       font-weight: 700;
       font-style: normal;
       text-align: center;
-      color: var(--feature-badge-text);
-      background: var(--feature-badge-bg);
-      border-radius: var(--radius-sm);
+      color: inherit;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .pricing-list > li:nth-child(1) .pricing-features li:nth-child(odd) {
+      background: var(--pam-green-row);
+    }
+
+    .pricing-list > li:nth-child(1) .pricing-features li:nth-child(even) {
+      background: #ffffff;
+    }
+
+    .pricing-list > li:nth-child(2) .pricing-features li:nth-child(odd) {
+      background: var(--pam-pink-row);
+    }
+
+    .pricing-list > li:nth-child(2) .pricing-features li:nth-child(even) {
+      background: #ffffff;
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-features li:nth-child(odd) {
+      background: var(--pam-blue-row);
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-features li:nth-child(even) {
+      background: #ffffff;
+    }
+
+    .pricing-list > li:nth-child(1) .pricing-features li {
+      color: #1a2b3c;
+    }
+
+    .pricing-list > li:nth-child(2) .pricing-features li {
+      color: #1a2b3c;
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-features li {
+      color: #1a2b3c;
+    }
+
+    .pricing-list > li:nth-child(1) .pricing-features li.pam-benefit-row.is-row-hover {
+      background: var(--pam-green-row-hover);
+    }
+
+    .pricing-list > li:nth-child(2) .pricing-features li.pam-benefit-row.is-row-hover {
+      background: var(--pam-pink-row-hover);
+    }
+
+    .pricing-list > li:nth-child(3) .pricing-features li.pam-benefit-row.is-row-hover {
+      background: var(--pam-blue-row-hover);
     }
 
     /* CTA */
     .pricing-footer {
-      padding: 1.6em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1rem 1rem;
       text-align: center;
-      border-top: 1px solid var(--border);
+      border-top: none;
       box-sizing: border-box;
+      background: transparent;
     }
 
     .select {
-      display: inline-block;
+      display: block;
       width: 100%;
-      max-width: 260px;
-      padding: 1.2em 2em;
+      max-width: none;
+      padding: 0.95rem 1rem;
       font-family: 'BentonSansFB', sans-serif;
-      font-size: 1.3rem;
+      font-size: var(--pam-btn-font);
       font-weight: 700;
-      color: var(--text-on-accent);
-      background: var(--accent);
-      border: 2px solid var(--accent);
-      border-radius: 0em; /* más bonito 50em */
+      border: none;
+      border-radius: 0;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+      letter-spacing: 0.04em;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
     }
 
-    .select:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--accent-glow);
+    .pricing-list > li:nth-child(1) .select {
+      color: #1a2b3c;
+      background: var(--pam-green);
+      border-color: var(--pam-green);
     }
 
-    .exclusive .select {
-      background: var(--accent);
-      color: var(--text-on-accent);
+    .pricing-list > li:nth-child(1) .select:hover {
+      background: var(--pam-green-chip);
+      border-color: var(--pam-green-chip);
+    }
+
+    .pricing-list > li:nth-child(2) .select {
+      color: #1a2b3c;
+      background: var(--pam-pink);
+      border-color: var(--pam-pink);
+    }
+
+    .pricing-list > li:nth-child(2) .select:hover {
+      background: var(--pam-pink-chip);
+      border-color: var(--pam-pink-chip);
+    }
+
+    .pricing-list > li:nth-child(3) .select {
+      color: #ffffff;
+      background: var(--pam-blue);
+      border-color: var(--pam-blue);
+    }
+
+    .pricing-list > li:nth-child(3) .select:hover {
+      background: var(--pam-blue-chip);
+      border-color: var(--pam-blue-chip);
     }
 
     /* Notes — siempre al final del bloque de precios */
     .pricing-notes {
       flex-shrink: 0;
       width: 100%;
-      margin: 3em auto 0;
+      margin: 1.75em auto 0;
       padding: 1.6em 2em;
       font-size: 1.35rem;
       line-height: 1.55;
       color: var(--notes-text);
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 0;
       box-shadow: var(--card-shadow);
     }
 
@@ -1194,17 +1479,8 @@
     }
 
     @media (min-width: 1024px) {
-      .pam-title {
-        margin-top: 2rem;
-      }
-
-      .pam-title h1 {
-        font-size: clamp(1.75rem, 2.5vw, 2.4rem);
-      }
-
-      .pam-title p {
-        margin-top: 0.7em;
-        font-size: 1.25rem;
+      .pam-page-header {
+        margin-top: 0.5rem;
       }
     }
 
@@ -1216,8 +1492,8 @@
         height: 40px;
       }
 
-      .pam-title {
-        margin-top: 4rem;
+      .pam-page-header {
+        margin-top: 3.5rem;
       }
 
       .pricing-switcher label {
@@ -1515,11 +1791,10 @@
     @media (max-width: 1023px) {
       .pam-pricing-layout {
         --pam-mobile-price-row: 1.75rem;
-        --pam-mobile-badge-row: 1.15em;
+        --pam-mobile-badge-row: 0;
       }
 
-      .pam-pricing-layout .benefits-card__header,
-      .pam-pricing-layout .pricing-header {
+      .pam-pricing-layout .benefits-card__header {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -1529,19 +1804,22 @@
         min-height: 0;
         height: auto;
         max-height: none;
-      }
-
-      .pam-pricing-layout .benefits-card__header {
         overflow: hidden;
       }
 
       .pam-pricing-layout .pricing-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        box-sizing: border-box;
+        padding: calc(0.75em + var(--pam-mobile-badge-row)) 0.6em 0.5em;
+        min-height: 0;
+        height: auto;
+        max-height: none;
         overflow: visible;
-      }
-
-      .pam-pricing-layout .pricing-header {
-        padding-left: 0.35em;
-        padding-right: 0.35em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
       }
 
       .pam-pricing-layout .benefits-card__header {
@@ -1551,35 +1829,40 @@
 
       .pam-pricing-layout .benefits-card__header h2,
       .pam-pricing-layout .pricing-header h2 {
-        font-size: 1.18rem;
         font-weight: 600;
         margin: 0 0 0.25em;
-        letter-spacing: 0.05em;
+        letter-spacing: 0;
         line-height: 1.15;
-        text-transform: uppercase;
-        text-align: center;
+        text-transform: none;
         flex-shrink: 0;
       }
 
-      .pam-pricing-layout .benefits-card__spacer {
-        display: block;
-        min-height: 0;
-        height: var(--pam-mobile-price-row);
+      .pam-pricing-layout .benefits-card__header h2 {
+        font-size: 1.65rem;
+        text-align: center;
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      .pam-pricing-layout .pricing-header h2 {
+        font-size: 1.18rem;
+        text-align: left;
         width: 100%;
-        margin: 0;
-        padding: 0;
-        visibility: hidden;
-        flex-shrink: 0;
+      }
+
+      .pam-pricing-layout .benefits-card__spacer {
+        display: none;
       }
 
       .pam-pricing-layout .price {
         display: flex;
         flex-wrap: nowrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: flex-start;
         min-height: var(--pam-mobile-price-row);
         height: var(--pam-mobile-price-row);
         flex-shrink: 0;
+        width: 100%;
       }
 
       .pam-pricing-layout .value {
@@ -1609,27 +1892,28 @@
   </button>
 
   <main class="pam-pricing-page">
-
-    <section class="pam-title">
-      <h1>Programa Amigos del MALI - PAM</h1>
-      <p>¿Te animas a ser parte del arte? Inicia tu suscripción y forma parte de la comunidad que apoya al Museo de Arte de Lima.</p>
-    </section>
-
     <div class="pricing-container has-margins">
-      <div class="pricing-switcher">
-        <p class="fieldset">
-          <input type="radio" name="duration-1" value="monthly" id="monthly-1" checked>
-          <label for="monthly-1">Mensual</label>
-
-          <input type="radio" name="duration-1" value="yearly" id="yearly-1">
-          <label for="yearly-1">Anual</label>
-
-          <span class="switch"></span>
-        </p>
-      </div>
-
       <div class="pam-pricing-viewport">
         <div class="pam-pricing-scale__inner">
+      <header class="pam-page-header">
+        <h1>Programa Amigos del Museo</h1>
+        <div class="pam-page-header__copy">
+          <p><strong>¿Te animas a ser parte del arte?</strong> Inicia tu suscripción y forma parte de la comunidad que apoya al Museo de Arte de Lima.</p>
+        </div>
+        <div class="pam-page-header__spacer" aria-hidden="true"></div>
+        <div class="pricing-switcher">
+          <p class="fieldset">
+            <input type="radio" name="duration-1" value="monthly" id="monthly-1" checked>
+            <label for="monthly-1">Mensual</label>
+
+            <input type="radio" name="duration-1" value="yearly" id="yearly-1">
+            <label for="yearly-1">Anual</label>
+
+            <span class="switch"></span>
+          </p>
+        </div>
+      </header>
+
       <div class="pam-pricing-layout">
 
         <aside class="benefits-card" aria-label="Lista de beneficios">
@@ -1652,7 +1936,149 @@
             <li>10% de descuento en consumos en el restaurante del MALI</li>
           </ul>
           </div>
-          <footer class="benefits-card__footer" aria-hidden="true"></footer>
+          <footer class="benefits-card__footer" aria-hidden="true">
+            <svg viewBox="0 0 280 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <filter id="pam-shapes-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="1.2" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- TRIÁNGULO -->
+              <polygon
+                points="35,16 56,56 14,56"
+                fill="none"
+                stroke="#cefa5b"
+                stroke-width="5"
+                stroke-linejoin="round"
+              />
+              <polygon
+                points="35,16 56,56 14,56"
+                fill="none"
+                stroke="white"
+                stroke-width="4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                pathLength="100"
+                stroke-dasharray="16 84"
+                filter="url(#pam-shapes-glow)"
+                opacity="0"
+              >
+                <animate attributeName="stroke-dashoffset"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="100;100;0;0;0"
+                  keyTimes="0;0.01;0.20;0.23;1"/>
+                <animate attributeName="opacity"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="0;1;1;0;0"
+                  keyTimes="0;0.01;0.20;0.23;1"/>
+              </polygon>
+
+              <!-- PARALELOGRAMO -->
+              <polygon
+                points="98,14 116,24 98,58 80,48"
+                fill="none"
+                stroke="#1bc469"
+                stroke-width="5"
+                stroke-linejoin="round"
+              />
+              <polygon
+                points="98,14 116,24 98,58 80,48"
+                fill="none"
+                stroke="white"
+                stroke-width="4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                pathLength="100"
+                stroke-dasharray="16 84"
+                filter="url(#pam-shapes-glow)"
+                opacity="0"
+              >
+                <animate attributeName="stroke-dashoffset"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="100;100;100;0;0;0"
+                  keyTimes="0;0.25;0.26;0.45;0.48;1"/>
+                <animate attributeName="opacity"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="0;0;1;1;0;0"
+                  keyTimes="0;0.25;0.26;0.45;0.48;1"/>
+              </polygon>
+
+              <!-- HEXÁGONO -->
+              <polygon
+                points="161,18 181,18 193,36 181,54 161,54 149,36"
+                fill="none"
+                stroke="#f7b5b0"
+                stroke-width="5"
+                stroke-linejoin="round"
+              />
+              <polygon
+                points="161,18 181,18 193,36 181,54 161,54 149,36"
+                fill="none"
+                stroke="white"
+                stroke-width="4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                pathLength="100"
+                stroke-dasharray="16 84"
+                filter="url(#pam-shapes-glow)"
+                opacity="0"
+              >
+                <animate attributeName="stroke-dashoffset"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="100;100;100;0;0;0"
+                  keyTimes="0;0.50;0.51;0.70;0.73;1"/>
+                <animate attributeName="opacity"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="0;0;1;1;0;0"
+                  keyTimes="0;0.50;0.51;0.70;0.73;1"/>
+              </polygon>
+
+              <!-- CÍRCULO -->
+              <circle
+                cx="245"
+                cy="36"
+                r="18"
+                fill="none"
+                stroke="#3a5ad0"
+                stroke-width="5"
+              />
+              <circle
+                cx="245"
+                cy="36"
+                r="18"
+                fill="none"
+                stroke="white"
+                stroke-width="4"
+                stroke-linecap="round"
+                pathLength="100"
+                stroke-dasharray="16 84"
+                filter="url(#pam-shapes-glow)"
+                opacity="0"
+              >
+                <animate attributeName="stroke-dashoffset"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="100;100;100;0;0;0"
+                  keyTimes="0;0.75;0.76;0.95;0.98;1"/>
+                <animate attributeName="opacity"
+                  dur="4.8s"
+                  repeatCount="indefinite"
+                  values="0;0;1;1;0;0"
+                  keyTimes="0;0.75;0.76;0.95;0.98;1"/>
+              </circle>
+            </svg>
+          </footer>
         </aside>
 
         <ul class="pricing-list bounce-invert">
@@ -2340,7 +2766,7 @@
         if (!layout) return;
 
         var isDesktopScroll = window.matchMedia('(min-width: 1024px)').matches;
-        var shouldSync = window.innerWidth >= 480;
+        var shouldSync = window.innerWidth >= 360;
         var syncTargets = layout.querySelectorAll(
           '.benefits-card__header, .pricing-header, .benefits-card__footer, .pricing-footer, .pam-benefit-row'
         );
@@ -2522,21 +2948,10 @@
 
       function applyPamViewportSize() {
         var wrap = document.querySelector('.pam-pricing-viewport');
-        var container = document.querySelector('.pricing-container');
-        if (!wrap || !container) return;
+        if (!wrap) return;
 
-        if (!window.matchMedia('(min-width: 1024px)').matches) {
-          return;
-        }
-
-        var rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 10;
-        var maxH = window.innerHeight - 11 * rem;
-        var availW = container.clientWidth;
-        var h = Math.min(availW * 9 / 16, maxH);
-        var w = h * 16 / 9;
-
-        wrap.style.width = Math.round(w) + 'px';
-        wrap.style.height = Math.round(h) + 'px';
+        wrap.style.width = '';
+        wrap.style.height = '';
       }
 
       window.applyPamViewportSize = applyPamViewportSize;
@@ -2551,27 +2966,39 @@
           inner.style.width = '';
           inner.style.marginBottom = '';
           wrap.style.height = '';
+          wrap.style.minHeight = '';
           wrap.style.overflow = '';
           applyPamViewportSize();
+          syncPamLayout();
           return;
         }
 
         var refWidth = 880;
+
+        inner.style.transform = 'none';
         inner.style.width = refWidth + 'px';
         inner.style.marginBottom = '0';
         wrap.style.height = 'auto';
-        wrap.style.overflow = 'visible';
-        syncPamLayout();
-        syncPamLayout();
-        refreshMobileBenefitTooltips();
+        wrap.style.minHeight = '0';
+        wrap.style.overflow = 'hidden';
 
-        var available = wrap.clientWidth;
-        var scale = Math.min(1, Math.max(0.36, available / refWidth));
-        var unscaledH = inner.offsetHeight;
+        syncPamLayout();
 
-        inner.style.transform = 'scale(' + scale + ')';
-        inner.style.transformOrigin = 'top center';
-        inner.style.marginBottom = Math.ceil(unscaledH * scale - unscaledH) + 'px';
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            var available = wrap.clientWidth;
+            var scale = Math.min(1, Math.max(0.36, available / refWidth));
+            var unscaledH = inner.offsetHeight;
+            var scaledH = Math.ceil(unscaledH * scale);
+
+            inner.style.transform = 'scale(' + scale + ')';
+            inner.style.transformOrigin = 'top center';
+            inner.style.marginBottom = (scaledH - unscaledH) + 'px';
+            wrap.style.height = scaledH + 'px';
+            wrap.style.minHeight = scaledH + 'px';
+            refreshMobileBenefitTooltips();
+          });
+        });
       }
 
       window.updatePamScale = updatePamScale;
@@ -2700,7 +3127,7 @@
           var currentWidth = window.innerWidth;
           var isMobileLayout = !window.matchMedia('(min-width: 1024px)').matches;
 
-          if (isMobileLayout && currentWidth === lastLayoutWidth) {
+          if (!isMobileLayout && currentWidth === lastLayoutWidth) {
             return;
           }
 

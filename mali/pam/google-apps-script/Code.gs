@@ -8,7 +8,7 @@
  * 4. Implementar → Nueva implementación → Aplicación web:
  *    - Ejecutar como: Yo
  *    - Quién tiene acceso: Cualquier persona
- * 5. Copia la URL de implementación en PAM_REGISTRO_API (membership.html).
+ * 5. Copia la URL de implementación en PAM_REGISTRO_API (membership.html) línea 1997.
  */
 
 var SHEET_NAME = 'Registros';
