@@ -2020,18 +2020,15 @@
 
     /* Modo embed (iframe en WordPress u otros sitios) */
     html[data-embed="true"],
-    html[data-embed="true"] body {
+    html[data-embed="true"] body,
+    html[data-embed="true"] .pam-pricing-page {
       overflow: hidden;
-      height: auto;
+      min-height: 0 !important;
+      height: auto !important;
     }
 
     [data-embed="true"] .theme-toggle {
       display: none;
-    }
-
-    [data-embed="true"] body,
-    [data-embed="true"] .pam-pricing-page {
-      min-height: 0;
     }
 
     [data-embed="true"] .pam-pricing-viewport,
@@ -2256,31 +2253,28 @@
       if (document.documentElement.getAttribute('data-embed') !== 'true') return;
 
       var notifyTimer;
-      var burstTimer = null;
+      var stabilizeTimer;
       var lastSentHeight = 0;
-      var EMBED_HEIGHT_BUFFER = 16;
+      var EMBED_HEIGHT_BUFFER = 8;
 
       function isContentReady() {
         var mount = document.getElementById('pam-pricing-mount');
         return !!(mount && mount.children.length > 0);
       }
 
-      function measureEmbedHeight(extraHeight) {
-        var height = 0;
-        var page = document.querySelector('.pam-pricing-page');
+      function getMeasureRoot() {
+        return document.querySelector('.pricing-container')
+          || document.querySelector('.pam-pricing-page');
+      }
 
-        if (page) {
-          var rect = page.getBoundingClientRect();
+      function measureEmbedHeight(extraHeight) {
+        var root = getMeasureRoot();
+        var height = 0;
+
+        if (root) {
+          var rect = root.getBoundingClientRect();
           height = rect.bottom + window.scrollY;
         }
-
-        height = Math.max(
-          height,
-          document.body.scrollHeight,
-          document.body.offsetHeight,
-          document.documentElement.scrollHeight,
-          document.documentElement.offsetHeight
-        );
 
         if (extraHeight) {
           height = Math.max(height, extraHeight);
@@ -2291,6 +2285,7 @@
 
       function postHeight(height) {
         if (window.parent === window || height <= 0) return;
+        if (lastSentHeight > 0 && Math.abs(height - lastSentHeight) < 3) return;
         lastSentHeight = height;
         window.parent.postMessage(
           { type: 'pam-iframe-resize', height: height },
@@ -2298,105 +2293,91 @@
         );
       }
 
-      function notifyParentHeight(extraHeight, force) {
-        if (window.parent === window) return;
+      function scheduleStableNotify(extraHeight) {
+        clearTimeout(stabilizeTimer);
+        stabilizeTimer = setTimeout(function () {
+          if (!isContentReady() && !extraHeight) {
+            scheduleStableNotify(extraHeight);
+            return;
+          }
 
+          requestAnimationFrame(function () {
+            var first = measureEmbedHeight(extraHeight);
+
+            setTimeout(function () {
+              requestAnimationFrame(function () {
+                var second = measureEmbedHeight(extraHeight);
+
+                if (Math.abs(first - second) > 6) {
+                  scheduleStableNotify(extraHeight);
+                  return;
+                }
+
+                postHeight(second);
+              });
+            }, 180);
+          });
+        }, 80);
+      }
+
+      function notifyParentHeight(extraHeight) {
+        if (window.parent === window) return;
         clearTimeout(notifyTimer);
         notifyTimer = setTimeout(function () {
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              if (!isContentReady() && !extraHeight) {
-                startBurstNotify();
-                return;
-              }
-
-              var height = measureEmbedHeight(extraHeight);
-
-              if (!force && lastSentHeight > 0 && Math.abs(height - lastSentHeight) < 3) {
-                return;
-              }
-
-              postHeight(height);
-            });
-          });
-        }, 50);
+          scheduleStableNotify(extraHeight);
+        }, 40);
       }
 
-      function startBurstNotify() {
-        if (burstTimer) return;
-
-        var attempts = 0;
-        var maxAttempts = 30;
-
-        burstTimer = setInterval(function () {
-          attempts += 1;
-          notifyParentHeight(null, true);
-
-          if (attempts >= maxAttempts || (isContentReady() && lastSentHeight > 300)) {
-            clearInterval(burstTimer);
-            burstTimer = null;
-          }
-        }, 200);
-      }
-
-      window.notifyPamIframeHeight = function (extraHeight, force) {
-        notifyParentHeight(extraHeight, !!force);
-      };
+      window.notifyPamIframeHeight = notifyParentHeight;
 
       window.addEventListener('message', function (event) {
         if (event.data && event.data.type === 'pam-iframe-request-height') {
-          notifyParentHeight(null, true);
+          scheduleStableNotify();
         }
       });
 
       window.addEventListener('load', function () {
-        notifyParentHeight(null, true);
+        scheduleStableNotify();
       });
 
       window.addEventListener('resize', function () {
-        notifyParentHeight(null, false);
+        lastSentHeight = 0;
+        notifyParentHeight();
       });
 
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', function () {
-          notifyParentHeight(null, false);
+          lastSentHeight = 0;
+          notifyParentHeight();
         });
       }
 
       if (typeof ResizeObserver !== 'undefined') {
         var resizeObserver = new ResizeObserver(function () {
           if (isContentReady()) {
-            notifyParentHeight(null, false);
+            notifyParentHeight();
           }
         });
 
-        resizeObserver.observe(document.body);
+        var measureRoot = getMeasureRoot();
+        if (measureRoot) {
+          resizeObserver.observe(measureRoot);
+        }
 
-        var pricingPage = document.querySelector('.pam-pricing-page');
-        if (pricingPage) {
-          resizeObserver.observe(pricingPage);
+        var pricingMount = document.getElementById('pam-pricing-mount');
+        if (pricingMount) {
+          resizeObserver.observe(pricingMount);
         }
       }
 
-      var pricingMount = document.getElementById('pam-pricing-mount');
-      if (pricingMount && typeof MutationObserver !== 'undefined') {
+      var pricingMountEl = document.getElementById('pam-pricing-mount');
+      if (pricingMountEl && typeof MutationObserver !== 'undefined') {
         var mountObserver = new MutationObserver(function () {
           if (isContentReady()) {
-            notifyParentHeight(null, true);
-            startBurstNotify();
+            scheduleStableNotify();
           }
         });
-        mountObserver.observe(pricingMount, { childList: true, subtree: true });
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-          startBurstNotify();
-          notifyParentHeight(null, true);
-        });
-      } else {
-        startBurstNotify();
-        notifyParentHeight(null, true);
+        mountObserver.observe(pricingMountEl, { childList: true, subtree: true });
       }
     })();
 
@@ -2427,7 +2408,7 @@
       PamRender.renderNotes(window.PAM_DATA, document.getElementById('pam-pricing-notes'));
 
       if (typeof window.notifyPamIframeHeight === 'function') {
-        window.notifyPamIframeHeight(null, true);
+        window.notifyPamIframeHeight();
       }
 
       function initRegistroModal() {
@@ -2533,7 +2514,12 @@
           requestAnimationFrame(function () {
             modal.classList.add('is-open');
             if (typeof window.notifyPamIframeHeight === 'function') {
-              window.notifyPamIframeHeight(document.documentElement.clientHeight);
+              var dialog = modal.querySelector('.pam-modal__dialog');
+              var extra = 0;
+              if (dialog) {
+                extra = dialog.getBoundingClientRect().bottom + window.scrollY;
+              }
+              window.notifyPamIframeHeight(extra);
             }
           });
           document.body.classList.add('modal-open');
@@ -2817,6 +2803,8 @@
       }
 
       function syncPamLayout() {
+        if (document.documentElement.getAttribute('data-embed') === 'true') return;
+
         var layout = document.querySelector('.pam-layout-desktop');
         if (!layout) return;
 
@@ -3203,16 +3191,8 @@
         updatePamScale();
         refreshMobileBenefitTooltips();
         if (typeof window.notifyPamIframeHeight === 'function') {
-          window.notifyPamIframeHeight(null, true);
+          window.notifyPamIframeHeight();
         }
-      });
-
-      [150, 500, 1200].forEach(function (delay) {
-        setTimeout(function () {
-          if (typeof window.notifyPamIframeHeight === 'function') {
-            window.notifyPamIframeHeight(null, true);
-          }
-        }, delay);
       });
     });
   </script>
