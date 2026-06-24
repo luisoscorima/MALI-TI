@@ -2017,7 +2017,63 @@
       line-height: 1.45;
       color: var(--text-muted);
     }
+
+    /* Modo embed (iframe en WordPress u otros sitios) */
+    [data-embed="true"] .theme-toggle {
+      display: none;
+    }
+
+    [data-embed="true"] body,
+    [data-embed="true"] .pam-pricing-page {
+      min-height: 0;
+    }
+
+    [data-embed="true"] .pam-pricing-viewport,
+    [data-embed="true"] .pam-pricing-scale__inner {
+      overflow: visible;
+      height: auto;
+      min-height: 0;
+    }
+
+    @media (min-width: 1024px) {
+      [data-embed="true"] .pam-pricing-layout {
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+      }
+
+      [data-embed="true"] .benefits-card,
+      [data-embed="true"] .pricing-wrapper,
+      [data-embed="true"] .pricing-wrapper > li.is-visible,
+      [data-embed="true"] .pricing-list > li {
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+      }
+
+      [data-embed="true"] .pam-rows-scroll,
+      [data-embed="true"] .pricing-body.pam-rows-scroll {
+        overflow: visible !important;
+        max-height: none !important;
+        flex: none !important;
+      }
+
+      [data-embed="true"] .pricing-list {
+        height: auto !important;
+        max-height: none !important;
+      }
+    }
   </style>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('embed') === '1' || window.self !== window.top) {
+        document.documentElement.setAttribute('data-embed', 'true');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -2190,6 +2246,45 @@
   <script src="pam-data.js"></script>
   <script src="pam-render.js"></script>
   <script>
+    (function initPamEmbedResize() {
+      if (document.documentElement.getAttribute('data-embed') !== 'true') return;
+
+      var notifyTimer;
+
+      function notifyParentHeight(extraHeight) {
+        if (window.parent === window) return;
+
+        clearTimeout(notifyTimer);
+        notifyTimer = setTimeout(function () {
+          requestAnimationFrame(function () {
+            var height = Math.max(
+              document.body.scrollHeight,
+              document.documentElement.scrollHeight
+            );
+
+            if (extraHeight) {
+              height = Math.max(height, extraHeight);
+            }
+
+            window.parent.postMessage(
+              { type: 'pam-iframe-resize', height: Math.ceil(height) },
+              '*'
+            );
+          });
+        }, 50);
+      }
+
+      window.notifyPamIframeHeight = notifyParentHeight;
+
+      window.addEventListener('load', notifyParentHeight);
+      window.addEventListener('resize', notifyParentHeight);
+
+      if (typeof ResizeObserver !== 'undefined') {
+        var resizeObserver = new ResizeObserver(notifyParentHeight);
+        resizeObserver.observe(document.body);
+      }
+    })();
+
     (function initTheme() {
       var saved = localStorage.getItem('pam-theme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -2201,6 +2296,9 @@
         var next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('pam-theme', next);
+        if (typeof window.notifyPamIframeHeight === 'function') {
+          window.notifyPamIframeHeight();
+        }
       });
     })();
 
@@ -2212,6 +2310,10 @@
 
       PamRender.mount(document.getElementById('pam-pricing-mount'), window.PAM_DATA);
       PamRender.renderNotes(window.PAM_DATA, document.getElementById('pam-pricing-notes'));
+
+      if (typeof window.notifyPamIframeHeight === 'function') {
+        window.notifyPamIframeHeight();
+      }
 
       function initRegistroModal() {
         // URL del Web App de Google Apps Script (ver mali/pam/google-apps-script/Code.gs)
@@ -2315,6 +2417,9 @@
           modal.hidden = false;
           requestAnimationFrame(function () {
             modal.classList.add('is-open');
+            if (typeof window.notifyPamIframeHeight === 'function') {
+              window.notifyPamIframeHeight(document.documentElement.clientHeight);
+            }
           });
           document.body.classList.add('modal-open');
           document.getElementById('reg-nombres').focus();
@@ -2326,6 +2431,9 @@
           window.setTimeout(function () {
             if (!modal.classList.contains('is-open')) {
               modal.hidden = true;
+            }
+            if (typeof window.notifyPamIframeHeight === 'function') {
+              window.notifyPamIframeHeight();
             }
           }, 300);
         }
@@ -2522,6 +2630,9 @@
                 }
                 if (typeof window.refreshMobileBenefitTooltips === 'function') {
                   window.refreshMobileBenefitTooltips();
+                }
+                if (typeof window.notifyPamIframeHeight === 'function') {
+                  window.notifyPamIframeHeight();
                 }
               }, 650);
             });
@@ -2945,6 +3056,9 @@
             window.updatePamCarousel();
           }
           refreshMobileBenefitTooltips();
+          if (typeof window.notifyPamIframeHeight === 'function') {
+            window.notifyPamIframeHeight();
+          }
         }, 120);
       }
 
@@ -2956,6 +3070,9 @@
           syncPamLayout();
           updatePamScale();
           refreshMobileBenefitTooltips();
+          if (typeof window.notifyPamIframeHeight === 'function') {
+            window.notifyPamIframeHeight();
+          }
         });
       }
 
@@ -2970,6 +3087,9 @@
         syncPamLayout();
         updatePamScale();
         refreshMobileBenefitTooltips();
+        if (typeof window.notifyPamIframeHeight === 'function') {
+          window.notifyPamIframeHeight();
+        }
       });
     });
   </script>
