@@ -2226,14 +2226,26 @@
         var modalPlanThemes = ['pam-modal--plan-green', 'pam-modal--plan-pink', 'pam-modal--plan-blue'];
 
         function setModalPlanTheme(btn) {
-          var planColumn = btn.closest('.pricing-wrapper');
-          planColumn = planColumn ? planColumn.parentElement : null;
           var themeClass = modalPlanThemes[0];
+          var mobilePlan = btn.closest('.pam-mobile-plan-item');
 
-          if (planColumn && planColumn.parentElement) {
-            var index = Array.prototype.indexOf.call(planColumn.parentElement.children, planColumn);
-            if (index >= 0 && index < modalPlanThemes.length) {
-              themeClass = modalPlanThemes[index];
+          if (mobilePlan) {
+            if (mobilePlan.classList.contains('pam-mobile-plan-item--green')) {
+              themeClass = 'pam-modal--plan-green';
+            } else if (mobilePlan.classList.contains('pam-mobile-plan-item--pink')) {
+              themeClass = 'pam-modal--plan-pink';
+            } else if (mobilePlan.classList.contains('pam-mobile-plan-item--blue')) {
+              themeClass = 'pam-modal--plan-blue';
+            }
+          } else {
+            var planColumn = btn.closest('.pricing-wrapper');
+            planColumn = planColumn ? planColumn.parentElement : null;
+
+            if (planColumn && planColumn.parentElement) {
+              var index = Array.prototype.indexOf.call(planColumn.parentElement.children, planColumn);
+              if (index >= 0 && index < modalPlanThemes.length) {
+                themeClass = modalPlanThemes[index];
+              }
             }
           }
 
