@@ -2019,6 +2019,12 @@
     }
 
     /* Modo embed (iframe en WordPress u otros sitios) */
+    html[data-embed="true"],
+    html[data-embed="true"] body {
+      overflow: hidden;
+      height: auto;
+    }
+
     [data-embed="true"] .theme-toggle {
       display: none;
     }
@@ -2250,6 +2256,31 @@
       if (document.documentElement.getAttribute('data-embed') !== 'true') return;
 
       var notifyTimer;
+      var EMBED_HEIGHT_BUFFER = 16;
+
+      function measureEmbedHeight(extraHeight) {
+        var height = 0;
+        var page = document.querySelector('.pam-pricing-page');
+
+        if (page) {
+          var rect = page.getBoundingClientRect();
+          height = rect.bottom + window.scrollY;
+        }
+
+        height = Math.max(
+          height,
+          document.body.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.scrollHeight,
+          document.documentElement.offsetHeight
+        );
+
+        if (extraHeight) {
+          height = Math.max(height, extraHeight);
+        }
+
+        return Math.ceil(height) + EMBED_HEIGHT_BUFFER;
+      }
 
       function notifyParentHeight(extraHeight) {
         if (window.parent === window) return;
@@ -2257,19 +2288,14 @@
         clearTimeout(notifyTimer);
         notifyTimer = setTimeout(function () {
           requestAnimationFrame(function () {
-            var height = Math.max(
-              document.body.scrollHeight,
-              document.documentElement.scrollHeight
-            );
+            requestAnimationFrame(function () {
+              var height = measureEmbedHeight(extraHeight);
 
-            if (extraHeight) {
-              height = Math.max(height, extraHeight);
-            }
-
-            window.parent.postMessage(
-              { type: 'pam-iframe-resize', height: Math.ceil(height) },
-              '*'
-            );
+              window.parent.postMessage(
+                { type: 'pam-iframe-resize', height: height },
+                '*'
+              );
+            });
           });
         }, 50);
       }
@@ -2279,9 +2305,20 @@
       window.addEventListener('load', notifyParentHeight);
       window.addEventListener('resize', notifyParentHeight);
 
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', notifyParentHeight);
+        window.visualViewport.addEventListener('scroll', notifyParentHeight);
+      }
+
       if (typeof ResizeObserver !== 'undefined') {
         var resizeObserver = new ResizeObserver(notifyParentHeight);
         resizeObserver.observe(document.body);
+        resizeObserver.observe(document.documentElement);
+
+        var pricingPage = document.querySelector('.pam-pricing-page');
+        if (pricingPage) {
+          resizeObserver.observe(pricingPage);
+        }
       }
     })();
 
