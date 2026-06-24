@@ -2074,6 +2074,7 @@
       var params = new URLSearchParams(window.location.search);
       if (params.get('embed') === '1' || window.self !== window.top) {
         document.documentElement.setAttribute('data-embed', 'true');
+        document.documentElement.setAttribute('data-theme', 'light');
       }
     })();
   </script>
@@ -2363,11 +2364,6 @@
         if (measureRoot) {
           resizeObserver.observe(measureRoot);
         }
-
-        var pricingMount = document.getElementById('pam-pricing-mount');
-        if (pricingMount) {
-          resizeObserver.observe(pricingMount);
-        }
       }
 
       var pricingMountEl = document.getElementById('pam-pricing-mount');
@@ -2382,19 +2378,26 @@
     })();
 
     (function initTheme() {
-      var saved = localStorage.getItem('pam-theme');
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var theme = saved || (prefersDark ? 'dark' : 'light');
+      var isEmbed = document.documentElement.getAttribute('data-embed') === 'true';
+      var theme;
+
+      if (isEmbed) {
+        theme = 'light';
+      } else {
+        var saved = localStorage.getItem('pam-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        theme = saved || (prefersDark ? 'dark' : 'light');
+      }
+
       document.documentElement.setAttribute('data-theme', theme);
 
       document.getElementById('theme-toggle').addEventListener('click', function () {
+        if (isEmbed) return;
+
         var current = document.documentElement.getAttribute('data-theme');
         var next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('pam-theme', next);
-        if (typeof window.notifyPamIframeHeight === 'function') {
-          window.notifyPamIframeHeight();
-        }
       });
     })();
 
@@ -2803,8 +2806,6 @@
       }
 
       function syncPamLayout() {
-        if (document.documentElement.getAttribute('data-embed') === 'true') return;
-
         var layout = document.querySelector('.pam-layout-desktop');
         if (!layout) return;
 
@@ -2955,6 +2956,11 @@
         }
 
         runLayoutSync();
+
+        if (document.documentElement.getAttribute('data-embed') === 'true'
+            && typeof window.notifyPamIframeHeight === 'function') {
+          window.notifyPamIframeHeight();
+        }
       }
 
       function initMobileBenefitLabels() {
