@@ -2256,7 +2256,14 @@
       if (document.documentElement.getAttribute('data-embed') !== 'true') return;
 
       var notifyTimer;
+      var burstTimer = null;
+      var lastSentHeight = 0;
       var EMBED_HEIGHT_BUFFER = 16;
+
+      function isContentReady() {
+        var mount = document.getElementById('pam-pricing-mount');
+        return !!(mount && mount.children.length > 0);
+      }
 
       function measureEmbedHeight(extraHeight) {
         var height = 0;
@@ -2282,43 +2289,114 @@
         return Math.ceil(height) + EMBED_HEIGHT_BUFFER;
       }
 
-      function notifyParentHeight(extraHeight) {
+      function postHeight(height) {
+        if (window.parent === window || height <= 0) return;
+        lastSentHeight = height;
+        window.parent.postMessage(
+          { type: 'pam-iframe-resize', height: height },
+          '*'
+        );
+      }
+
+      function notifyParentHeight(extraHeight, force) {
         if (window.parent === window) return;
 
         clearTimeout(notifyTimer);
         notifyTimer = setTimeout(function () {
           requestAnimationFrame(function () {
             requestAnimationFrame(function () {
+              if (!isContentReady() && !extraHeight) {
+                startBurstNotify();
+                return;
+              }
+
               var height = measureEmbedHeight(extraHeight);
 
-              window.parent.postMessage(
-                { type: 'pam-iframe-resize', height: height },
-                '*'
-              );
+              if (!force && lastSentHeight > 0 && Math.abs(height - lastSentHeight) < 3) {
+                return;
+              }
+
+              postHeight(height);
             });
           });
         }, 50);
       }
 
-      window.notifyPamIframeHeight = notifyParentHeight;
+      function startBurstNotify() {
+        if (burstTimer) return;
 
-      window.addEventListener('load', notifyParentHeight);
-      window.addEventListener('resize', notifyParentHeight);
+        var attempts = 0;
+        var maxAttempts = 30;
+
+        burstTimer = setInterval(function () {
+          attempts += 1;
+          notifyParentHeight(null, true);
+
+          if (attempts >= maxAttempts || (isContentReady() && lastSentHeight > 300)) {
+            clearInterval(burstTimer);
+            burstTimer = null;
+          }
+        }, 200);
+      }
+
+      window.notifyPamIframeHeight = function (extraHeight, force) {
+        notifyParentHeight(extraHeight, !!force);
+      };
+
+      window.addEventListener('message', function (event) {
+        if (event.data && event.data.type === 'pam-iframe-request-height') {
+          notifyParentHeight(null, true);
+        }
+      });
+
+      window.addEventListener('load', function () {
+        notifyParentHeight(null, true);
+      });
+
+      window.addEventListener('resize', function () {
+        notifyParentHeight(null, false);
+      });
 
       if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', notifyParentHeight);
-        window.visualViewport.addEventListener('scroll', notifyParentHeight);
+        window.visualViewport.addEventListener('resize', function () {
+          notifyParentHeight(null, false);
+        });
       }
 
       if (typeof ResizeObserver !== 'undefined') {
-        var resizeObserver = new ResizeObserver(notifyParentHeight);
+        var resizeObserver = new ResizeObserver(function () {
+          if (isContentReady()) {
+            notifyParentHeight(null, false);
+          }
+        });
+
         resizeObserver.observe(document.body);
-        resizeObserver.observe(document.documentElement);
 
         var pricingPage = document.querySelector('.pam-pricing-page');
         if (pricingPage) {
           resizeObserver.observe(pricingPage);
         }
+      }
+
+      var pricingMount = document.getElementById('pam-pricing-mount');
+      if (pricingMount && typeof MutationObserver !== 'undefined') {
+        var mountObserver = new MutationObserver(function () {
+          if (isContentReady()) {
+            notifyParentHeight(null, true);
+            startBurstNotify();
+          }
+        });
+        mountObserver.observe(pricingMount, { childList: true, subtree: true });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          startBurstNotify();
+          notifyParentHeight(null, true);
+        });
+      } else {
+        startBurstNotify();
+        notifyParentHeight(null, true);
       }
     })();
 
@@ -2349,7 +2427,7 @@
       PamRender.renderNotes(window.PAM_DATA, document.getElementById('pam-pricing-notes'));
 
       if (typeof window.notifyPamIframeHeight === 'function') {
-        window.notifyPamIframeHeight();
+        window.notifyPamIframeHeight(null, true);
       }
 
       function initRegistroModal() {
@@ -3125,8 +3203,16 @@
         updatePamScale();
         refreshMobileBenefitTooltips();
         if (typeof window.notifyPamIframeHeight === 'function') {
-          window.notifyPamIframeHeight();
+          window.notifyPamIframeHeight(null, true);
         }
+      });
+
+      [150, 500, 1200].forEach(function (delay) {
+        setTimeout(function () {
+          if (typeof window.notifyPamIframeHeight === 'function') {
+            window.notifyPamIframeHeight(null, true);
+          }
+        }, delay);
       });
     });
   </script>
