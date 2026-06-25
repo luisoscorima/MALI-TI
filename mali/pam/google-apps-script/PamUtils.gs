@@ -77,6 +77,11 @@ function esPagoConfirmado_(estadoMp) {
   return MP_ESTADOS_PAGO_OK.indexOf(String(estadoMp || '').trim().toLowerCase()) !== -1;
 }
 
+/** Fecha/hora actual en Lima para la columna registrado_en. */
+function ahoraLima_() {
+  return Utilities.formatDate(new Date(), PAM_TIMEZONE, 'yyyy-MM-dd HH:mm:ss');
+}
+
 /** Saludo personalizado: primer nombre + primer apellido. */
 function formatNombreSaludo_(nombres, apellidos) {
   var n = String(nombres || '').trim();

@@ -167,6 +167,50 @@ function configurarActivadoresPam() {
   Logger.log('Activadores PAM configurados.');
 }
 
+/**
+ * Revisa si los activadores de bienvenida y caducidad están creados.
+ * Ejecutar desde el editor → Ver → Registros (Logs).
+ */
+function verificarActivadoresPam() {
+  var esperados = {
+    enviarMensajesBienvenidaPendientes: false,
+    enviarAvisosCaducidadPendientes: false
+  };
+
+  ScriptApp.getProjectTriggers().forEach(function (trigger) {
+    var fn = trigger.getHandlerFunction();
+    if (esperados.hasOwnProperty(fn)) {
+      esperados[fn] = true;
+      Logger.log('OK — ' + fn + ' (' + describirActivador_(trigger) + ')');
+    }
+  });
+
+  Logger.log('=== Resumen activadores PAM ===');
+  if (!esperados.enviarMensajesBienvenidaPendientes) {
+    Logger.log('FALTA: enviarMensajesBienvenidaPendientes (bienvenida cada hora)');
+  }
+  if (!esperados.enviarAvisosCaducidadPendientes) {
+    Logger.log('FALTA: enviarAvisosCaducidadPendientes (caducidad cada día 8:00 Lima)');
+  }
+  if (esperados.enviarMensajesBienvenidaPendientes && esperados.enviarAvisosCaducidadPendientes) {
+    Logger.log('Todo configurado. Revisa también: Ejecuciones (menú izquierdo) por errores recientes.');
+  } else {
+    Logger.log('Solución: ejecuta configurarActivadoresPam() una vez y autoriza permisos.');
+  }
+}
+
+/** Ejecuta bienvenida + caducidad ahora (prueba manual). */
+function procesarCorreosPamAhora() {
+  enviarMensajesBienvenidaPendientes();
+  enviarAvisosCaducidadPendientes();
+}
+
+function describirActivador_(trigger) {
+  var type = String(trigger.getEventType());
+  if (type.indexOf('CLOCK') === -1) return type;
+  return 'temporizador';
+}
+
 function probarAvisoCaducidad() {
   sendCaducidadEmail_('tu-correo@ejemplo.com', 'María', 'García', 'Amigo', '2026-12-31', 5);
 }

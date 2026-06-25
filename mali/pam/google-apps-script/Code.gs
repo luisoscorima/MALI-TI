@@ -66,7 +66,7 @@ function doPost(e) {
     syncSheetHeaders_(sheet);
 
     sheet.appendRow([
-      data.registrado_en || new Date().toISOString(),
+      ahoraLima_(),
       data.nombres || '',
       data.apellidos || '',
       data.dni || '',
