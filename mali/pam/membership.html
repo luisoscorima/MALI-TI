@@ -2504,7 +2504,14 @@
             .then(function () {
               sessionStorage.setItem('pam-ultimo-registro', JSON.stringify(payload));
               closeModal();
-              openCheckoutInNewTab(pendingCheckout.url);
+
+              if (!openCheckoutInNewTab(pendingCheckout.url)) {
+                alert(
+                  'Tus datos fueron guardados. Si Mercado Pago no se abrió, ' +
+                  'permite ventanas emergentes en el navegador e inténtalo de nuevo.'
+                );
+              }
+
               submitBtn.disabled = false;
               submitBtn.textContent = 'Continuar al pago';
             })
@@ -2517,19 +2524,38 @@
         });
 
         function openCheckoutInNewTab(url) {
-          if (!url) return;
+          if (!url) return false;
 
-          var opener = window.top || window;
-          var newTab = opener.open(url, '_blank', 'noopener,noreferrer');
-          if (newTab) return;
+          // No usar window.top: en iframe cross-origin (mali.pe ← proyectosti.mali.pe) lanza SecurityError.
+          try {
+            var newTab = window.open(url, '_blank', 'noopener,noreferrer');
+            if (newTab) return true;
+          } catch (err) {
+            console.warn('PAM checkout window.open:', err);
+          }
 
-          var link = document.createElement('a');
-          link.href = url;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
+          try {
+            var link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            return true;
+          } catch (err2) {
+            console.warn('PAM checkout link:', err2);
+          }
+
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ type: 'pam-open-checkout', url: url }, '*');
+            }
+          } catch (err3) {
+            console.warn('PAM checkout postMessage:', err3);
+          }
+
+          return false;
         }
 
         function openModal() {
