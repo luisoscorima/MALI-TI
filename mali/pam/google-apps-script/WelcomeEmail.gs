@@ -1,6 +1,10 @@
 /**
  * Mensaje de bienvenida PAM — envío desde pam@mali.pe
  *
+ * IMPORTANTE: el proyecto Apps Script y la hoja deben estar en la cuenta pam@mali.pe
+ * (Implementar → Ejecutar como: Yo). Si no, el correo sale desde otra cuenta @mali.pe.
+ * En Google Workspace, pam@mali.pe debe ser alias o cuenta con permiso "Enviar como".
+ *
  * Al enviar la bienvenida (pago confirmado) se calcula fecha_caducidad automáticamente.
  *
  * Uso manual: enviarMensajesBienvenidaPendientes()
@@ -54,11 +58,12 @@ function enviarMensajesBienvenidaPendientes() {
     }
 
     var nombres = String(row[col.nombres] || '').trim();
+    var apellidos = col.apellidos !== -1 ? String(row[col.apellidos] || '').trim() : '';
     var plan = String(row[col.plan] || '').trim();
     var frecuencia = row[col.frecuencia];
 
     try {
-      sendWelcomeEmail_(correo, nombres, plan);
+      sendWelcomeEmail_(correo, nombres, apellidos, plan);
       setEstadoBienvenida_(sheet, rowIndex, col.mensaje_bienvenida, MENSAJE_BIENVENIDA.ENVIADO);
       fijarFechaCaducidadTrasAlta_(sheet, rowIndex, col, frecuencia);
       resumen.enviados++;
@@ -92,12 +97,32 @@ function fijarFechaCaducidadTrasAlta_(sheet, rowIndex, col, frecuencia) {
   }
 }
 
+/**
+ * Prueba con la última fila de la hoja (cambia el correo destino abajo).
+ */
 function probarMensajeBienvenida() {
-  sendWelcomeEmail_('tu-correo@ejemplo.com', 'Nombre', 'Amigo');
+  var correoPrueba = 'tu-correo@ejemplo.com'; // ← pon aquí tu correo real
+  var sheet = getOrCreateSheet_();
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var col = indexRegistroHeaders_(headers);
+  var lastRow = sheet.getLastRow();
+
+  var nombres = 'María';
+  var apellidos = 'García';
+  var plan = 'Amigo';
+
+  if (lastRow >= 2 && col.nombres !== -1) {
+    var row = sheet.getRange(lastRow, 1, lastRow, headers.length).getValues()[0];
+    nombres = String(row[col.nombres] || nombres).trim();
+    apellidos = col.apellidos !== -1 ? String(row[col.apellidos] || apellidos).trim() : apellidos;
+    plan = col.plan !== -1 ? String(row[col.plan] || plan).trim() : plan;
+  }
+
+  sendWelcomeEmail_(correoPrueba, nombres, apellidos, plan);
 }
 
-function sendWelcomeEmail_(to, nombres, plan) {
-  var nombre = nombres || 'amigo/a del museo';
+function sendWelcomeEmail_(to, nombres, apellidos, plan) {
+  var nombre = formatNombreSaludo_(nombres, apellidos);
   var planTexto = plan ? ' al plan ' + plan : '';
 
   var subject = 'Bienvenido/a al Programa Amigos del MALI';
@@ -112,15 +137,10 @@ function sendWelcomeEmail_(to, nombres, plan) {
     'Equipo PAM — Museo de Arte de Lima',
     '',
     '—',
-    'Este correo fue enviado desde pam@mali.pe',
     'Si tienes consultas, responde a este mensaje.'
   ].join('\n');
 
-  GmailApp.sendEmail(to, subject, body, {
-    name: PAM_FROM_NAME,
-    replyTo: PAM_REPLY_TO,
-    htmlBody: body.replace(/\n/g, '<br>')
-  });
+  GmailApp.sendEmail(to, subject, body, getOpcionesEmailPam_(body.replace(/\n/g, '<br>')));
 }
 
 function normalizarEstadoBienvenida_(value) {

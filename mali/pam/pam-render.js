@@ -44,6 +44,8 @@
     var footer = el('footer', 'pricing-footer');
     var link = el('a', 'select js-open-registro', {
       href: billing.checkout,
+      target: '_blank',
+      rel: 'noopener noreferrer',
       role: 'button'
     });
     link.textContent = 'Unirme ahora';

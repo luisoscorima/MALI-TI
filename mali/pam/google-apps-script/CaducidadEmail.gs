@@ -74,10 +74,11 @@ function enviarAvisosCaducidadPendientes() {
     }
 
     var nombres = String(row[col.nombres] || '').trim();
+    var apellidos = col.apellidos !== -1 ? String(row[col.apellidos] || '').trim() : '';
     var plan = String(row[col.plan] || '').trim();
 
     try {
-      sendCaducidadEmail_(correo, nombres, plan, fechaCaducidad, diasRestantes);
+      sendCaducidadEmail_(correo, nombres, apellidos, plan, fechaCaducidad, diasRestantes);
       setEstadoAvisoCaducidad_(sheet, rowIndex, col.aviso_caducidad, AVISO_CADUCIDAD.ENVIADO);
       resumen.enviados++;
     } catch (err) {
@@ -167,11 +168,11 @@ function configurarActivadoresPam() {
 }
 
 function probarAvisoCaducidad() {
-  sendCaducidadEmail_('tu-correo@ejemplo.com', 'Nombre', 'Amigo', '2026-12-31', 5);
+  sendCaducidadEmail_('tu-correo@ejemplo.com', 'María', 'García', 'Amigo', '2026-12-31', 5);
 }
 
-function sendCaducidadEmail_(to, nombres, plan, fechaCaducidad, diasRestantes) {
-  var nombre = nombres || 'amigo/a del museo';
+function sendCaducidadEmail_(to, nombres, apellidos, plan, fechaCaducidad, diasRestantes) {
+  var nombre = formatNombreSaludo_(nombres, apellidos);
   var planTexto = plan ? ' (' + plan + ')' : '';
   var fechaTexto = formatearFechaLima_(fechaCaducidad);
   var diasTexto = diasRestantes === 1 ? '1 día' : diasRestantes + ' días';
@@ -191,14 +192,10 @@ function sendCaducidadEmail_(to, nombres, plan, fechaCaducidad, diasRestantes) {
     'Equipo PAM — Museo de Arte de Lima',
     '',
     '—',
-    'pam@mali.pe'
+    'Si tienes consultas, responde a este mensaje.'
   ].join('\n');
 
-  GmailApp.sendEmail(to, subject, body, {
-    name: PAM_FROM_NAME,
-    replyTo: PAM_REPLY_TO,
-    htmlBody: body.replace(/\n/g, '<br>')
-  });
+  GmailApp.sendEmail(to, subject, body, getOpcionesEmailPam_(body.replace(/\n/g, '<br>')));
 }
 
 function normalizarEstadoAvisoCaducidad_(value) {

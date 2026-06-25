@@ -2503,7 +2503,10 @@
           saveRegistro(payload)
             .then(function () {
               sessionStorage.setItem('pam-ultimo-registro', JSON.stringify(payload));
-              window.location.href = pendingCheckout.url;
+              closeModal();
+              openCheckoutInNewTab(pendingCheckout.url);
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Continuar al pago';
             })
             .catch(function () {
               alert('No pudimos guardar tus datos. Por favor, intenta nuevamente.');
@@ -2511,6 +2514,22 @@
               submitBtn.textContent = 'Continuar al pago';
             });
         });
+
+        function openCheckoutInNewTab(url) {
+          if (!url) return;
+
+          var opener = window.top || window;
+          var newTab = opener.open(url, '_blank', 'noopener,noreferrer');
+          if (newTab) return;
+
+          var link = document.createElement('a');
+          link.href = url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
 
         function openModal() {
           modal.hidden = false;

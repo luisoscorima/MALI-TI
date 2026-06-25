@@ -4,6 +4,7 @@
 
 var PAM_TIMEZONE = 'America/Lima';
 var PAM_FROM_NAME = 'Programa Amigos del MALI';
+var PAM_FROM_EMAIL = 'pam@mali.pe';
 var PAM_REPLY_TO = 'pam@mali.pe';
 var MP_ESTADOS_PAGO_OK = ['approved', 'authorized'];
 
@@ -76,6 +77,30 @@ function esPagoConfirmado_(estadoMp) {
   return MP_ESTADOS_PAGO_OK.indexOf(String(estadoMp || '').trim().toLowerCase()) !== -1;
 }
 
+/** Saludo personalizado: primer nombre + primer apellido. */
+function formatNombreSaludo_(nombres, apellidos) {
+  var n = String(nombres || '').trim();
+  var a = String(apellidos || '').trim();
+  var primerNombre = n ? n.split(/\s+/)[0] : '';
+  var primerApellido = a ? a.split(/\s+/)[0] : '';
+
+  if (primerNombre && primerApellido) {
+    return primerNombre + ' ' + primerApellido;
+  }
+  if (primerNombre) return primerNombre;
+  if (primerApellido) return primerApellido;
+  return 'amigo/a del museo';
+}
+
+function getOpcionesEmailPam_(htmlBody) {
+  return {
+    name: PAM_FROM_NAME,
+    from: PAM_FROM_EMAIL,
+    replyTo: PAM_REPLY_TO,
+    htmlBody: htmlBody
+  };
+}
+
 function indexRegistroHeaders_(headers) {
   function idx(name) {
     return headers.indexOf(name);
@@ -84,6 +109,7 @@ function indexRegistroHeaders_(headers) {
   return {
     registrado_en: idx('registrado_en'),
     nombres: idx('nombres'),
+    apellidos: idx('apellidos'),
     correo: idx('correo'),
     plan: idx('plan'),
     frecuencia: idx('frecuencia'),
