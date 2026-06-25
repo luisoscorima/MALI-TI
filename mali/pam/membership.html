@@ -2508,7 +2508,8 @@
               submitBtn.disabled = false;
               submitBtn.textContent = 'Continuar al pago';
             })
-            .catch(function () {
+            .catch(function (err) {
+              console.error('PAM registro:', err);
               alert('No pudimos guardar tus datos. Por favor, intenta nuevamente.');
               submitBtn.disabled = false;
               submitBtn.textContent = 'Continuar al pago';
@@ -2595,11 +2596,23 @@
 
           return fetch(PAM_REGISTRO_API, {
             method: 'POST',
+            redirect: 'manual',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload)
           }).then(function (response) {
-            return response.json().then(function (data) {
-              if (!response.ok || !data.success) {
+            // Apps Script guarda los datos y responde 302; el JSON no llega al navegador por CORS.
+            if (response.type === 'opaqueredirect' || response.status === 0 || response.status === 302) {
+              return;
+            }
+
+            if (!response.ok) {
+              throw new Error('HTTP ' + response.status);
+            }
+
+            return response.text().then(function (text) {
+              if (!text) return;
+              var data = JSON.parse(text);
+              if (!data.success) {
                 throw new Error(data.error || 'No se pudo guardar el registro');
               }
             });
