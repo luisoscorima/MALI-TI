@@ -5,10 +5,11 @@
  * 1. Crea una hoja de cálculo en Google Drive (ej. "PAM Registros").
  * 2. Extiende → Apps Script, pega este código y guarda.
  * 3. Ejecuta setupSheet() una vez (autoriza permisos).
- * 4. Implementar → Nueva implementación → Aplicación web:
+ * 4. Ejecuta configurarActivadoresPam() una vez (correos automáticos).
+ * 5. Implementar → Nueva implementación → Aplicación web:
  *    - Ejecutar como: Yo
  *    - Quién tiene acceso: Cualquier persona
- * 5. Copia la URL de implementación en PAM_REGISTRO_API (membership.html) línea 1997.
+ * 6. Copia la URL de implementación en PAM_REGISTRO_API (membership.html).
  */
 
 var SHEET_NAME = 'Registros';
@@ -29,16 +30,24 @@ var HEADERS = [
   'plan',
   'frecuencia',
   'checkout_url',
-  'acepta_privacidad'
+  'acepta_privacidad',
+  // Vacío hasta integrar webhook de Mercado Pago. Valores posibles:
+  // pending | in_process | approved | authorized | rejected | cancelled | refunded | charged_back
+  'estado_mercado_pago',
+  // mensaje_bienvenida — ver WelcomeEmail.gs
+  'mensaje_bienvenida',
+  // Se calcula al confirmar el pago (bienvenida). Formato yyyy-MM-dd
+  'fecha_caducidad',
+  // aviso_caducidad — ver CaducidadEmail.gs
+  'aviso_caducidad'
 ];
+
+/** Estado inicial al registrar desde el front. */
+var MENSAJE_BIENVENIDA_DEFAULT = 'PENDIENTE';
 
 function setupSheet() {
   var sheet = getOrCreateSheet_();
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-    sheet.setFrozenRows(1);
-  }
+  syncSheetHeaders_(sheet);
 }
 
 function doGet() {
@@ -54,11 +63,7 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     var sheet = getOrCreateSheet_();
 
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
-      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-      sheet.setFrozenRows(1);
-    }
+    syncSheetHeaders_(sheet);
 
     sheet.appendRow([
       data.registrado_en || new Date().toISOString(),
@@ -76,13 +81,42 @@ function doPost(e) {
       data.plan || '',
       data.frecuencia || '',
       data.checkout_url || '',
-      data.acepta_privacidad === true ? 'Sí' : 'No'
+      data.acepta_privacidad === true ? 'Sí' : 'No',
+      '', // estado_mercado_pago — sin integración MP aún
+      MENSAJE_BIENVENIDA_DEFAULT,
+      '', // fecha_caducidad — se calcula al confirmar pago
+      'PENDIENTE' // aviso_caducidad
     ]);
 
     return jsonResponse_({ success: true });
   } catch (err) {
     return jsonResponse_({ success: false, error: err.message });
   }
+}
+
+/**
+ * Añade columnas nuevas a hojas ya existentes sin borrar datos.
+ * Ejecutar setupSheet() una vez tras desplegar cambios de columnas.
+ */
+function syncSheetHeaders_(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+    sheet.setFrozenRows(1);
+    return;
+  }
+
+  var existing = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var missing = HEADERS.filter(function (header) {
+    return existing.indexOf(header) === -1;
+  });
+
+  if (missing.length === 0) return;
+
+  var startCol = existing.length + 1;
+  sheet.getRange(1, startCol, 1, startCol + missing.length - 1).setValues([missing]);
+  sheet.getRange(1, 1, 1, sheet.getLastColumn()).setFontWeight('bold');
+  sheet.setFrozenRows(1);
 }
 
 function getOrCreateSheet_() {
